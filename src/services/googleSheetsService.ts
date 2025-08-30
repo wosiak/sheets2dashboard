@@ -71,6 +71,11 @@ export class GoogleSheetsService {
         }
       });
       
+      // Log detalhado para as primeiras linhas
+      if (index < 5) {
+        console.log(`📋 Linha ${index + 1} parseada:`, rowData);
+      }
+      
       return rowData;
     });
 
@@ -79,6 +84,13 @@ export class GoogleSheetsService {
       sampleRow: parsedData[0] || 'Nenhum dado', 
       columns: Object.keys(parsedData[0] || {}) 
     });
+    
+    // Log específico para dados de ontem (29/08/2025)
+    const dadosOntem = parsedData.filter(row => row.DATA === '29/08/2025');
+    console.log('📅 Dados de ontem (29/08/2025):', dadosOntem.length, 'registros');
+    if (dadosOntem.length > 0) {
+      console.log('📊 Exemplo de dados de ontem:', dadosOntem.slice(0, 3));
+    }
     
     return parsedData;
   }
