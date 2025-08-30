@@ -26,7 +26,7 @@ function App() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
-                📊 BI Dashboard - Planilhas em Tempo Real
+                📊 Dashboards | Clearwater
               </h1>
               <p className="text-gray-600 mt-1">
                 Conectado ao Google Sheets - Atualização automática
