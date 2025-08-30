@@ -12,7 +12,7 @@ export class GoogleSheetsService {
 
   async getSheetData(spreadsheetId: string, sheetName: string, range?: string): Promise<any[][]> {
     try {
-      const rangeParam = range || `${sheetName}!A:I`; // Lê apenas até a coluna I
+      const rangeParam = range || `${sheetName}!A:H`; // Lê até a coluna H (CONTRATOS - DIÁRIO)
       console.log('📊 Tentando buscar dados da planilha:', { spreadsheetId, sheetName, range: rangeParam });
       
       const url = `${GOOGLE_SHEETS_API_BASE}/${spreadsheetId}/values/${rangeParam}?key=${this.apiKey}`;
@@ -196,20 +196,23 @@ export class GoogleSheetsService {
           leads: 0,
           cotacao_diaria: 0,
           ligacao_diaria: 0,
-          follow_up: 0
+          follow_up: 0,
+          contratos: 0
         };
       }
       
-      // Soma valores numéricos apenas das colunas A-I
+      // Soma valores numéricos das colunas A-H
       const leads = Number(row.LEADS) || 0;
       const cotacaoDiaria = Number(row['COTAÇÃO DIÁRIA']) || 0;
       const ligacaoDiaria = Number(row['LIGAÇÃO DIÁRIA']) || 0;
       const followUp = Number(row['FOLLOW UP']) || 0;
+      const contratos = Number(row['CONTRATOS - DIÁRIO']) || 0;
       
       vendorMetrics[vendor].leads += leads;
       vendorMetrics[vendor].cotacao_diaria += cotacaoDiaria;
       vendorMetrics[vendor].ligacao_diaria += ligacaoDiaria;
       vendorMetrics[vendor].follow_up += followUp;
+      vendorMetrics[vendor].contratos += contratos;
       
       // Log dos primeiros registros para debug
       if (index < 3) {
@@ -218,7 +221,8 @@ export class GoogleSheetsService {
           leads,
           cotacaoDiaria,
           ligacaoDiaria,
-          followUp
+          followUp,
+          contratos
         });
       }
     });
