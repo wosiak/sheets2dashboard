@@ -62,6 +62,12 @@ export class GoogleSheetsService {
         if (header && header.trim()) { // Só processa colunas com nome
           const value = row[colIndex] || '';
           
+          // Ignora a coluna I (VENDEDOR duplicado) - usa apenas a coluna B
+          if (colIndex === 8 && header === 'VENDEDOR') {
+            console.log('⚠️ Ignorando coluna I (VENDEDOR duplicado)');
+            return;
+          }
+          
           // Converte valores numéricos
           if (typeof value === 'string' && value.trim() && !isNaN(Number(value))) {
             rowData[header.trim()] = Number(value);
