@@ -96,6 +96,7 @@ const SuporteDashboard = () => {
         atividadeDiaria: 0,
         novaSolicitacao: 0,
         normal: 0,
+        urgente: 0,
         concluido: 0,
       };
     }
@@ -115,6 +116,11 @@ const SuporteDashboard = () => {
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
+    const urgente = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['URGENTE'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
     const concluido = filteredData.reduce((sum, row) => {
       const value = parseInt(row['CONCLUÍDO'] || '0');
       return sum + (isNaN(value) ? 0 : value);
@@ -124,6 +130,7 @@ const SuporteDashboard = () => {
       atividadeDiaria,
       novaSolicitacao,
       normal,
+      urgente,
       concluido,
     };
   };
@@ -131,7 +138,7 @@ const SuporteDashboard = () => {
   const prepareChartData = () => {
     if (filteredData.length === 0) {
       return [
-        { data: 'Sem dados', atividadeDiaria: 0, novaSolicitacao: 0, normal: 0, concluido: 0 }
+        { data: 'Sem dados', atividadeDiaria: 0, novaSolicitacao: 0, normal: 0, urgente: 0, concluido: 0 }
       ];
     }
 
@@ -140,6 +147,7 @@ const SuporteDashboard = () => {
       atividadeDiaria: parseInt(row['ATIVIDADE DIÁRIA'] || '0') || 0,
       novaSolicitacao: parseInt(row['NOVA SOLICITAÇÃO'] || '0') || 0,
       normal: parseInt(row['NORMAL'] || '0') || 0,
+      urgente: parseInt(row['URGENTE'] || '0') || 0,
       concluido: parseInt(row['CONCLUÍDO'] || '0') || 0,
     }));
   };
@@ -198,7 +206,7 @@ const SuporteDashboard = () => {
         />
 
         {/* Métricas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           <MetricCard
             title="ATIVIDADE DIÁRIA"
             value={metrics.atividadeDiaria}
@@ -212,13 +220,17 @@ const SuporteDashboard = () => {
             value={metrics.normal}
           />
           <MetricCard
+            title="URGENTE"
+            value={metrics.urgente}
+          />
+          <MetricCard
             title="CONCLUÍDO"
             value={metrics.concluido}
           />
         </div>
 
         {/* Gráficos */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Atividade Diária */}
           <div className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Atividade Diária por Dia</h3>
@@ -319,6 +331,34 @@ const SuporteDashboard = () => {
                   labelFormatter={(label) => `Data: ${label}`}
                 />
                 <Bar dataKey="concluido" fill="#8B5CF6" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Gráfico Urgente - Largura Total */}
+        <div className="w-full">
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Urgente por Dia</h3>
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Urgente']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="urgente" fill="#DC2626" />
               </BarChart>
             </ResponsiveContainer>
           </div>

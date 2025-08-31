@@ -6,8 +6,13 @@ import { MetricCard } from './MetricCard';
 
 interface FinanceiroData {
   DATA: string;
+  'ATIVIDADE DIÁRIA': string;
   'NOVA PROPOSTA': string;
   'STATUS PROPOSTA': string;
+  'CLIENTE INADIMPLENTE': string;
+  'CLIENTE ADIMPLENTE': string;
+  'DATA VENCIMENTO': string;
+  'COBRANÇA PARCELA': string;
   'NOTA FISCAL': string;
   'ESTORNO': string;
 }
@@ -92,12 +97,22 @@ const FinanceiroDashboard = () => {
   const calculateMetrics = () => {
     if (filteredData.length === 0) {
       return {
+        atividadeDiaria: 0,
         novaProposta: 0,
         statusProposta: 0,
+        clienteInadimplente: 0,
+        clienteAdimplente: 0,
+        dataVencimento: 0,
+        cobrancaParcela: 0,
         notaFiscal: 0,
         estorno: 0,
       };
     }
+
+    const atividadeDiaria = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['ATIVIDADE DIÁRIA'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
 
     const novaProposta = filteredData.reduce((sum, row) => {
       const value = parseInt(row['NOVA PROPOSTA'] || '0');
@@ -106,6 +121,26 @@ const FinanceiroDashboard = () => {
 
     const statusProposta = filteredData.reduce((sum, row) => {
       const value = parseInt(row['STATUS PROPOSTA'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const clienteInadimplente = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['CLIENTE INADIMPLENTE'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const clienteAdimplente = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['CLIENTE ADIMPLENTE'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const dataVencimento = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['DATA VENCIMENTO'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const cobrancaParcela = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['COBRANÇA PARCELA'] || '0');
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
@@ -120,8 +155,13 @@ const FinanceiroDashboard = () => {
     }, 0);
 
     return {
+      atividadeDiaria,
       novaProposta,
       statusProposta,
+      clienteInadimplente,
+      clienteAdimplente,
+      dataVencimento,
+      cobrancaParcela,
       notaFiscal,
       estorno,
     };
@@ -130,14 +170,30 @@ const FinanceiroDashboard = () => {
   const prepareChartData = () => {
     if (filteredData.length === 0) {
       return [
-        { data: 'Sem dados', novaProposta: 0, statusProposta: 0, notaFiscal: 0, estorno: 0 }
+        { 
+          data: 'Sem dados', 
+          atividadeDiaria: 0,
+          novaProposta: 0, 
+          statusProposta: 0, 
+          clienteInadimplente: 0,
+          clienteAdimplente: 0,
+          dataVencimento: 0,
+          cobrancaParcela: 0,
+          notaFiscal: 0, 
+          estorno: 0 
+        }
       ];
     }
 
     return filteredData.map(row => ({
       data: row.DATA,
+      atividadeDiaria: parseInt(row['ATIVIDADE DIÁRIA'] || '0') || 0,
       novaProposta: parseInt(row['NOVA PROPOSTA'] || '0') || 0,
       statusProposta: parseInt(row['STATUS PROPOSTA'] || '0') || 0,
+      clienteInadimplente: parseInt(row['CLIENTE INADIMPLENTE'] || '0') || 0,
+      clienteAdimplente: parseInt(row['CLIENTE ADIMPLENTE'] || '0') || 0,
+      dataVencimento: parseInt(row['DATA VENCIMENTO'] || '0') || 0,
+      cobrancaParcela: parseInt(row['COBRANÇA PARCELA'] || '0') || 0,
       notaFiscal: parseInt(row['NOTA FISCAL'] || '0') || 0,
       estorno: parseInt(row['ESTORNO'] || '0') || 0,
     }));
@@ -197,7 +253,11 @@ const FinanceiroDashboard = () => {
         />
 
         {/* Métricas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+          <MetricCard
+            title="ATIVIDADE DIÁRIA"
+            value={metrics.atividadeDiaria}
+          />
           <MetricCard
             title="NOVA PROPOSTA"
             value={metrics.novaProposta}
@@ -205,6 +265,22 @@ const FinanceiroDashboard = () => {
           <MetricCard
             title="STATUS PROPOSTA"
             value={metrics.statusProposta}
+          />
+          <MetricCard
+            title="CLIENTE INADIMPLENTE"
+            value={metrics.clienteInadimplente}
+          />
+          <MetricCard
+            title="CLIENTE ADIMPLENTE"
+            value={metrics.clienteAdimplente}
+          />
+          <MetricCard
+            title="DATA VENCIMENTO"
+            value={metrics.dataVencimento}
+          />
+          <MetricCard
+            title="COBRANÇA PARCELA"
+            value={metrics.cobrancaParcela}
           />
           <MetricCard
             title="NOTA FISCAL"
@@ -217,7 +293,33 @@ const FinanceiroDashboard = () => {
         </div>
 
         {/* Gráficos */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Atividade Diária */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Atividade Diária por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Atividade Diária']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="atividadeDiaria" fill="#3B82F6" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
           {/* Nova Proposta */}
           <div className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Nova Proposta por Dia</h3>
@@ -239,7 +341,7 @@ const FinanceiroDashboard = () => {
                   formatter={(value: any) => [Math.round(value), 'Nova Proposta']}
                   labelFormatter={(label) => `Data: ${label}`}
                 />
-                <Bar dataKey="novaProposta" fill="#3B82F6" />
+                <Bar dataKey="novaProposta" fill="#8B5CF6" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -270,6 +372,110 @@ const FinanceiroDashboard = () => {
             </ResponsiveContainer>
           </div>
 
+          {/* Cliente Inadimplente */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Cliente Inadimplente por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Cliente Inadimplente']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="clienteInadimplente" fill="#DC2626" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Cliente Adimplente */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Cliente Adimplente por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Cliente Adimplente']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="clienteAdimplente" fill="#059669" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Data Vencimento */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Data Vencimento por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Data Vencimento']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="dataVencimento" fill="#F59E0B" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Cobrança Parcela */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Cobrança Parcela por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Cobrança Parcela']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="cobrancaParcela" fill="#06B6D4" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
           {/* Nota Fiscal */}
           <div className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Nota Fiscal por Dia</h3>
@@ -291,7 +497,7 @@ const FinanceiroDashboard = () => {
                   formatter={(value: any) => [Math.round(value), 'Nota Fiscal']}
                   labelFormatter={(label) => `Data: ${label}`}
                 />
-                <Bar dataKey="notaFiscal" fill="#F59E0B" />
+                <Bar dataKey="notaFiscal" fill="#84CC16" />
               </BarChart>
             </ResponsiveContainer>
           </div>

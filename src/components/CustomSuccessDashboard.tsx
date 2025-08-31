@@ -103,14 +103,49 @@ const CustomSuccessDashboard = () => {
     if (filteredData.length === 0) {
       return {
         atividadeDiaria: 0,
+        oportunidade: 0,
+        indicacao: 0,
+        novoCliente: 0,
+        primeiroContato: 0,
+        relacionamento: 0,
         envioBoleto: 0,
         suporte: 0,
+        inadimplente: 0,
+        insatisfeito: 0,
+        desistiu: 0,
+        duplicado: 0,
+        renovacao: 0,
         cancelada: 0,
       };
     }
 
     const atividadeDiaria = filteredData.reduce((sum, row) => {
       const value = parseInt(row['ATIVIDADE DIÁRIA'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const oportunidade = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['OPORTUNIDADE'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const indicacao = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['INDICAÇÃO'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const novoCliente = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['NOVO CLIENTE'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const primeiroContato = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['1 CONTATO'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const relacionamento = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['RELACIONAMENTO'] || '0');
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
@@ -124,6 +159,31 @@ const CustomSuccessDashboard = () => {
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
+    const inadimplente = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['INADIMPLENTE'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const insatisfeito = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['INSATISFEITO'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const desistiu = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['DESISTIU'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const duplicado = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['DUPLICADO'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const renovacao = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['RENOVAÇÃO'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
     const cancelada = filteredData.reduce((sum, row) => {
       const value = parseInt(row['CANCELADA'] || '0');
       return sum + (isNaN(value) ? 0 : value);
@@ -131,8 +191,18 @@ const CustomSuccessDashboard = () => {
 
     return {
       atividadeDiaria,
+      oportunidade,
+      indicacao,
+      novoCliente,
+      primeiroContato,
+      relacionamento,
       envioBoleto,
       suporte,
+      inadimplente,
+      insatisfeito,
+      desistiu,
+      duplicado,
+      renovacao,
       cancelada,
     };
   };
@@ -140,15 +210,41 @@ const CustomSuccessDashboard = () => {
   const prepareChartData = () => {
     if (filteredData.length === 0) {
       return [
-        { data: 'Sem dados', atividadeDiaria: 0, envioBoleto: 0, suporte: 0, cancelada: 0 }
+        { 
+          data: 'Sem dados', 
+          atividadeDiaria: 0, 
+          oportunidade: 0,
+          indicacao: 0,
+          novoCliente: 0,
+          primeiroContato: 0,
+          relacionamento: 0,
+          envioBoleto: 0, 
+          suporte: 0, 
+          inadimplente: 0,
+          insatisfeito: 0,
+          desistiu: 0,
+          duplicado: 0,
+          renovacao: 0,
+          cancelada: 0 
+        }
       ];
     }
 
     return filteredData.map(row => ({
       data: row.DATA,
       atividadeDiaria: parseInt(row['ATIVIDADE DIÁRIA'] || '0') || 0,
+      oportunidade: parseInt(row['OPORTUNIDADE'] || '0') || 0,
+      indicacao: parseInt(row['INDICAÇÃO'] || '0') || 0,
+      novoCliente: parseInt(row['NOVO CLIENTE'] || '0') || 0,
+      primeiroContato: parseInt(row['1 CONTATO'] || '0') || 0,
+      relacionamento: parseInt(row['RELACIONAMENTO'] || '0') || 0,
       envioBoleto: parseInt(row['ENVIO DE BOLETO'] || '0') || 0,
       suporte: parseInt(row['SUPORTE'] || '0') || 0,
+      inadimplente: parseInt(row['INADIMPLENTE'] || '0') || 0,
+      insatisfeito: parseInt(row['INSATISFEITO'] || '0') || 0,
+      desistiu: parseInt(row['DESISTIU'] || '0') || 0,
+      duplicado: parseInt(row['DUPLICADO'] || '0') || 0,
+      renovacao: parseInt(row['RENOVAÇÃO'] || '0') || 0,
       cancelada: parseInt(row['CANCELADA'] || '0') || 0,
     }));
   };
@@ -207,10 +303,30 @@ const CustomSuccessDashboard = () => {
         />
 
         {/* Métricas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
           <MetricCard
             title="ATIVIDADE DIÁRIA"
             value={metrics.atividadeDiaria}
+          />
+          <MetricCard
+            title="OPORTUNIDADE"
+            value={metrics.oportunidade}
+          />
+          <MetricCard
+            title="INDICAÇÃO"
+            value={metrics.indicacao}
+          />
+          <MetricCard
+            title="NOVO CLIENTE"
+            value={metrics.novoCliente}
+          />
+          <MetricCard
+            title="1º CONTATO"
+            value={metrics.primeiroContato}
+          />
+          <MetricCard
+            title="RELACIONAMENTO"
+            value={metrics.relacionamento}
           />
           <MetricCard
             title="ENVIO DE BOLETO"
@@ -221,13 +337,33 @@ const CustomSuccessDashboard = () => {
             value={metrics.suporte}
           />
           <MetricCard
+            title="INADIMPLENTE"
+            value={metrics.inadimplente}
+          />
+          <MetricCard
+            title="INSATISFEITO"
+            value={metrics.insatisfeito}
+          />
+          <MetricCard
+            title="DESISTIU"
+            value={metrics.desistiu}
+          />
+          <MetricCard
+            title="DUPLICADO"
+            value={metrics.duplicado}
+          />
+          <MetricCard
+            title="RENOVAÇÃO"
+            value={metrics.renovacao}
+          />
+          <MetricCard
             title="CANCELADA"
             value={metrics.cancelada}
           />
         </div>
 
         {/* Gráficos */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Atividade Diária */}
           <div className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Atividade Diária por Dia</h3>
@@ -254,6 +390,136 @@ const CustomSuccessDashboard = () => {
             </ResponsiveContainer>
           </div>
 
+          {/* Oportunidade */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Oportunidade por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Oportunidade']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="oportunidade" fill="#8B5CF6" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Indicação */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Indicação por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Indicação']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="indicacao" fill="#06B6D4" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Novo Cliente */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Novo Cliente por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Novo Cliente']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="novoCliente" fill="#10B981" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* 1º Contato */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">1º Contato por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), '1º Contato']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="primeiroContato" fill="#F59E0B" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Relacionamento */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Relacionamento por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Relacionamento']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="relacionamento" fill="#84CC16" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
           {/* Envio de Boleto */}
           <div className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Envio de Boleto por Dia</h3>
@@ -275,7 +541,7 @@ const CustomSuccessDashboard = () => {
                   formatter={(value: any) => [Math.round(value), 'Envio de Boleto']}
                   labelFormatter={(label) => `Data: ${label}`}
                 />
-                <Bar dataKey="envioBoleto" fill="#10B981" />
+                <Bar dataKey="envioBoleto" fill="#059669" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -301,7 +567,137 @@ const CustomSuccessDashboard = () => {
                   formatter={(value: any) => [Math.round(value), 'Suporte']}
                   labelFormatter={(label) => `Data: ${label}`}
                 />
-                <Bar dataKey="suporte" fill="#F59E0B" />
+                <Bar dataKey="suporte" fill="#F97316" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Inadimplente */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Inadimplente por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Inadimplente']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="inadimplente" fill="#DC2626" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Insatisfeito */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Insatisfeito por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Insatisfeito']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="insatisfeito" fill="#B91C1C" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Desistiu */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Desistiu por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Desistiu']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="desistiu" fill="#6B7280" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Duplicado */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Duplicado por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Duplicado']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="duplicado" fill="#7C3AED" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Renovação */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Renovação por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Renovação']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="renovacao" fill="#059669" />
               </BarChart>
             </ResponsiveContainer>
           </div>
