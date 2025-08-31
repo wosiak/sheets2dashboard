@@ -28,7 +28,7 @@ export const dashboardConfigs: Record<string, DashboardConfig> = {
   
   adm: {
     spreadsheetId: import.meta.env.VITE_SPREADSHEET_ADM_ID || '',
-    sheetName: 'AGOSTO2025',
+    sheetName: '2025',
     refreshInterval: 60,
     charts: [
       {
