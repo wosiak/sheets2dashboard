@@ -493,8 +493,15 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
       return {
         atividade_diaria: 0,
         nova_proposta: 0,
+        pend_assinatura: 0,
         em_analise: 0,
-        implantada: 0
+        pendencia: 0,
+        entrevista_medica: 0,
+        boleto: 0,
+        implantada: 0,
+        desistiu: 0,
+        erro_vendas: 0,
+        declinada: 0
       };
     }
     
@@ -505,13 +512,27 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
     const dataIndex = headers.findIndex((h: string) => h === 'DATA');
     const atividadeIndex = headers.findIndex((h: string) => h === 'ATIVIDADE DIÁRIA');
     const propostaIndex = headers.findIndex((h: string) => h === 'NOVA PROPOSTA');
+    const pendAssinaturaIndex = headers.findIndex((h: string) => h === 'PEND ASSINATURA');
     const analiseIndex = headers.findIndex((h: string) => h === 'EM ANÁLISE');
+    const pendenciaIndex = headers.findIndex((h: string) => h === 'PENDÊNCIA');
+    const entrevistaMedicaIndex = headers.findIndex((h: string) => h === 'ENTREVISTA MÉDICA');
+    const boletoIndex = headers.findIndex((h: string) => h === 'BOLETO');
     const implantadaIndex = headers.findIndex((h: string) => h === 'IMPLANTADA');
+    const desistiuIndex = headers.findIndex((h: string) => h === 'DESISTIU');
+    const erroVendasIndex = headers.findIndex((h: string) => h === 'ERRO DE VENDAS');
+    const declinadaIndex = headers.findIndex((h: string) => h === 'DECLINADA');
     
     let atividadeTotal = 0;
     let propostaTotal = 0;
+    let pendAssinaturaTotal = 0;
     let analiseTotal = 0;
+    let pendenciaTotal = 0;
+    let entrevistaMedicaTotal = 0;
+    let boletoTotal = 0;
     let implantadaTotal = 0;
+    let desistiuTotal = 0;
+    let erroVendasTotal = 0;
+    let declinadaTotal = 0;
     
     rows.forEach((row: any[]) => {
       if (atividadeIndex >= 0 && row[atividadeIndex]) {
@@ -520,19 +541,47 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
       if (propostaIndex >= 0 && row[propostaIndex]) {
         propostaTotal += Number(row[propostaIndex]) || 0;
       }
+      if (pendAssinaturaIndex >= 0 && row[pendAssinaturaIndex]) {
+        pendAssinaturaTotal += Number(row[pendAssinaturaIndex]) || 0;
+      }
       if (analiseIndex >= 0 && row[analiseIndex]) {
         analiseTotal += Number(row[analiseIndex]) || 0;
       }
+      if (pendenciaIndex >= 0 && row[pendenciaIndex]) {
+        pendenciaTotal += Number(row[pendenciaIndex]) || 0;
+      }
+      if (entrevistaMedicaIndex >= 0 && row[entrevistaMedicaIndex]) {
+        entrevistaMedicaTotal += Number(row[entrevistaMedicaIndex]) || 0;
+      }
+      if (boletoIndex >= 0 && row[boletoIndex]) {
+        boletoTotal += Number(row[boletoIndex]) || 0;
+      }
       if (implantadaIndex >= 0 && row[implantadaIndex]) {
         implantadaTotal += Number(row[implantadaIndex]) || 0;
+      }
+      if (desistiuIndex >= 0 && row[desistiuIndex]) {
+        desistiuTotal += Number(row[desistiuIndex]) || 0;
+      }
+      if (erroVendasIndex >= 0 && row[erroVendasIndex]) {
+        erroVendasTotal += Number(row[erroVendasIndex]) || 0;
+      }
+      if (declinadaIndex >= 0 && row[declinadaIndex]) {
+        declinadaTotal += Number(row[declinadaIndex]) || 0;
       }
     });
     
     return {
       atividade_diaria: atividadeTotal,
       nova_proposta: propostaTotal,
+      pend_assinatura: pendAssinaturaTotal,
       em_analise: analiseTotal,
-      implantada: implantadaTotal
+      pendencia: pendenciaTotal,
+      entrevista_medica: entrevistaMedicaTotal,
+      boleto: boletoTotal,
+      implantada: implantadaTotal,
+      desistiu: desistiuTotal,
+      erro_vendas: erroVendasTotal,
+      declinada: declinadaTotal
     };
   }, [filteredData]);
 
@@ -542,8 +591,15 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
       return {
         atividadeDiaria: [],
         novaProposta: [],
+        pendAssinatura: [],
         emAnalise: [],
-        implantada: []
+        pendencia: [],
+        entrevistaMedica: [],
+        boleto: [],
+        implantada: [],
+        desistiu: [],
+        erroVendas: [],
+        declinada: []
       };
     }
     
@@ -554,8 +610,15 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
     const dataIndex = headers.findIndex((h: string) => h === 'DATA');
     const atividadeIndex = headers.findIndex((h: string) => h === 'ATIVIDADE DIÁRIA');
     const propostaIndex = headers.findIndex((h: string) => h === 'NOVA PROPOSTA');
+    const pendAssinaturaIndex = headers.findIndex((h: string) => h === 'PEND ASSINATURA');
     const analiseIndex = headers.findIndex((h: string) => h === 'EM ANÁLISE');
+    const pendenciaIndex = headers.findIndex((h: string) => h === 'PENDÊNCIA');
+    const entrevistaMedicaIndex = headers.findIndex((h: string) => h === 'ENTREVISTA MÉDICA');
+    const boletoIndex = headers.findIndex((h: string) => h === 'BOLETO');
     const implantadaIndex = headers.findIndex((h: string) => h === 'IMPLANTADA');
+    const desistiuIndex = headers.findIndex((h: string) => h === 'DESISTIU');
+    const erroVendasIndex = headers.findIndex((h: string) => h === 'ERRO DE VENDAS');
+    const declinadaIndex = headers.findIndex((h: string) => h === 'DECLINADA');
     
     // Ordena por data
     const sortedRows = rows.sort((a: any[], b: any[]) => {
@@ -582,13 +645,41 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
         name: row[dataIndex] || '',
         value: Number(row[propostaIndex]) || 0
       })),
+      pendAssinatura: sortedRows.map((row: any[]) => ({
+        name: row[dataIndex] || '',
+        value: Number(row[pendAssinaturaIndex]) || 0
+      })),
       emAnalise: sortedRows.map((row: any[]) => ({
         name: row[dataIndex] || '',
         value: Number(row[analiseIndex]) || 0
       })),
+      pendencia: sortedRows.map((row: any[]) => ({
+        name: row[dataIndex] || '',
+        value: Number(row[pendenciaIndex]) || 0
+      })),
+      entrevistaMedica: sortedRows.map((row: any[]) => ({
+        name: row[dataIndex] || '',
+        value: Number(row[entrevistaMedicaIndex]) || 0
+      })),
+      boleto: sortedRows.map((row: any[]) => ({
+        name: row[dataIndex] || '',
+        value: Number(row[boletoIndex]) || 0
+      })),
       implantada: sortedRows.map((row: any[]) => ({
         name: row[dataIndex] || '',
         value: Number(row[implantadaIndex]) || 0
+      })),
+      desistiu: sortedRows.map((row: any[]) => ({
+        name: row[dataIndex] || '',
+        value: Number(row[desistiuIndex]) || 0
+      })),
+      erroVendas: sortedRows.map((row: any[]) => ({
+        name: row[dataIndex] || '',
+        value: Number(row[erroVendasIndex]) || 0
+      })),
+      declinada: sortedRows.map((row: any[]) => ({
+        name: row[dataIndex] || '',
+        value: Number(row[declinadaIndex]) || 0
       }))
     };
   }, [filteredData]);
@@ -654,7 +745,7 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
         </div>
         
         {/* Métricas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
           <MetricCard
             title="ATIVIDADE DIÁRIA"
             value={metrics.atividade_diaria}
@@ -666,8 +757,28 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
             format="number"
           />
           <MetricCard
+            title="PEND ASSINATURA"
+            value={metrics.pend_assinatura}
+            format="number"
+          />
+          <MetricCard
             title="EM ANÁLISE"
             value={metrics.em_analise}
+            format="number"
+          />
+          <MetricCard
+            title="PENDÊNCIA"
+            value={metrics.pendencia}
+            format="number"
+          />
+          <MetricCard
+            title="ENTREVISTA MÉDICA"
+            value={metrics.entrevista_medica}
+            format="number"
+          />
+          <MetricCard
+            title="BOLETO"
+            value={metrics.boleto}
             format="number"
           />
           <MetricCard
@@ -675,10 +786,25 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
             value={metrics.implantada}
             format="number"
           />
+          <MetricCard
+            title="DESISTIU"
+            value={metrics.desistiu}
+            format="number"
+          />
+          <MetricCard
+            title="ERRO DE VENDAS"
+            value={metrics.erro_vendas}
+            format="number"
+          />
+          <MetricCard
+            title="DECLINADA"
+            value={metrics.declinada}
+            format="number"
+          />
         </div>
         
         {/* Gráficos */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Atividade Diária */}
           <div>
             {filteredData.rows?.length === 0 && (
@@ -710,9 +836,23 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
               color="#10b981"
             />
           </div>
-        </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+
+          {/* Pendente Assinatura */}
+          <div>
+            {filteredData.rows?.length === 0 && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                <p className="text-xs text-yellow-700">📝 Nenhum registro encontrado para o período selecionado</p>
+              </div>
+            )}
+            <BarChart
+              data={chartData.pendAssinatura}
+              xAxisKey="name"
+              yAxisKey="value"
+              title="Pendente Assinatura"
+              color="#f97316"
+            />
+          </div>
+
           {/* Em Análise */}
           <div>
             {filteredData.rows?.length === 0 && (
@@ -728,7 +868,55 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
               color="#f59e0b"
             />
           </div>
-          
+
+          {/* Pendência */}
+          <div>
+            {filteredData.rows?.length === 0 && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                <p className="text-xs text-yellow-700">⏳ Nenhum registro encontrado para o período selecionado</p>
+              </div>
+            )}
+            <BarChart
+              data={chartData.pendencia}
+              xAxisKey="name"
+              yAxisKey="value"
+              title="Pendência"
+              color="#ef4444"
+            />
+          </div>
+
+          {/* Entrevista Médica */}
+          <div>
+            {filteredData.rows?.length === 0 && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                <p className="text-xs text-yellow-700">🏥 Nenhum registro encontrado para o período selecionado</p>
+              </div>
+            )}
+            <BarChart
+              data={chartData.entrevistaMedica}
+              xAxisKey="name"
+              yAxisKey="value"
+              title="Entrevista Médica"
+              color="#06b6d4"
+            />
+          </div>
+
+          {/* Boleto */}
+          <div>
+            {filteredData.rows?.length === 0 && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                <p className="text-xs text-yellow-700">💰 Nenhum registro encontrado para o período selecionado</p>
+              </div>
+            )}
+            <BarChart
+              data={chartData.boleto}
+              xAxisKey="name"
+              yAxisKey="value"
+              title="Boleto"
+              color="#84cc16"
+            />
+          </div>
+
           {/* Implantada */}
           <div>
             {filteredData.rows?.length === 0 && (
@@ -742,6 +930,54 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
               yAxisKey="value"
               title="Implantada"
               color="#8b5cf6"
+            />
+          </div>
+
+          {/* Desistiu */}
+          <div>
+            {filteredData.rows?.length === 0 && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                <p className="text-xs text-yellow-700">❌ Nenhum registro encontrado para o período selecionado</p>
+              </div>
+            )}
+            <BarChart
+              data={chartData.desistiu}
+              xAxisKey="name"
+              yAxisKey="value"
+              title="Desistiu"
+              color="#6b7280"
+            />
+          </div>
+
+          {/* Erro de Vendas */}
+          <div>
+            {filteredData.rows?.length === 0 && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                <p className="text-xs text-yellow-700">⚠️ Nenhum registro encontrado para o período selecionado</p>
+              </div>
+            )}
+            <BarChart
+              data={chartData.erroVendas}
+              xAxisKey="name"
+              yAxisKey="value"
+              title="Erro de Vendas"
+              color="#dc2626"
+            />
+          </div>
+
+          {/* Declinada */}
+          <div>
+            {filteredData.rows?.length === 0 && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                <p className="text-xs text-yellow-700">🚫 Nenhum registro encontrado para o período selecionado</p>
+              </div>
+            )}
+            <BarChart
+              data={chartData.declinada}
+              xAxisKey="name"
+              yAxisKey="value"
+              title="Declinada"
+              color="#7c3aed"
             />
           </div>
         </div>
