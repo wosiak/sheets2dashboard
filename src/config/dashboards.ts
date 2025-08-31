@@ -105,52 +105,27 @@ export const dashboardConfigs: Record<string, DashboardConfig> = {
       },
     ],
   },
-  
-  custom: {
-    spreadsheetId: import.meta.env.VITE_SPREADSHEET_CUSTOM_ID || '',
-    sheetName: import.meta.env.VITE_SHEET_CUSTOM_NAME || 'Sheet1',
-    refreshInterval: 45,
+  customSuccess: {
+    spreadsheetId: '1zqBau-zlqhgFb8ifl9X1qcLc-DtJhNw5-NtVcOGk3qc',
+    sheetName: '2025',
+    refreshInterval: 30,
     charts: [
-      {
-        id: 'sucesso-por-canal',
-        title: 'Sucesso por Canal',
-        type: 'bar',
-        dataKey: 'sucesso',
-        xAxisKey: 'canal',
-        yAxisKey: 'sucesso',
-      },
-      {
-        id: 'conversao-por-periodo',
-        title: 'Conversão por Período',
-        type: 'line',
-        dataKey: 'conversao',
-        xAxisKey: 'periodo',
-        yAxisKey: 'conversao',
-      },
+      { id: 'atividade-diaria-por-dia', title: 'Atividade Diária por Dia', type: 'bar', dataKey: 'atividadeDiaria', xAxisKey: 'data', yAxisKey: 'atividadeDiaria' },
+      { id: 'envio-boleto-por-dia', title: 'Envio de Boleto por Dia', type: 'bar', dataKey: 'envioBoleto', xAxisKey: 'data', yAxisKey: 'envioBoleto' },
+      { id: 'suporte-por-dia', title: 'Suporte por Dia', type: 'bar', dataKey: 'suporte', xAxisKey: 'data', yAxisKey: 'suporte' },
+      { id: 'cancelada-por-dia', title: 'Cancelada por Dia', type: 'bar', dataKey: 'cancelada', xAxisKey: 'data', yAxisKey: 'cancelada' },
     ],
   },
   
   suporte: {
-    spreadsheetId: import.meta.env.VITE_SPREADSHEET_SUPORTE_ID || '',
-    sheetName: import.meta.env.VITE_SHEET_SUPORTE_NAME || 'Sheet1',
-    refreshInterval: 60,
+    spreadsheetId: '19TdHUfkCIXzm4niGvC3JT95JRmUPz9-0sF7iCmBpGZ8',
+    sheetName: '2025',
+    refreshInterval: 30,
     charts: [
-      {
-        id: 'tickets-por-status',
-        title: 'Tickets por Status',
-        type: 'pie',
-        dataKey: 'quantidade',
-        xAxisKey: 'status',
-        yAxisKey: 'quantidade',
-      },
-      {
-        id: 'tempo-resposta-por-agente',
-        title: 'Tempo de Resposta por Agente',
-        type: 'bar',
-        dataKey: 'tempo_medio',
-        xAxisKey: 'agente',
-        yAxisKey: 'tempo_medio',
-      },
+      { id: 'atividade-diaria-por-dia', title: 'Atividade Diária por Dia', type: 'bar', dataKey: 'atividadeDiaria', xAxisKey: 'data', yAxisKey: 'atividadeDiaria' },
+      { id: 'nova-solicitacao-por-dia', title: 'Nova Solicitação por Dia', type: 'bar', dataKey: 'novaSolicitacao', xAxisKey: 'data', yAxisKey: 'novaSolicitacao' },
+      { id: 'normal-por-dia', title: 'Normal por Dia', type: 'bar', dataKey: 'normal', xAxisKey: 'data', yAxisKey: 'normal' },
+      { id: 'concluido-por-dia', title: 'Concluído por Dia', type: 'bar', dataKey: 'concluido', xAxisKey: 'data', yAxisKey: 'concluido' },
     ],
   },
   
@@ -214,6 +189,6 @@ export const getDashboardConfig = (dashboardName: string): DashboardConfig => {
 // Lista de dashboards disponíveis
 export const availableDashboards = Object.keys(dashboardConfigs).map(key => ({
   id: key,
-  name: key.charAt(0).toUpperCase() + key.slice(1),
+  name: key === 'customSuccess' ? 'Custom Success' : key.charAt(0).toUpperCase() + key.slice(1),
   config: dashboardConfigs[key],
 }));

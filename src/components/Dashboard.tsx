@@ -7,6 +7,8 @@ import { getDashboardConfig } from '../config/dashboards';
 import { GoogleSheetsService } from '../services/googleSheetsService';
 import { getMockDataForDashboard } from '../data/mockData';
 import RhDashboard from './RhDashboard';
+import CustomSuccessDashboard from './CustomSuccessDashboard';
+import SuporteDashboard from './SuporteDashboard';
 
 interface DashboardProps {
   dashboardName: string;
@@ -713,20 +715,35 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
   const config = getDashboardConfig(dashboardName);
   
   console.log('🔍 Dashboard - Configuração:', { dashboardName, sheetName: config.sheetName, spreadsheetId: config.spreadsheetId });
+  console.log('🎯 Renderizando dashboard:', dashboardName);
 
   // Renderiza dashboard específica baseada no nome
   if (dashboardName === 'adm') {
+    console.log('📊 Renderizando dashboard ADM');
     return <AdmDashboardSimple config={config} />;
   }
   
   if (dashboardName === 'rh') {
+    console.log('📊 Renderizando dashboard RH');
     return <RhDashboard />;
+  }
+
+  if (dashboardName === 'customSuccess') {
+    console.log('📊 Renderizando dashboard Custom Success');
+    return <CustomSuccessDashboard />;
+  }
+
+  if (dashboardName === 'suporte') {
+    console.log('📊 Renderizando dashboard Suporte');
+    return <SuporteDashboard />;
   }
   
   if (dashboardName === 'vendas') {
+    console.log('📊 Renderizando dashboard Vendas');
     return <VendasDashboard config={config} />;
   }
 
   // Dashboard padrão (vendas)
+  console.log('📊 Renderizando dashboard padrão (Vendas)');
   return <VendasDashboard config={config} />;
 };

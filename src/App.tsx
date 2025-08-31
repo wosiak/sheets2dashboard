@@ -18,6 +18,9 @@ function App() {
   const [currentDashboard, setCurrentDashboard] = useState('vendas');
   const [isTVMode, setIsTVMode] = useState(false);
 
+  console.log('🎯 App - Dashboard atual:', currentDashboard);
+  console.log('📋 Dashboards disponíveis:', availableDashboards.map(d => d.id));
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className={`min-h-screen bg-gray-50 ${isTVMode ? 'p-0' : 'p-6'}`}>
