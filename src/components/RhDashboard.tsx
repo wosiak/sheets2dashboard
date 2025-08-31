@@ -12,23 +12,26 @@ import { filterDataByPeriodCustom } from '../utils/rhDateFilter';
 interface RhData {
   DATA: string;
   ATENDIMENTO: string;
-  ENTREVISTA: string;
+  'ENTREVISTA AGENDADA': string;
+  'ENTREVISTA REALIZADA': string;
   APROVADO: string;
   REPROVADOS: string;
 }
 
 interface RhMetrics {
   totalAtendimento: number;
-  totalEntrevista: number;
+  totalEntrevistaAgendada: number;
+  totalEntrevistaRealizada: number;
   totalAprovado: number;
-  totalReprovado: number;
+  totalReprovados: number;
 }
 
 interface RhChartData {
   atendimentoPorDia: Array<{ name: string; value: number }>;
-  entrevistaPorDia: Array<{ name: string; value: number }>;
+  entrevistaAgendadaPorDia: Array<{ name: string; value: number }>;
+  entrevistaRealizadaPorDia: Array<{ name: string; value: number }>;
   aprovadoPorDia: Array<{ name: string; value: number }>;
-  reprovadoPorDia: Array<{ name: string; value: number }>;
+  reprovadosPorDia: Array<{ name: string; value: number }>;
 }
 
 const RhDashboard: React.FC = () => {
@@ -42,9 +45,9 @@ const RhDashboard: React.FC = () => {
       console.log('📊 Buscando dados da planilha RH...');
       
       try {
-        // Busca dados da planilha até coluna E (ATENDIMENTO, ENTREVISTA, APROVADO, REPROVADOS)
+        // Busca dados da planilha até coluna F (ATENDIMENTO, ENTREVISTA AGENDADA, ENTREVISTA REALIZADA, APROVADO, REPROVADOS)
         const response = await fetch(
-          `https://sheets.googleapis.com/v4/spreadsheets/1lrpFiG9QCS_lWuy_RE8kGZ9SowbSQjYdRYR086C_fxM/values/2025!A:E?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
+          `https://sheets.googleapis.com/v4/spreadsheets/1lrpFiG9QCS_lWuy_RE8kGZ9SowbSQjYdRYR086C_fxM/values/2025!A:F?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
         );
 
         if (!response.ok) {
@@ -95,7 +98,7 @@ const RhDashboard: React.FC = () => {
     // Log detalhado das datas para debug
     console.log('🔍 Debug - Primeiras 5 datas da planilha RH:');
     processedData.slice(0, 5).forEach((row, index) => {
-      console.log(`  Linha ${index + 1}: DATA="${row.DATA}", ATENDIMENTO="${row.ATENDIMENTO}", ENTREVISTA="${row.ENTREVISTA}", APROVADO="${row.APROVADO}", REPROVADOS="${row.REPROVADOS}"`);
+      console.log(`  Linha ${index + 1}: DATA="${row.DATA}", ATENDIMENTO="${row.ATENDIMENTO}", ENTREVISTA AGENDADA="${row['ENTREVISTA AGENDADA']}", ENTREVISTA REALIZADA="${row['ENTREVISTA REALIZADA']}", APROVADO="${row.APROVADO}", REPROVADOS="${row.REPROVADOS}"`);
     });
     
     // Log específico para 29/08/2025
@@ -108,16 +111,18 @@ const RhDashboard: React.FC = () => {
     // Calcula métricas totais
     const metrics: RhMetrics = {
       totalAtendimento: 0,
-      totalEntrevista: 0,
+      totalEntrevistaAgendada: 0,
+      totalEntrevistaRealizada: 0,
       totalAprovado: 0,
-      totalReprovado: 0
+      totalReprovados: 0
     };
 
     filteredData.forEach((row) => {
       metrics.totalAtendimento += Number(row.ATENDIMENTO) || 0;
-      metrics.totalEntrevista += Number(row.ENTREVISTA) || 0;
+      metrics.totalEntrevistaAgendada += Number(row['ENTREVISTA AGENDADA']) || 0;
+      metrics.totalEntrevistaRealizada += Number(row['ENTREVISTA REALIZADA']) || 0;
       metrics.totalAprovado += Number(row.APROVADO) || 0;
-      metrics.totalReprovado += Number(row.REPROVADOS) || 0;
+      metrics.totalReprovados += Number(row.REPROVADOS) || 0;
     });
 
     // Prepara dados para gráficos
@@ -126,15 +131,19 @@ const RhDashboard: React.FC = () => {
         name: row.DATA,
         value: Number(row.ATENDIMENTO) || 0
       })).filter(item => item.value > 0),
-      entrevistaPorDia: filteredData.map(row => ({
+      entrevistaAgendadaPorDia: filteredData.map(row => ({
         name: row.DATA,
-        value: Number(row.ENTREVISTA) || 0
+        value: Number(row['ENTREVISTA AGENDADA']) || 0
+      })).filter(item => item.value > 0),
+      entrevistaRealizadaPorDia: filteredData.map(row => ({
+        name: row.DATA,
+        value: Number(row['ENTREVISTA REALIZADA']) || 0
       })).filter(item => item.value > 0),
       aprovadoPorDia: filteredData.map(row => ({
         name: row.DATA,
         value: Number(row.APROVADO) || 0
       })).filter(item => item.value > 0),
-      reprovadoPorDia: filteredData.map(row => ({
+      reprovadosPorDia: filteredData.map(row => ({
         name: row.DATA,
         value: Number(row.REPROVADOS) || 0
       })).filter(item => item.value > 0)
@@ -192,15 +201,20 @@ const RhDashboard: React.FC = () => {
         />
 
         {/* Métricas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           <MetricCard
             title="Total Atendimento"
             value={metrics.totalAtendimento}
             format="number"
           />
           <MetricCard
-            title="Total Entrevista"
-            value={metrics.totalEntrevista}
+            title="Total Entrevista Agendada"
+            value={metrics.totalEntrevistaAgendada}
+            format="number"
+          />
+          <MetricCard
+            title="Total Entrevista Realizada"
+            value={metrics.totalEntrevistaRealizada}
             format="number"
           />
           <MetricCard
@@ -209,117 +223,149 @@ const RhDashboard: React.FC = () => {
             format="number"
           />
           <MetricCard
-            title="Total Reprovado"
-            value={metrics.totalReprovado}
+            title="Total Reprovados"
+            value={metrics.totalReprovados}
             format="number"
           />
         </div>
 
         {/* Gráficos */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Atendimento por Dia */}
-          {chartData.atendimentoPorDia && chartData.atendimentoPorDia.length > 0 ? (
-            <div>
-              {filteredData.length === 0 && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                  <p className="text-xs text-yellow-700">📋 Nenhum registro encontrado para o período selecionado</p>
-                </div>
-              )}
-              <BarChart
-                data={chartData.atendimentoPorDia}
-                xAxisKey="name"
-                yAxisKey="value"
-                title="Atendimento por Dia"
-                color="#3b82f6"
-              />
-            </div>
-          ) : (
-            <div className="bg-white rounded-lg shadow-sm border p-6 flex items-center justify-center h-64">
-              <div className="text-center text-gray-500">
-                <div className="text-4xl mb-2">📊</div>
-                <p>Nenhum dado de atendimento disponível</p>
-                <p className="text-sm">para o período selecionado</p>
+        <div className="space-y-6">
+          {/* Primeira linha: 3 gráficos em 33% cada */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Atendimento por Dia */}
+            {chartData.atendimentoPorDia && chartData.atendimentoPorDia.length > 0 ? (
+              <div>
+                {filteredData.length === 0 && (
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                    <p className="text-xs text-yellow-700">📋 Nenhum registro encontrado para o período selecionado</p>
+                  </div>
+                )}
+                <BarChart
+                  data={chartData.atendimentoPorDia}
+                  xAxisKey="name"
+                  yAxisKey="value"
+                  title="Atendimento por Dia"
+                  color="#3b82f6"
+                />
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="bg-white rounded-lg shadow-sm border p-6 flex items-center justify-center h-64">
+                <div className="text-center text-gray-500">
+                  <div className="text-4xl mb-2">📊</div>
+                  <p>Nenhum dado de atendimento disponível</p>
+                  <p className="text-sm">para o período selecionado</p>
+                </div>
+              </div>
+            )}
 
-          {/* Entrevista por Dia */}
-          {chartData.entrevistaPorDia && chartData.entrevistaPorDia.length > 0 ? (
-            <div>
-              {filteredData.length === 0 && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                  <p className="text-xs text-yellow-700">📋 Nenhum registro encontrado para o período selecionado</p>
-                </div>
-              )}
-              <BarChart
-                data={chartData.entrevistaPorDia}
-                xAxisKey="name"
-                yAxisKey="value"
-                title="Entrevista por Dia"
-                color="#10b981"
-              />
-            </div>
-          ) : (
-            <div className="bg-white rounded-lg shadow-sm border p-6 flex items-center justify-center h-64">
-              <div className="text-center text-gray-500">
-                <div className="text-4xl mb-2">📊</div>
-                <p>Nenhum dado de entrevista disponível</p>
-                <p className="text-sm">para o período selecionado</p>
+            {/* Entrevista Agendada por Dia */}
+            {chartData.entrevistaAgendadaPorDia && chartData.entrevistaAgendadaPorDia.length > 0 ? (
+              <div>
+                {filteredData.length === 0 && (
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                    <p className="text-xs text-yellow-700">📋 Nenhum registro encontrado para o período selecionado</p>
+                  </div>
+                )}
+                <BarChart
+                  data={chartData.entrevistaAgendadaPorDia}
+                  xAxisKey="name"
+                  yAxisKey="value"
+                  title="Entrevista Agendada por Dia"
+                  color="#10b981"
+                />
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="bg-white rounded-lg shadow-sm border p-6 flex items-center justify-center h-64">
+                <div className="text-center text-gray-500">
+                  <div className="text-4xl mb-2">📊</div>
+                  <p>Nenhum dado de entrevista agendada disponível</p>
+                  <p className="text-sm">para o período selecionado</p>
+                </div>
+              </div>
+            )}
 
-          {/* Aprovado por Dia */}
-          {chartData.aprovadoPorDia && chartData.aprovadoPorDia.length > 0 ? (
-            <div>
-              {filteredData.length === 0 && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                  <p className="text-xs text-yellow-700">📋 Nenhum registro encontrado para o período selecionado</p>
-                </div>
-              )}
-              <BarChart
-                data={chartData.aprovadoPorDia}
-                xAxisKey="name"
-                yAxisKey="value"
-                title="Aprovado por Dia"
-                color="#059669"
-              />
-            </div>
-          ) : (
-            <div className="bg-white rounded-lg shadow-sm border p-6 flex items-center justify-center h-64">
-              <div className="text-center text-gray-500">
-                <div className="text-4xl mb-2">📊</div>
-                <p>Nenhum dado de aprovado disponível</p>
-                <p className="text-sm">para o período selecionado</p>
+            {/* Entrevista Realizada por Dia */}
+            {chartData.entrevistaRealizadaPorDia && chartData.entrevistaRealizadaPorDia.length > 0 ? (
+              <div>
+                {filteredData.length === 0 && (
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                    <p className="text-xs text-yellow-700">📋 Nenhum registro encontrado para o período selecionado</p>
+                  </div>
+                )}
+                <BarChart
+                  data={chartData.entrevistaRealizadaPorDia}
+                  xAxisKey="name"
+                  yAxisKey="value"
+                  title="Entrevista Realizada por Dia"
+                  color="#f59e0b"
+                />
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="bg-white rounded-lg shadow-sm border p-6 flex items-center justify-center h-64">
+                <div className="text-center text-gray-500">
+                  <div className="text-4xl mb-2">📊</div>
+                  <p>Nenhum dado de entrevista realizada disponível</p>
+                  <p className="text-sm">para o período selecionado</p>
+                </div>
+              </div>
+            )}
+          </div>
 
-          {/* Reprovado por Dia */}
-          {chartData.reprovadoPorDia && chartData.reprovadoPorDia.length > 0 ? (
-            <div>
-              {filteredData.length === 0 && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                  <p className="text-xs text-yellow-700">📋 Nenhum registro encontrado para o período selecionado</p>
-                </div>
-              )}
-              <BarChart
-                data={chartData.reprovadoPorDia}
-                xAxisKey="name"
-                yAxisKey="value"
-                title="Reprovado por Dia"
-                color="#dc2626"
-              />
-            </div>
-          ) : (
-            <div className="bg-white rounded-lg shadow-sm border p-6 flex items-center justify-center h-64">
-              <div className="text-center text-gray-500">
-                <div className="text-4xl mb-2">📊</div>
-                <p>Nenhum dado de reprovado disponível</p>
-                <p className="text-sm">para o período selecionado</p>
+          {/* Segunda linha: 2 gráficos em 50% cada */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Aprovado por Dia */}
+            {chartData.aprovadoPorDia && chartData.aprovadoPorDia.length > 0 ? (
+              <div>
+                {filteredData.length === 0 && (
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                    <p className="text-xs text-yellow-700">📋 Nenhum registro encontrado para o período selecionado</p>
+                  </div>
+                )}
+                <BarChart
+                  data={chartData.aprovadoPorDia}
+                  xAxisKey="name"
+                  yAxisKey="value"
+                  title="Aprovado por Dia"
+                  color="#059669"
+                />
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="bg-white rounded-lg shadow-sm border p-6 flex items-center justify-center h-64">
+                <div className="text-center text-gray-500">
+                  <div className="text-4xl mb-2">📊</div>
+                  <p>Nenhum dado de aprovado disponível</p>
+                  <p className="text-sm">para o período selecionado</p>
+                </div>
+              </div>
+            )}
+
+            {/* Reprovados por Dia */}
+            {chartData.reprovadosPorDia && chartData.reprovadosPorDia.length > 0 ? (
+              <div>
+                {filteredData.length === 0 && (
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                    <p className="text-xs text-yellow-700">📋 Nenhum registro encontrado para o período selecionado</p>
+                  </div>
+                )}
+                <BarChart
+                  data={chartData.reprovadosPorDia}
+                  xAxisKey="name"
+                  yAxisKey="value"
+                  title="Reprovados por Dia"
+                  color="#dc2626"
+                />
+              </div>
+            ) : (
+              <div className="bg-white rounded-lg shadow-sm border p-6 flex items-center justify-center h-64">
+                <div className="text-center text-gray-500">
+                  <div className="text-4xl mb-2">📊</div>
+                  <p>Nenhum dado de reprovados disponível</p>
+                  <p className="text-sm">para o período selecionado</p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
