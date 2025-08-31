@@ -11,6 +11,7 @@ import CustomSuccessDashboard from './CustomSuccessDashboard';
 import SuporteDashboard from './SuporteDashboard';
 import RetencaoDashboard from './RetencaoDashboard';
 import FinanceiroDashboard from './FinanceiroDashboard';
+import { ChartFilter } from './ChartFilter';
 
 interface DashboardProps {
   dashboardName: string;
@@ -398,8 +399,26 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
 // Componente separado para dashboard de ADM
 const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
   const [selectedPeriod, setSelectedPeriod] = React.useState<'hoje' | 'ontem' | 'semana' | 'mes'>('ontem');
+  const [selectedCharts, setSelectedCharts] = React.useState<string[]>([]);
   
   const hasApiKey = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY && import.meta.env.VITE_GOOGLE_SHEETS_API_KEY !== 'your_google_sheets_api_key_here';
+  
+  // Inicializar todos os gráficos como selecionados
+  React.useEffect(() => {
+    setSelectedCharts([
+      'atividade-diaria',
+      'nova-proposta', 
+      'pend-assinatura',
+      'em-analise',
+      'pendencia',
+      'entrevista-medica',
+      'boleto',
+      'implantada',
+      'desistiu',
+      'erro-vendas',
+      'declinada'
+    ]);
+  }, []);
   
   // Busca dados da planilha ADM
   const { data: rawData, isLoading, error } = useQuery({
@@ -585,6 +604,50 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
     };
   }, [filteredData]);
 
+  // Funções para controlar a seleção de gráficos
+  const handleChartToggle = (chartId: string) => {
+    setSelectedCharts(prev => 
+      prev.includes(chartId) 
+        ? prev.filter(id => id !== chartId)
+        : [...prev, chartId]
+    );
+  };
+
+  const handleSelectAll = () => {
+    setSelectedCharts([
+      'atividade-diaria',
+      'nova-proposta', 
+      'pend-assinatura',
+      'em-analise',
+      'pendencia',
+      'entrevista-medica',
+      'boleto',
+      'implantada',
+      'desistiu',
+      'erro-vendas',
+      'declinada'
+    ]);
+  };
+
+  const handleClearAll = () => {
+    setSelectedCharts([]);
+  };
+
+  // Configuração dos gráficos para o filtro
+  const chartConfigs = [
+    { id: 'atividade-diaria', title: 'Atividade Diária' },
+    { id: 'nova-proposta', title: 'Nova Proposta' },
+    { id: 'pend-assinatura', title: 'Pendente Assinatura' },
+    { id: 'em-analise', title: 'Em Análise' },
+    { id: 'pendencia', title: 'Pendência' },
+    { id: 'entrevista-medica', title: 'Entrevista Médica' },
+    { id: 'boleto', title: 'Boleto' },
+    { id: 'implantada', title: 'Implantada' },
+    { id: 'desistiu', title: 'Desistiu' },
+    { id: 'erro-vendas', title: 'Erro de Vendas' },
+    { id: 'declinada', title: 'Declinada' }
+  ];
+
   // Gera dados para gráficos
   const chartData = React.useMemo(() => {
     if (!filteredData.rows || filteredData.rows.length === 0) {
@@ -722,22 +785,39 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
         
         {/* Filtros */}
         <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
-          <div className="flex items-center space-x-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Período
-              </label>
-              <select
-                value={selectedPeriod}
-                onChange={(e) => setSelectedPeriod(e.target.value as 'hoje' | 'ontem' | 'semana' | 'mes')}
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="hoje">Hoje</option>
-                <option value="ontem">Ontem</option>
-                <option value="semana">Última Semana</option>
-                <option value="mes">Mês</option>
-              </select>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Período
+                </label>
+                <select
+                  value={selectedPeriod}
+                  onChange={(e) => setSelectedPeriod(e.target.value as 'hoje' | 'ontem' | 'semana' | 'mes')}
+                  className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="hoje">Hoje</option>
+                  <option value="ontem">Ontem</option>
+                  <option value="semana">Última Semana</option>
+                  <option value="mes">Mês</option>
+                </select>
+              </div>
+              
+              {/* Filtro de Gráficos */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Gráficos
+                </label>
+                <ChartFilter
+                  charts={chartConfigs}
+                  selectedCharts={selectedCharts}
+                  onChartToggle={handleChartToggle}
+                  onSelectAll={handleSelectAll}
+                  onClearAll={handleClearAll}
+                />
+              </div>
             </div>
+            
             <div className="text-sm text-gray-600">
               Total de registros: <span className="font-semibold text-gray-900">{filteredData.rows?.length || 0}</span>
             </div>
@@ -746,240 +826,76 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
         
         {/* Métricas */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
-          <MetricCard
-            title="ATIVIDADE DIÁRIA"
-            value={metrics.atividade_diaria}
-            format="number"
-          />
-          <MetricCard
-            title="NOVA PROPOSTA"
-            value={metrics.nova_proposta}
-            format="number"
-          />
-          <MetricCard
-            title="PEND ASSINATURA"
-            value={metrics.pend_assinatura}
-            format="number"
-          />
-          <MetricCard
-            title="EM ANÁLISE"
-            value={metrics.em_analise}
-            format="number"
-          />
-          <MetricCard
-            title="PENDÊNCIA"
-            value={metrics.pendencia}
-            format="number"
-          />
-          <MetricCard
-            title="ENTREVISTA MÉDICA"
-            value={metrics.entrevista_medica}
-            format="number"
-          />
-          <MetricCard
-            title="BOLETO"
-            value={metrics.boleto}
-            format="number"
-          />
-          <MetricCard
-            title="IMPLANTADA"
-            value={metrics.implantada}
-            format="number"
-          />
-          <MetricCard
-            title="DESISTIU"
-            value={metrics.desistiu}
-            format="number"
-          />
-          <MetricCard
-            title="ERRO DE VENDAS"
-            value={metrics.erro_vendas}
-            format="number"
-          />
-          <MetricCard
-            title="DECLINADA"
-            value={metrics.declinada}
-            format="number"
-          />
+          {chartConfigs
+            .filter(chart => selectedCharts.includes(chart.id))
+            .map((chart) => {
+              const metricKey = chart.id.replace('-', '_') as keyof typeof metrics;
+              const value = metrics[metricKey] || 0;
+              
+              const colors = {
+                'atividade-diaria': 'text-blue-600',
+                'nova-proposta': 'text-green-600',
+                'pend-assinatura': 'text-orange-600',
+                'em-analise': 'text-yellow-600',
+                'pendencia': 'text-red-600',
+                'entrevista-medica': 'text-cyan-600',
+                'boleto': 'text-lime-600',
+                'implantada': 'text-purple-600',
+                'desistiu': 'text-gray-600',
+                'erro-vendas': 'text-rose-600',
+                'declinada': 'text-indigo-600',
+              };
+              
+              return (
+                <MetricCard
+                  key={chart.id}
+                  title={chart.title.toUpperCase()}
+                  value={value}
+                  format="number"
+                />
+              );
+            })}
         </div>
         
         {/* Gráficos */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Atividade Diária */}
-          <div>
-            {filteredData.rows?.length === 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                <p className="text-xs text-yellow-700">📊 Nenhum registro encontrado para o período selecionado</p>
-              </div>
-            )}
-            <BarChart
-              data={chartData.atividadeDiaria}
-              xAxisKey="name"
-              yAxisKey="value"
-              title="Atividade Diária"
-              color="#3b82f6"
-            />
-          </div>
-          
-          {/* Nova Proposta */}
-          <div>
-            {filteredData.rows?.length === 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                <p className="text-xs text-yellow-700">📈 Nenhum registro encontrado para o período selecionado</p>
-              </div>
-            )}
-            <BarChart
-              data={chartData.novaProposta}
-              xAxisKey="name"
-              yAxisKey="value"
-              title="Nova Proposta"
-              color="#10b981"
-            />
-          </div>
-
-          {/* Pendente Assinatura */}
-          <div>
-            {filteredData.rows?.length === 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                <p className="text-xs text-yellow-700">📝 Nenhum registro encontrado para o período selecionado</p>
-              </div>
-            )}
-            <BarChart
-              data={chartData.pendAssinatura}
-              xAxisKey="name"
-              yAxisKey="value"
-              title="Pendente Assinatura"
-              color="#f97316"
-            />
-          </div>
-
-          {/* Em Análise */}
-          <div>
-            {filteredData.rows?.length === 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                <p className="text-xs text-yellow-700">🔍 Nenhum registro encontrado para o período selecionado</p>
-              </div>
-            )}
-            <BarChart
-              data={chartData.emAnalise}
-              xAxisKey="name"
-              yAxisKey="value"
-              title="Em Análise"
-              color="#f59e0b"
-            />
-          </div>
-
-          {/* Pendência */}
-          <div>
-            {filteredData.rows?.length === 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                <p className="text-xs text-yellow-700">⏳ Nenhum registro encontrado para o período selecionado</p>
-              </div>
-            )}
-            <BarChart
-              data={chartData.pendencia}
-              xAxisKey="name"
-              yAxisKey="value"
-              title="Pendência"
-              color="#ef4444"
-            />
-          </div>
-
-          {/* Entrevista Médica */}
-          <div>
-            {filteredData.rows?.length === 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                <p className="text-xs text-yellow-700">🏥 Nenhum registro encontrado para o período selecionado</p>
-              </div>
-            )}
-            <BarChart
-              data={chartData.entrevistaMedica}
-              xAxisKey="name"
-              yAxisKey="value"
-              title="Entrevista Médica"
-              color="#06b6d4"
-            />
-          </div>
-
-          {/* Boleto */}
-          <div>
-            {filteredData.rows?.length === 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                <p className="text-xs text-yellow-700">💰 Nenhum registro encontrado para o período selecionado</p>
-              </div>
-            )}
-            <BarChart
-              data={chartData.boleto}
-              xAxisKey="name"
-              yAxisKey="value"
-              title="Boleto"
-              color="#84cc16"
-            />
-          </div>
-
-          {/* Implantada */}
-          <div>
-            {filteredData.rows?.length === 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                <p className="text-xs text-yellow-700">✅ Nenhum registro encontrado para o período selecionado</p>
-              </div>
-            )}
-            <BarChart
-              data={chartData.implantada}
-              xAxisKey="name"
-              yAxisKey="value"
-              title="Implantada"
-              color="#8b5cf6"
-            />
-          </div>
-
-          {/* Desistiu */}
-          <div>
-            {filteredData.rows?.length === 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                <p className="text-xs text-yellow-700">❌ Nenhum registro encontrado para o período selecionado</p>
-              </div>
-            )}
-            <BarChart
-              data={chartData.desistiu}
-              xAxisKey="name"
-              yAxisKey="value"
-              title="Desistiu"
-              color="#6b7280"
-            />
-          </div>
-
-          {/* Erro de Vendas */}
-          <div>
-            {filteredData.rows?.length === 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                <p className="text-xs text-yellow-700">⚠️ Nenhum registro encontrado para o período selecionado</p>
-              </div>
-            )}
-            <BarChart
-              data={chartData.erroVendas}
-              xAxisKey="name"
-              yAxisKey="value"
-              title="Erro de Vendas"
-              color="#dc2626"
-            />
-          </div>
-
-          {/* Declinada */}
-          <div>
-            {filteredData.rows?.length === 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
-                <p className="text-xs text-yellow-700">🚫 Nenhum registro encontrado para o período selecionado</p>
-              </div>
-            )}
-            <BarChart
-              data={chartData.declinada}
-              xAxisKey="name"
-              yAxisKey="value"
-              title="Declinada"
-              color="#7c3aed"
-            />
-          </div>
+          {chartConfigs
+            .filter(chart => selectedCharts.includes(chart.id))
+            .map((chart) => {
+              // Mapeia o ID do gráfico para os dados correspondentes
+              const chartDataMap: Record<string, any> = {
+                'atividade-diaria': { data: chartData.atividadeDiaria, color: '#3b82f6' },
+                'nova-proposta': { data: chartData.novaProposta, color: '#10b981' },
+                'pend-assinatura': { data: chartData.pendAssinatura, color: '#f97316' },
+                'em-analise': { data: chartData.emAnalise, color: '#f59e0b' },
+                'pendencia': { data: chartData.pendencia, color: '#ef4444' },
+                'entrevista-medica': { data: chartData.entrevistaMedica, color: '#06b6d4' },
+                'boleto': { data: chartData.boleto, color: '#84cc16' },
+                'implantada': { data: chartData.implantada, color: '#8b5cf6' },
+                'desistiu': { data: chartData.desistiu, color: '#6b7280' },
+                'erro-vendas': { data: chartData.erroVendas, color: '#dc2626' },
+                'declinada': { data: chartData.declinada, color: '#7c3aed' }
+              };
+              
+              const chartInfo = chartDataMap[chart.id];
+              
+              return (
+                <div key={chart.id}>
+                  {filteredData.rows?.length === 0 && (
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                      <p className="text-xs text-yellow-700">📊 Nenhum registro encontrado para o período selecionado</p>
+                    </div>
+                  )}
+                  <BarChart
+                    data={chartInfo.data}
+                    xAxisKey="name"
+                    yAxisKey="value"
+                    title={chart.title}
+                    color={chartInfo.color}
+                  />
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>

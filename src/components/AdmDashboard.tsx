@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BarChart } from './charts/BarChart';
 import { googleSheetsService } from '../services/googleSheetsService';
 import { getDashboardConfig } from '../config/dashboards';
+import { ChartFilter } from './ChartFilter';
 
 interface AdmDashboardProps {
   spreadsheetId: string;
@@ -12,8 +13,31 @@ export const AdmDashboard: React.FC<AdmDashboardProps> = ({ spreadsheetId }) => 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [period, setPeriod] = useState<'hoje' | 'ontem' | 'semana' | 'mes'>('mes');
+  const [selectedCharts, setSelectedCharts] = useState<string[]>([]);
 
   const config = getDashboardConfig('adm');
+
+  // Inicializar todos os gráficos como selecionados
+  useEffect(() => {
+    setSelectedCharts(config.charts.map(chart => chart.id));
+  }, [config.charts]);
+
+  // Funções para controlar a seleção de gráficos
+  const handleChartToggle = (chartId: string) => {
+    setSelectedCharts(prev => 
+      prev.includes(chartId) 
+        ? prev.filter(id => id !== chartId)
+        : [...prev, chartId]
+    );
+  };
+
+  const handleSelectAll = () => {
+    setSelectedCharts(config.charts.map(chart => chart.id));
+  };
+
+  const handleClearAll = () => {
+    setSelectedCharts([]);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -88,56 +112,74 @@ export const AdmDashboard: React.FC<AdmDashboardProps> = ({ spreadsheetId }) => 
             ))}
           </div>
 
+          {/* Filtro de Gráficos */}
+          <ChartFilter
+            charts={config.charts}
+            selectedCharts={selectedCharts}
+            onChartToggle={handleChartToggle}
+            onSelectAll={handleSelectAll}
+            onClearAll={handleClearAll}
+          />
+
           {/* Estatísticas rápidas */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div className="bg-white p-4 rounded-lg shadow-sm border">
-              <div className="text-2xl font-bold text-blue-600">
-                {data.reduce((sum, row) => sum + (parseInt(row.atividade_diaria) || 0), 0)}
-              </div>
-              <div className="text-sm text-gray-600">Atividade Diária</div>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow-sm border">
-              <div className="text-2xl font-bold text-green-600">
-                {data.reduce((sum, row) => sum + (parseInt(row.nova_proposta) || 0), 0)}
-              </div>
-              <div className="text-sm text-gray-600">Nova Proposta</div>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow-sm border">
-              <div className="text-2xl font-bold text-yellow-600">
-                {data.reduce((sum, row) => sum + (parseInt(row.em_analise) || 0), 0)}
-              </div>
-              <div className="text-sm text-gray-600">Em Análise</div>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow-sm border">
-              <div className="text-2xl font-bold text-purple-600">
-                {data.reduce((sum, row) => sum + (parseInt(row.implantada) || 0), 0)}
-              </div>
-              <div className="text-sm text-gray-600">Implantada</div>
-            </div>
+            {config.charts
+              .filter(chart => selectedCharts.includes(chart.id))
+              .map((chart) => {
+                const total = data.reduce((sum, row) => {
+                  const value = parseInt(row[chart.dataKey] || '0');
+                  return sum + (isNaN(value) ? 0 : value);
+                }, 0);
+                
+                const colors = {
+                  'atividade_diaria': 'text-blue-600',
+                  'nova_proposta': 'text-green-600',
+                  'pend_assinatura': 'text-purple-600',
+                  'em_analise': 'text-yellow-600',
+                  'pendencia': 'text-orange-600',
+                  'entrevista_medica': 'text-indigo-600',
+                  'boleto': 'text-pink-600',
+                  'implantada': 'text-emerald-600',
+                  'desistiu': 'text-red-600',
+                  'erro_vendas': 'text-rose-600',
+                  'declinada': 'text-gray-600',
+                };
+                
+                return (
+                  <div key={chart.id} className="bg-white p-4 rounded-lg shadow-sm border">
+                    <div className={`text-2xl font-bold ${colors[chart.dataKey as keyof typeof colors] || 'text-blue-600'}`}>
+                      {total}
+                    </div>
+                    <div className="text-sm text-gray-600">{chart.title}</div>
+                  </div>
+                );
+              })}
           </div>
         </div>
 
         {/* Gráficos */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {config.charts.map((chart) => (
-            <div key={chart.id} className="bg-white p-6 rounded-lg shadow-sm border">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">{chart.title}</h3>
-              <div className="h-64">
-                <BarChart
-                  data={data}
-                  dataKey={chart.dataKey}
-                  xAxisKey={chart.xAxisKey}
-                  yAxisKey={chart.yAxisKey}
-                />
+          {config.charts
+            .filter(chart => selectedCharts.includes(chart.id))
+            .map((chart) => (
+              <div key={chart.id} className="bg-white p-6 rounded-lg shadow-sm border">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">{chart.title}</h3>
+                <div className="h-64">
+                  <BarChart
+                    data={data}
+                    dataKey={chart.dataKey}
+                    xAxisKey={chart.xAxisKey}
+                    yAxisKey={chart.yAxisKey}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
 
         {/* Informações adicionais */}
         <div className="mt-8 text-center text-sm text-gray-500">
           <p>Dados atualizados automaticamente a cada {config.refreshInterval} segundos</p>
-          <p>Total de registros: {data.length}</p>
+          <p>Total de registros: {data.length} | Gráficos visíveis: {selectedCharts.length}/{config.charts.length}</p>
         </div>
       </div>
     </div>
