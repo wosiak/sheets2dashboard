@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Dashboard } from './components/Dashboard';
 import { TVModeToggle } from './components/TVModeToggle';
 import { availableDashboards } from './config/dashboards';
+import clearwaterLogo from './assets/clearwater-logo.jpeg';
 
 // Configuração do React Query
 const queryClient = new QueryClient({
@@ -27,16 +28,23 @@ function App() {
         {/* Header */}
         <div className={`bg-white shadow-sm border-b ${isTVMode ? 'p-4' : 'p-6 mb-6'}`}>
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                📊 Dashboards | Clearwater
+            {/* Espaçador vazio para centralizar */}
+            <div className="w-48"></div>
+            
+            {/* Logo e Título Centralizados */}
+            <div className="flex items-center space-x-4">
+              <img 
+                src={clearwaterLogo} 
+                alt="Clearwater Logo" 
+                className="w-16 h-16 rounded-lg object-cover"
+              />
+              <h1 className="text-4xl font-bold text-gray-900">
+                Dashboards | Clearwater
               </h1>
-              <p className="text-gray-600 mt-1">
-                Conectado ao Google Sheets - Atualização automática
-              </p>
             </div>
             
-            <div className="flex items-center space-x-4">
+            {/* Controles à direita */}
+            <div className="flex items-center space-x-4 w-48 justify-end">
               {/* Seletor de Dashboard */}
               <div className="flex items-center space-x-2">
                 <label className="text-sm font-medium text-gray-700">Dashboard:</label>

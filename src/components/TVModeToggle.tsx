@@ -9,7 +9,7 @@ export const TVModeToggle: React.FC<TVModeToggleProps> = ({ isTVMode, onToggle }
   return (
     <button
       onClick={() => onToggle(!isTVMode)}
-      className={`px-4 py-2 rounded-md shadow-lg transition-colors ${
+      className={`px-4 py-2 rounded-md shadow-lg transition-colors whitespace-nowrap ${
         isTVMode
           ? 'bg-red-500 text-white hover:bg-red-600'
           : 'bg-purple-500 text-white hover:bg-purple-600'
