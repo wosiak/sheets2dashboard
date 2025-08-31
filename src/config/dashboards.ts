@@ -4,7 +4,7 @@ import type { DashboardConfig } from '../types';
 export const dashboardConfigs: Record<string, DashboardConfig> = {
   vendas: {
     spreadsheetId: import.meta.env.VITE_SPREADSHEET_VENDAS_ID || '',
-    sheetName: import.meta.env.VITE_SHEET_VENDAS_NAME || 'AGOSTO2025',
+    sheetName: '2025',
     refreshInterval: 30,
     charts: [
       {
