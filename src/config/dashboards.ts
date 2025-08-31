@@ -3,7 +3,7 @@ import type { DashboardConfig } from '../types';
 // Configurações para diferentes dashboards
 export const dashboardConfigs: Record<string, DashboardConfig> = {
   vendas: {
-    spreadsheetId: import.meta.env.VITE_SPREADSHEET_VENDAS_ID || '',
+    spreadsheetId: '1IwtjjLQRiyqfCADbnCX-jditUecvtlpHT1svy0JN3ls',
     sheetName: '2025',
     refreshInterval: 30,
     charts: [
@@ -27,7 +27,7 @@ export const dashboardConfigs: Record<string, DashboardConfig> = {
   },
   
   adm: {
-    spreadsheetId: import.meta.env.VITE_SPREADSHEET_ADM_ID || '',
+    spreadsheetId: '19eH7lt-HX3XXD3bvh6_oBHrIoS9UME2UR7r74FAJ-oU',
     sheetName: '2025',
     refreshInterval: 60,
     charts: [
