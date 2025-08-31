@@ -23,6 +23,14 @@ export const dashboardConfigs: Record<string, DashboardConfig> = {
         xAxisKey: 'vendedor',
         yAxisKey: 'contratos',
       },
+      {
+        id: 'faturamento-por-vendedor',
+        title: 'Faturamento por Vendedor',
+        type: 'bar',
+        dataKey: 'faturamento',
+        xAxisKey: 'vendedor',
+        yAxisKey: 'faturamento',
+      },
     ],
   },
   

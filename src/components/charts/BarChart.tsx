@@ -7,6 +7,7 @@ interface BarChartProps {
   yAxisKey: string;
   title: string;
   color?: string;
+  format?: 'number' | 'currency';
 }
 
 export const BarChart: React.FC<BarChartProps> = ({ 
@@ -14,13 +15,22 @@ export const BarChart: React.FC<BarChartProps> = ({
   xAxisKey, 
   yAxisKey, 
   title, 
-  color = '#3b82f6' 
+  color = '#3b82f6',
+  format = 'number'
 }) => {
   // Cores para as barras
   const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#84cc16', '#f97316'];
 
-  // Função para formatar valores como números inteiros
-  const formatValue = (value: any) => Math.round(Number(value)).toString();
+  // Função para formatar valores
+  const formatValue = (value: any) => {
+    if (format === 'currency') {
+      return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      }).format(Number(value));
+    }
+    return Math.round(Number(value)).toString();
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-sm border p-6">
@@ -41,7 +51,15 @@ export const BarChart: React.FC<BarChartProps> = ({
             domain={[0, 'dataMax + 1']}
           />
           <Tooltip 
-            formatter={(value: any) => [Math.round(Number(value)), '']}
+            formatter={(value: any) => {
+              if (format === 'currency') {
+                return [new Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL'
+                }).format(Number(value)), ''];
+              }
+              return [Math.round(Number(value)), ''];
+            }}
             labelStyle={{ color: '#374151' }}
           />
           <Bar dataKey={yAxisKey} radius={[4, 4, 0, 0]}>

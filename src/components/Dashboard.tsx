@@ -81,7 +81,7 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
     const metrics: Record<string, number> = {};
     
     // Soma colunas A-H
-    const numericColumns = ['LEADS', 'COTAÇÃO DIÁRIA', 'LIGAÇÃO DIÁRIA', 'FOLLOW UP', 'CONTRATOS - DIÁRIO'];
+    const numericColumns = ['LEADS', 'COTAÇÃO DIÁRIA', 'LIGAÇÃO DIÁRIA', 'FOLLOW UP', 'CONTRATOS - DIÁRIO', 'FATURAMENTO'];
     
     numericColumns.forEach(column => {
       const total = filteredData.reduce((sum, row) => {
@@ -138,6 +138,11 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
         value: vendor.contratos
       })));
       
+      data.faturamentoPorVendedor = sortByValue(vendorMetrics.map(vendor => ({
+        name: vendor.vendedor,
+        value: vendor.faturamento
+      })));
+      
       console.log('✅ Gráficos com dados reais gerados');
     } else {
       // Se não há dados filtrados, mostra gráficos vazios mas com estrutura
@@ -165,6 +170,11 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
         }));
         
         data.contratosPorVendedor = vendorList.map(vendor => ({
+          name: vendor,
+          value: 0
+        }));
+        
+        data.faturamentoPorVendedor = vendorList.map(vendor => ({
           name: vendor,
           value: 0
         }));
@@ -243,7 +253,7 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
               key={key}
               title={key === 'cotacao_diaria' ? 'COTAÇÃO DIÁRIA' : key.replace(/_/g, ' ').toUpperCase()}
               value={value}
-              format={key.includes('leads') || key.includes('cotacao') || key.includes('follow') || key.includes('contratos') ? 'number' : 'default'}
+              format={key.includes('faturamento') ? 'currency' : key.includes('leads') || key.includes('cotacao') || key.includes('follow') || key.includes('contratos') ? 'number' : 'default'}
             />
           ))}
         </div>
@@ -347,6 +357,34 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
               <div className="text-center text-gray-500">
                 <div className="text-4xl mb-2">📋</div>
                 <p>Nenhum dado de contratos disponível</p>
+                <p className="text-sm">para o período selecionado</p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 gap-6">
+          {chartData.faturamentoPorVendedor && chartData.faturamentoPorVendedor.length > 0 ? (
+            <div>
+              {filteredData.length === 0 && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                  <p className="text-xs text-yellow-700">💰 Nenhum registro encontrado para o período selecionado</p>
+                </div>
+              )}
+              <BarChart
+                data={chartData.faturamentoPorVendedor}
+                xAxisKey="name"
+                yAxisKey="value"
+                title="Faturamento por Vendedor"
+                color="#ef4444"
+                format="currency"
+              />
+            </div>
+          ) : (
+            <div className="bg-white rounded-lg shadow-sm border p-6 flex items-center justify-center h-64">
+              <div className="text-center text-gray-500">
+                <div className="text-4xl mb-2">💰</div>
+                <p>Nenhum dado de faturamento disponível</p>
                 <p className="text-sm">para o período selecionado</p>
               </div>
             </div>

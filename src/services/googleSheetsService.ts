@@ -12,7 +12,7 @@ export class GoogleSheetsService {
 
   async getSheetData(spreadsheetId: string, sheetName: string, range?: string): Promise<any[][]> {
     try {
-      const rangeParam = range || `${sheetName}!A:H`; // Lê até a coluna H (CONTRATOS - DIÁRIO)
+      const rangeParam = range || `${sheetName}!A:I`; // Lê até a coluna I (FATURAMENTO)
       console.log('📊 Tentando buscar dados da planilha:', { spreadsheetId, sheetName, range: rangeParam });
       
       const url = `${GOOGLE_SHEETS_API_BASE}/${spreadsheetId}/values/${rangeParam}?key=${this.apiKey}`;
@@ -69,8 +69,33 @@ export class GoogleSheetsService {
           }
           
           // Converte valores numéricos
-          if (typeof value === 'string' && value.trim() && !isNaN(Number(value))) {
-            rowData[header.trim()] = Number(value);
+          if (typeof value === 'string' && value.trim()) {
+            // Trata valores monetários brasileiros (vírgula como separador decimal)
+            if (header === 'FATURAMENTO') {
+              console.log(`💰 Valor FATURAMENTO encontrado: "${value}"`);
+              // Tenta converter diretamente primeiro
+              if (!isNaN(Number(value))) {
+                rowData[header.trim()] = Number(value);
+                console.log(`💰 Conversão direta: ${value} -> ${Number(value)}`);
+              } else if (value.includes(',')) {
+                // Se tem vírgula, tenta converter formato brasileiro
+                const cleanValue = value.replace(/\./g, '').replace(',', '.');
+                if (!isNaN(Number(cleanValue))) {
+                  rowData[header.trim()] = Number(cleanValue);
+                  console.log(`💰 Conversão brasileira: ${value} -> ${Number(cleanValue)}`);
+                } else {
+                  rowData[header.trim()] = 0;
+                  console.log(`💰 Conversão falhou, definindo como 0: ${value}`);
+                }
+              } else {
+                rowData[header.trim()] = 0;
+                console.log(`💰 Valor não numérico, definindo como 0: ${value}`);
+              }
+            } else if (!isNaN(Number(value))) {
+              rowData[header.trim()] = Number(value);
+            } else {
+              rowData[header.trim()] = value;
+            }
           } else {
             rowData[header.trim()] = value;
           }
@@ -114,6 +139,12 @@ export class GoogleSheetsService {
     console.log('📅 Filtrando dados por período:', period, 'Data de hoje (Brasília):', todayStr);
     console.log('📊 Total de registros para filtrar:', data.length);
     
+    // Log das primeiras datas para debug
+    console.log('📅 Primeiras 5 datas encontradas:');
+    data.slice(0, 5).forEach((row, index) => {
+      console.log(`  ${index + 1}. DATA: "${row.DATA}"`);
+    });
+    
     const filteredData = data.filter(row => {
       if (!row.DATA) return false;
       
@@ -138,7 +169,11 @@ export class GoogleSheetsService {
           return rowDate >= weekAgo;
           
         case 'mes':
-          return rowDate.getMonth() === brasiliaTime.getMonth() && rowDate.getFullYear() === brasiliaTime.getFullYear();
+          const currentMonth = brasiliaTime.getMonth();
+          const currentYear = brasiliaTime.getFullYear();
+          const isInCurrentMonth = rowDate.getMonth() === currentMonth && rowDate.getFullYear() === currentYear;
+          console.log(`📅 Verificando mês: ${rowDateStr} (mês ${rowDate.getMonth()}, ano ${rowDate.getFullYear()}) vs atual (mês ${currentMonth}, ano ${currentYear}) = ${isInCurrentMonth}`);
+          return isInCurrentMonth;
           
         default:
           return true;
@@ -181,6 +216,17 @@ export class GoogleSheetsService {
     console.log('🔍 Iniciando cálculo de métricas por vendedor...');
     console.log('📊 Total de registros para processar:', data.length);
     
+    // Log específico para debug da coluna FATURAMENTO
+    console.log('💰 Debug coluna FATURAMENTO:');
+    data.slice(0, 5).forEach((row, index) => {
+      console.log(`📋 Linha ${index + 1}:`, {
+        vendedor: row.VENDEDOR,
+        faturamento: row.FATURAMENTO,
+        faturamentoType: typeof row.FATURAMENTO,
+        faturamentoRaw: row.FATURAMENTO
+      });
+    });
+    
     const vendorMetrics: Record<string, any> = {};
     
     data.forEach((row, index) => {
@@ -197,7 +243,8 @@ export class GoogleSheetsService {
           cotacao_diaria: 0,
           ligacao_diaria: 0,
           follow_up: 0,
-          contratos: 0
+          contratos: 0,
+          faturamento: 0
         };
       }
       
@@ -207,12 +254,19 @@ export class GoogleSheetsService {
       const ligacaoDiaria = Number(row['LIGAÇÃO DIÁRIA']) || 0;
       const followUp = Number(row['FOLLOW UP']) || 0;
       const contratos = Number(row['CONTRATOS - DIÁRIO']) || 0;
+      const faturamento = Number(row.FATURAMENTO) || 0;
+      
+      // Log específico para faturamento
+      if (faturamento > 0) {
+        console.log(`💰 Faturamento encontrado para ${vendor}: R$ ${faturamento.toFixed(2)}`);
+      }
       
       vendorMetrics[vendor].leads += leads;
       vendorMetrics[vendor].cotacao_diaria += cotacaoDiaria;
       vendorMetrics[vendor].ligacao_diaria += ligacaoDiaria;
       vendorMetrics[vendor].follow_up += followUp;
       vendorMetrics[vendor].contratos += contratos;
+      vendorMetrics[vendor].faturamento += faturamento;
       
       // Log dos primeiros registros para debug
       if (index < 3) {
@@ -222,7 +276,8 @@ export class GoogleSheetsService {
           cotacaoDiaria,
           ligacaoDiaria,
           followUp,
-          contratos
+          contratos,
+          faturamento
         });
       }
     });
