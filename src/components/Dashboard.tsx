@@ -9,6 +9,7 @@ import { getMockDataForDashboard } from '../data/mockData';
 import RhDashboard from './RhDashboard';
 import CustomSuccessDashboard from './CustomSuccessDashboard';
 import SuporteDashboard from './SuporteDashboard';
+import RetencaoDashboard from './RetencaoDashboard';
 
 interface DashboardProps {
   dashboardName: string;
@@ -736,6 +737,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
   if (dashboardName === 'suporte') {
     console.log('📊 Renderizando dashboard Suporte');
     return <SuporteDashboard />;
+  }
+
+  if (dashboardName === 'retencao') {
+    console.log('📊 Renderizando dashboard Retenção');
+    return <RetencaoDashboard />;
   }
   
   if (dashboardName === 'vendas') {

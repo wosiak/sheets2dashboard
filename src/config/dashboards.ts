@@ -130,26 +130,14 @@ export const dashboardConfigs: Record<string, DashboardConfig> = {
   },
   
   retencao: {
-    spreadsheetId: import.meta.env.VITE_SPREADSHEET_RETENCAO_ID || '',
-    sheetName: import.meta.env.VITE_SHEET_RETENCAO_NAME || 'Sheet1',
-    refreshInterval: 90,
+    spreadsheetId: '1GUkqFhUTVLFVNiYIp3aBnAKerjZF26CkIwKwSlfs4Xw',
+    sheetName: '2025',
+    refreshInterval: 30,
     charts: [
-      {
-        id: 'retencao-por-plano',
-        title: 'Retenção por Plano',
-        type: 'bar',
-        dataKey: 'retencao',
-        xAxisKey: 'plano',
-        yAxisKey: 'retencao',
-      },
-      {
-        id: 'churn-por-mes',
-        title: 'Churn por Mês',
-        type: 'line',
-        dataKey: 'churn',
-        xAxisKey: 'mes',
-        yAxisKey: 'churn',
-      },
+      { id: 'novo-contato-por-dia', title: 'Novo Contato por Dia', type: 'bar', dataKey: 'novoContato', xAxisKey: 'data', yAxisKey: 'novoContato' },
+      { id: 'fechamento-por-dia', title: 'Fechamento por Dia', type: 'bar', dataKey: 'fechamento', xAxisKey: 'data', yAxisKey: 'fechamento' },
+      { id: 'sem-interesse-por-dia', title: 'Sem Interesse por Dia', type: 'bar', dataKey: 'semInteresse', xAxisKey: 'data', yAxisKey: 'semInteresse' },
+      { id: 'reativado-por-dia', title: 'Reativado por Dia', type: 'bar', dataKey: 'reativado', xAxisKey: 'data', yAxisKey: 'reativado' },
     ],
   },
   
