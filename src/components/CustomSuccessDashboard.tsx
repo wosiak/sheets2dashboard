@@ -203,6 +203,7 @@ const CustomSuccessDashboard = () => {
           onVendorChange={setSelectedVendor}
           vendors={[]}
           totalRecords={filteredData.length}
+          showVendorFilter={false}
         />
 
         {/* Métricas */}

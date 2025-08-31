@@ -188,6 +188,7 @@ const RhDashboard: React.FC = () => {
           onVendorChange={setSelectedVendor}
           vendors={[]}
           totalRecords={filteredData.length}
+          showVendorFilter={false}
         />
 
         {/* Métricas */}

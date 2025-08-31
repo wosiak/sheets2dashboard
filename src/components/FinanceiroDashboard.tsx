@@ -4,20 +4,19 @@ import { GoogleSheetsService } from '../services/googleSheetsService';
 import { FilterBar } from './FilterBar';
 import { MetricCard } from './MetricCard';
 
-interface SuporteData {
+interface FinanceiroData {
   DATA: string;
-  'ATIVIDADE DIÁRIA': string;
-  'NOVA SOLICITAÇÃO': string;
-  'NORMAL': string;
-  'URGENTE': string;
-  'CONCLUÍDO': string;
+  'NOVA PROPOSTA': string;
+  'STATUS PROPOSTA': string;
+  'NOTA FISCAL': string;
+  'ESTORNO': string;
 }
 
-const SuporteDashboard = () => {
-  console.log('🚀 SuporteDashboard - Componente inicializado');
+const FinanceiroDashboard = () => {
+  console.log('🚀 FinanceiroDashboard - Componente inicializado');
   
-  const [data, setData] = useState<SuporteData[]>([]);
-  const [filteredData, setFilteredData] = useState<SuporteData[]>([]);
+  const [data, setData] = useState<FinanceiroData[]>([]);
+  const [filteredData, setFilteredData] = useState<FinanceiroData[]>([]);
   const [selectedPeriod, setSelectedPeriod] = useState<'hoje' | 'ontem' | 'semana' | 'mes'>('ontem');
   const [selectedVendor, setSelectedVendor] = useState<string>('');
   const [loading, setLoading] = useState(true);
@@ -26,25 +25,25 @@ const SuporteDashboard = () => {
   const googleSheetsService = new GoogleSheetsService(import.meta.env.VITE_GOOGLE_SHEETS_API_KEY);
 
   useEffect(() => {
-    console.log('🔄 SuporteDashboard - useEffect inicial executado');
+    console.log('🔄 FinanceiroDashboard - useEffect inicial executado');
     fetchData();
   }, []);
 
   useEffect(() => {
     if (data.length > 0) {
-      console.log('🔄 SuporteDashboard - useEffect de filtro executado');
+      console.log('🔄 FinanceiroDashboard - useEffect de filtro executado');
       filterData();
     }
   }, [data, selectedPeriod]);
 
   const fetchData = async () => {
     try {
-      console.log('📊 Buscando dados da planilha Suporte...');
+      console.log('📊 Buscando dados da planilha Financeiro...');
       setLoading(true);
       setError(null);
 
       const response = await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/19TdHUfkCIXzm4niGvC3JT95JRmUPz9-0sF7iCmBpGZ8/values/2025!A:F?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
+        `https://sheets.googleapis.com/v4/spreadsheets/1yNtfhoSM_RlrDfH8OCCwkzwvsz7ZBmPiPS1RWvWa8eE/values/2025!A:H?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
       );
 
       if (!response.ok) {
@@ -52,7 +51,7 @@ const SuporteDashboard = () => {
       }
 
       const result = await response.json();
-      console.log('✅ Dados da planilha Suporte carregados com sucesso');
+      console.log('✅ Dados da planilha Financeiro carregados com sucesso');
 
       if (!result.values || result.values.length === 0) {
         setData([]);
@@ -63,18 +62,18 @@ const SuporteDashboard = () => {
       const headers = result.values[0];
       const rows = result.values.slice(1);
 
-      const parsedData: SuporteData[] = rows.map((row: any[]) => {
+      const parsedData: FinanceiroData[] = rows.map((row: any[]) => {
         const obj: any = {};
         headers.forEach((header: string, index: number) => {
           obj[header] = row[index] || '';
         });
-        return obj as SuporteData;
+        return obj as FinanceiroData;
       });
 
-      console.log('📊 Dados Suporte processados:', parsedData.length, 'registros');
+      console.log('📊 Dados Financeiro processados:', parsedData.length, 'registros');
       setData(parsedData);
     } catch (err) {
-      console.error('❌ Erro ao buscar dados Suporte:', err);
+      console.error('❌ Erro ao buscar dados Financeiro:', err);
       setError(err instanceof Error ? err.message : 'Erro desconhecido');
     } finally {
       setLoading(false);
@@ -93,54 +92,54 @@ const SuporteDashboard = () => {
   const calculateMetrics = () => {
     if (filteredData.length === 0) {
       return {
-        atividadeDiaria: 0,
-        novaSolicitacao: 0,
-        normal: 0,
-        concluido: 0,
+        novaProposta: 0,
+        statusProposta: 0,
+        notaFiscal: 0,
+        estorno: 0,
       };
     }
 
-    const atividadeDiaria = filteredData.reduce((sum, row) => {
-      const value = parseInt(row['ATIVIDADE DIÁRIA'] || '0');
+    const novaProposta = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['NOVA PROPOSTA'] || '0');
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
-    const novaSolicitacao = filteredData.reduce((sum, row) => {
-      const value = parseInt(row['NOVA SOLICITAÇÃO'] || '0');
+    const statusProposta = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['STATUS PROPOSTA'] || '0');
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
-    const normal = filteredData.reduce((sum, row) => {
-      const value = parseInt(row['NORMAL'] || '0');
+    const notaFiscal = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['NOTA FISCAL'] || '0');
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
-    const concluido = filteredData.reduce((sum, row) => {
-      const value = parseInt(row['CONCLUÍDO'] || '0');
+    const estorno = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['ESTORNO'] || '0');
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
     return {
-      atividadeDiaria,
-      novaSolicitacao,
-      normal,
-      concluido,
+      novaProposta,
+      statusProposta,
+      notaFiscal,
+      estorno,
     };
   };
 
   const prepareChartData = () => {
     if (filteredData.length === 0) {
       return [
-        { data: 'Sem dados', atividadeDiaria: 0, novaSolicitacao: 0, normal: 0, concluido: 0 }
+        { data: 'Sem dados', novaProposta: 0, statusProposta: 0, notaFiscal: 0, estorno: 0 }
       ];
     }
 
     return filteredData.map(row => ({
       data: row.DATA,
-      atividadeDiaria: parseInt(row['ATIVIDADE DIÁRIA'] || '0') || 0,
-      novaSolicitacao: parseInt(row['NOVA SOLICITAÇÃO'] || '0') || 0,
-      normal: parseInt(row['NORMAL'] || '0') || 0,
-      concluido: parseInt(row['CONCLUÍDO'] || '0') || 0,
+      novaProposta: parseInt(row['NOVA PROPOSTA'] || '0') || 0,
+      statusProposta: parseInt(row['STATUS PROPOSTA'] || '0') || 0,
+      notaFiscal: parseInt(row['NOTA FISCAL'] || '0') || 0,
+      estorno: parseInt(row['ESTORNO'] || '0') || 0,
     }));
   };
 
@@ -153,7 +152,7 @@ const SuporteDashboard = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Carregando dados Suporte...</p>
+            <p className="mt-4 text-gray-600">Carregando dados Financeiro...</p>
           </div>
         </div>
       </div>
@@ -183,8 +182,8 @@ const SuporteDashboard = () => {
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Suporte</h1>
-          <p className="text-gray-600">Dashboard de Atendimento e Solicitações</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Financeiro</h1>
+          <p className="text-gray-600">Dashboard de Propostas, Faturas e Estornos</p>
         </div>
 
         <FilterBar
@@ -200,28 +199,28 @@ const SuporteDashboard = () => {
         {/* Métricas */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <MetricCard
-            title="ATIVIDADE DIÁRIA"
-            value={metrics.atividadeDiaria}
+            title="NOVA PROPOSTA"
+            value={metrics.novaProposta}
           />
           <MetricCard
-            title="NOVA SOLICITAÇÃO"
-            value={metrics.novaSolicitacao}
+            title="STATUS PROPOSTA"
+            value={metrics.statusProposta}
           />
           <MetricCard
-            title="NORMAL"
-            value={metrics.normal}
+            title="NOTA FISCAL"
+            value={metrics.notaFiscal}
           />
           <MetricCard
-            title="CONCLUÍDO"
-            value={metrics.concluido}
+            title="ESTORNO"
+            value={metrics.estorno}
           />
         </div>
 
         {/* Gráficos */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Atividade Diária */}
+          {/* Nova Proposta */}
           <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Atividade Diária por Dia</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Nova Proposta por Dia</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -237,17 +236,17 @@ const SuporteDashboard = () => {
                   tickFormatter={(value) => Math.round(value).toString()}
                 />
                 <Tooltip 
-                  formatter={(value: any) => [Math.round(value), 'Atividade Diária']}
+                  formatter={(value: any) => [Math.round(value), 'Nova Proposta']}
                   labelFormatter={(label) => `Data: ${label}`}
                 />
-                <Bar dataKey="atividadeDiaria" fill="#3B82F6" />
+                <Bar dataKey="novaProposta" fill="#3B82F6" />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
-          {/* Nova Solicitação */}
+          {/* Status Proposta */}
           <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Nova Solicitação por Dia</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Status Proposta por Dia</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -263,17 +262,17 @@ const SuporteDashboard = () => {
                   tickFormatter={(value) => Math.round(value).toString()}
                 />
                 <Tooltip 
-                  formatter={(value: any) => [Math.round(value), 'Nova Solicitação']}
+                  formatter={(value: any) => [Math.round(value), 'Status Proposta']}
                   labelFormatter={(label) => `Data: ${label}`}
                 />
-                <Bar dataKey="novaSolicitacao" fill="#10B981" />
+                <Bar dataKey="statusProposta" fill="#10B981" />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
-          {/* Normal */}
+          {/* Nota Fiscal */}
           <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Normal por Dia</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Nota Fiscal por Dia</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -289,17 +288,17 @@ const SuporteDashboard = () => {
                   tickFormatter={(value) => Math.round(value).toString()}
                 />
                 <Tooltip 
-                  formatter={(value: any) => [Math.round(value), 'Normal']}
+                  formatter={(value: any) => [Math.round(value), 'Nota Fiscal']}
                   labelFormatter={(label) => `Data: ${label}`}
                 />
-                <Bar dataKey="normal" fill="#F59E0B" />
+                <Bar dataKey="notaFiscal" fill="#F59E0B" />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
-          {/* Concluído */}
+          {/* Estorno */}
           <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Concluído por Dia</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Estorno por Dia</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -315,10 +314,10 @@ const SuporteDashboard = () => {
                   tickFormatter={(value) => Math.round(value).toString()}
                 />
                 <Tooltip 
-                  formatter={(value: any) => [Math.round(value), 'Concluído']}
+                  formatter={(value: any) => [Math.round(value), 'Estorno']}
                   labelFormatter={(label) => `Data: ${label}`}
                 />
-                <Bar dataKey="concluido" fill="#8B5CF6" />
+                <Bar dataKey="estorno" fill="#EF4444" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -328,5 +327,4 @@ const SuporteDashboard = () => {
   );
 };
 
-export default SuporteDashboard;
-
+export default FinanceiroDashboard;

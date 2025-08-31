@@ -193,6 +193,7 @@ const RetencaoDashboard = () => {
           onVendorChange={setSelectedVendor}
           vendors={[]}
           totalRecords={filteredData.length}
+          showVendorFilter={false}
         />
 
         {/* Métricas */}

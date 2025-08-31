@@ -142,26 +142,14 @@ export const dashboardConfigs: Record<string, DashboardConfig> = {
   },
   
   financeiro: {
-    spreadsheetId: import.meta.env.VITE_SPREADSHEET_FINANCEIRO_ID || '',
-    sheetName: import.meta.env.VITE_SHEET_FINANCEIRO_NAME || 'Sheet1',
-    refreshInterval: 60,
+    spreadsheetId: '1yNtfhoSM_RlrDfH8OCCwkzwvsz7ZBmPiPS1RWvWa8eE',
+    sheetName: '2025',
+    refreshInterval: 30,
     charts: [
-      {
-        id: 'receita-mensal',
-        title: 'Receita Mensal',
-        type: 'line',
-        dataKey: 'receita',
-        xAxisKey: 'mes',
-        yAxisKey: 'receita',
-      },
-      {
-        id: 'custos-vs-receita',
-        title: 'Custos vs Receita',
-        type: 'bar',
-        dataKey: 'valor',
-        xAxisKey: 'categoria',
-        yAxisKey: 'valor',
-      },
+      { id: 'nova-proposta-por-dia', title: 'Nova Proposta por Dia', type: 'bar', dataKey: 'novaProposta', xAxisKey: 'data', yAxisKey: 'novaProposta' },
+      { id: 'status-proposta-por-dia', title: 'Status Proposta por Dia', type: 'bar', dataKey: 'statusProposta', xAxisKey: 'data', yAxisKey: 'statusProposta' },
+      { id: 'nota-fiscal-por-dia', title: 'Nota Fiscal por Dia', type: 'bar', dataKey: 'notaFiscal', xAxisKey: 'data', yAxisKey: 'notaFiscal' },
+      { id: 'estorno-por-dia', title: 'Estorno por Dia', type: 'bar', dataKey: 'estorno', xAxisKey: 'data', yAxisKey: 'estorno' },
     ],
   },
 };

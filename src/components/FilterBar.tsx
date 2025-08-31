@@ -7,6 +7,7 @@ interface FilterBarProps {
   onVendorChange: (vendor: string) => void;
   vendors: string[];
   totalRecords: number;
+  showVendorFilter?: boolean;
 }
 
 export const FilterBar: React.FC<FilterBarProps> = ({
@@ -15,7 +16,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   selectedVendor,
   onVendorChange,
   vendors,
-  totalRecords
+  totalRecords,
+  showVendorFilter = true,
 }) => {
   return (
     <div className="bg-white rounded-lg shadow-sm border p-6">
@@ -37,23 +39,24 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             </select>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Vendedor
-            </label>
-            <select
-              value={selectedVendor}
-              onChange={(e) => onVendorChange(e.target.value)}
-              className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">Todos os Vendedores</option>
-              {vendors.map((vendor) => (
-                <option key={vendor} value={vendor}>
-                  {vendor}
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* Filtro de Vendedor */}
+          {showVendorFilter && (
+            <div className="flex flex-col">
+              <label className="text-sm font-medium text-gray-700 mb-1">Vendedor</label>
+              <select
+                value={selectedVendor}
+                onChange={(e) => onVendorChange(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="">Todos os Vendedores</option>
+                {vendors.map((vendor) => (
+                  <option key={vendor} value={vendor}>
+                    {vendor}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
         </div>
 
         <div className="text-right">

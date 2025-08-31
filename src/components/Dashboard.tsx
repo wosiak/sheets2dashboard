@@ -10,6 +10,7 @@ import RhDashboard from './RhDashboard';
 import CustomSuccessDashboard from './CustomSuccessDashboard';
 import SuporteDashboard from './SuporteDashboard';
 import RetencaoDashboard from './RetencaoDashboard';
+import FinanceiroDashboard from './FinanceiroDashboard';
 
 interface DashboardProps {
   dashboardName: string;
@@ -742,6 +743,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
   if (dashboardName === 'retencao') {
     console.log('📊 Renderizando dashboard Retenção');
     return <RetencaoDashboard />;
+  }
+
+  if (dashboardName === 'financeiro') {
+    console.log('📊 Renderizando dashboard Financeiro');
+    return <FinanceiroDashboard />;
   }
   
   if (dashboardName === 'vendas') {
