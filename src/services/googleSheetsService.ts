@@ -127,7 +127,7 @@ export class GoogleSheetsService {
   }
 
   // Função para filtrar dados por período
-  filterDataByPeriod(data: any[], period: 'hoje' | 'ontem' | 'semana' | 'mes'): any[] {
+  filterDataByPeriod(data: any[], period: 'hoje' | 'ontem' | 'semana' | 'mes' | 'custom', customMonth?: string, customYear?: string): any[] {
     if (!data.length) return [];
     
     // Usa fuso horário de Brasília - funciona independentemente do dia
@@ -174,6 +174,14 @@ export class GoogleSheetsService {
           const isInCurrentMonth = rowDate.getMonth() === currentMonth && rowDate.getFullYear() === currentYear;
           console.log(`📅 Verificando mês: ${rowDateStr} (mês ${rowDate.getMonth()}, ano ${rowDate.getFullYear()}) vs atual (mês ${currentMonth}, ano ${currentYear}) = ${isInCurrentMonth}`);
           return isInCurrentMonth;
+          
+        case 'custom':
+          if (!customMonth || !customYear) return false;
+          const targetMonth = parseInt(customMonth) - 1; // Mês começa em 0
+          const targetYear = parseInt(customYear);
+          const isInCustomMonth = rowDate.getMonth() === targetMonth && rowDate.getFullYear() === targetYear;
+          console.log(`📅 Verificando mês customizado: ${rowDateStr} (mês ${rowDate.getMonth()}, ano ${rowDate.getFullYear()}) vs selecionado (mês ${targetMonth}, ano ${targetYear}) = ${isInCustomMonth}`);
+          return isInCustomMonth;
           
         default:
           return true;

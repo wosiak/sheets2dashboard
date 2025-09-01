@@ -19,8 +19,10 @@ interface DashboardProps {
 
 // Componente separado para dashboard de vendas
 const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
-  const [selectedPeriod, setSelectedPeriod] = React.useState<'hoje' | 'ontem' | 'semana' | 'mes'>('ontem');
+  const [selectedPeriod, setSelectedPeriod] = React.useState<'hoje' | 'ontem' | 'semana' | 'mes' | 'custom'>('ontem');
   const [selectedVendor, setSelectedVendor] = React.useState<string>('');
+  const [selectedMonth, setSelectedMonth] = React.useState<string>('');
+  const [selectedYear, setSelectedYear] = React.useState<string>('');
 
   const hasApiKey = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY && import.meta.env.VITE_GOOGLE_SHEETS_API_KEY !== 'your_google_sheets_api_key_here';
   const googleSheetsService = new GoogleSheetsService(import.meta.env.VITE_GOOGLE_SHEETS_API_KEY || '');
@@ -60,7 +62,12 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
     if (!rawData || !rawData.length) return [];
     
     console.log('📅 Aplicando filtro de período:', selectedPeriod);
-    const periodFiltered = googleSheetsService.filterDataByPeriod(rawData, selectedPeriod);
+    const periodFiltered = googleSheetsService.filterDataByPeriod(
+      rawData, 
+      selectedPeriod, 
+      selectedPeriod === 'custom' ? selectedMonth : undefined,
+      selectedPeriod === 'custom' ? selectedYear : undefined
+    );
     console.log('📊 Dados filtrados por período:', { period: selectedPeriod, count: periodFiltered.length });
     
     // Filtra por vendedor se selecionado
@@ -71,7 +78,7 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
     }
     
     return periodFiltered;
-  }, [rawData, selectedPeriod, selectedVendor]);
+  }, [rawData, selectedPeriod, selectedVendor, selectedMonth, selectedYear]);
 
   // Calcula métricas dinâmicas
   const metrics = React.useMemo(() => {
@@ -245,6 +252,10 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
           onVendorChange={setSelectedVendor}
           vendors={vendors}
           totalRecords={filteredData.length}
+          selectedMonth={selectedMonth}
+          onMonthChange={setSelectedMonth}
+          selectedYear={selectedYear}
+          onYearChange={setSelectedYear}
         />
 
         {/* Métricas */}
@@ -398,8 +409,10 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
 
 // Componente separado para dashboard de ADM
 const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
-  const [selectedPeriod, setSelectedPeriod] = React.useState<'hoje' | 'ontem' | 'semana' | 'mes'>('ontem');
+  const [selectedPeriod, setSelectedPeriod] = React.useState<'hoje' | 'ontem' | 'semana' | 'mes' | 'custom'>('ontem');
   const [selectedCharts, setSelectedCharts] = React.useState<string[]>([]);
+  const [selectedMonth, setSelectedMonth] = React.useState<string>('');
+  const [selectedYear, setSelectedYear] = React.useState<string>('');
   
   const hasApiKey = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY && import.meta.env.VITE_GOOGLE_SHEETS_API_KEY !== 'your_google_sheets_api_key_here';
   
@@ -497,6 +510,11 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
         case 'mes':
           return rowDateObj.getMonth() === brasiliaTime.getMonth() && 
                  rowDateObj.getFullYear() === brasiliaTime.getFullYear();
+        case 'custom':
+          if (!selectedMonth || !selectedYear) return false;
+          const targetMonth = parseInt(selectedMonth) - 1; // Mês começa em 0
+          const targetYear = parseInt(selectedYear);
+          return rowDateObj.getMonth() === targetMonth && rowDateObj.getFullYear() === targetYear;
         default:
           return true;
       }
@@ -504,7 +522,7 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
     
     console.log('📅 Dados ADM filtrados por período:', { period: selectedPeriod, count: filteredRows.length });
     return { headers, rows: filteredRows };
-  }, [rawData, selectedPeriod]);
+  }, [rawData, selectedPeriod, selectedMonth, selectedYear]);
 
   // Calcula métricas
   const metrics = React.useMemo(() => {
@@ -793,15 +811,26 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
                 </label>
                 <select
                   value={selectedPeriod}
-                  onChange={(e) => setSelectedPeriod(e.target.value as 'hoje' | 'ontem' | 'semana' | 'mes')}
+                  onChange={(e) => setSelectedPeriod(e.target.value as 'hoje' | 'ontem' | 'semana' | 'mes' | 'custom')}
                   className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="hoje">Hoje</option>
                   <option value="ontem">Ontem</option>
                   <option value="semana">Última Semana</option>
-                  <option value="mes">Mês</option>
+                  <option value="mes">Mês Atual</option>
+                  <option value="custom">Mês Específico</option>
                 </select>
               </div>
+              
+              {/* Filtro de Mês Específico */}
+              {selectedPeriod === 'custom' && (
+                <MonthFilter
+                  selectedMonth={selectedMonth}
+                  onMonthChange={setSelectedMonth}
+                  selectedYear={selectedYear}
+                  onYearChange={setSelectedYear}
+                />
+              )}
               
               {/* Filtro de Gráficos */}
               <div>

@@ -1,13 +1,19 @@
 import React from 'react';
+import { MonthFilter } from './MonthFilter';
 
 interface FilterBarProps {
-  selectedPeriod: 'hoje' | 'ontem' | 'semana' | 'mes';
-  onPeriodChange: (period: 'hoje' | 'ontem' | 'semana' | 'mes') => void;
+  selectedPeriod: 'hoje' | 'ontem' | 'semana' | 'mes' | 'custom';
+  onPeriodChange: (period: 'hoje' | 'ontem' | 'semana' | 'mes' | 'custom') => void;
   selectedVendor: string;
   onVendorChange: (vendor: string) => void;
   vendors: string[];
   totalRecords: number;
   showVendorFilter?: boolean;
+  // Novos props para filtro de mês customizado
+  selectedMonth?: string;
+  onMonthChange?: (month: string) => void;
+  selectedYear?: string;
+  onYearChange?: (year: string) => void;
 }
 
 export const FilterBar: React.FC<FilterBarProps> = ({
@@ -18,6 +24,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   vendors,
   totalRecords,
   showVendorFilter = true,
+  selectedMonth = '',
+  onMonthChange = () => {},
+  selectedYear = '',
+  onYearChange = () => {},
 }) => {
   return (
     <div className="bg-white rounded-lg shadow-sm border p-6">
@@ -29,15 +39,26 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             </label>
             <select
               value={selectedPeriod}
-              onChange={(e) => onPeriodChange(e.target.value as 'hoje' | 'ontem' | 'semana' | 'mes')}
+              onChange={(e) => onPeriodChange(e.target.value as 'hoje' | 'ontem' | 'semana' | 'mes' | 'custom')}
               className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="hoje">Hoje</option>
               <option value="ontem">Ontem</option>
               <option value="semana">Última Semana</option>
-              <option value="mes">Mês</option>
+              <option value="mes">Mês Atual</option>
+              <option value="custom">Mês Específico</option>
             </select>
           </div>
+
+          {/* Filtro de Mês Específico */}
+          {selectedPeriod === 'custom' && (
+            <MonthFilter
+              selectedMonth={selectedMonth}
+              onMonthChange={onMonthChange}
+              selectedYear={selectedYear}
+              onYearChange={onYearChange}
+            />
+          )}
 
           {/* Filtro de Vendedor */}
           {showVendorFilter && (
