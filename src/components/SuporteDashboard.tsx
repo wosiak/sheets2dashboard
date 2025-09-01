@@ -18,8 +18,10 @@ const SuporteDashboard = () => {
   
   const [data, setData] = useState<SuporteData[]>([]);
   const [filteredData, setFilteredData] = useState<SuporteData[]>([]);
-  const [selectedPeriod, setSelectedPeriod] = useState<'hoje' | 'ontem' | 'semana' | 'mes'>('ontem');
+  const [selectedPeriod, setSelectedPeriod] = useState<'hoje' | 'ontem' | 'semana' | 'mes' | 'custom'>('ontem');
   const [selectedVendor, setSelectedVendor] = useState<string>('');
+  const [selectedMonth, setSelectedMonth] = useState<string>('');
+  const [selectedYear, setSelectedYear] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,7 +37,7 @@ const SuporteDashboard = () => {
       console.log('🔄 SuporteDashboard - useEffect de filtro executado');
       filterData();
     }
-  }, [data, selectedPeriod]);
+  }, [data, selectedPeriod, selectedMonth, selectedYear]);
 
   const fetchData = async () => {
     try {
@@ -85,7 +87,31 @@ const SuporteDashboard = () => {
     console.log('🔑 GoogleSheetsService inicializado com API Key:', import.meta.env.VITE_GOOGLE_SHEETS_API_KEY ? '✅ Configurada' : '❌ Não configurada');
     console.log('📅 Filtrando dados por período:', selectedPeriod);
     
-    const filtered = googleSheetsService.filterDataByPeriod(data, selectedPeriod);
+    let filtered;
+    if (selectedPeriod === 'custom' && selectedMonth && selectedYear) {
+      // Filtro de mês específico
+      const targetMonth = parseInt(selectedMonth) - 1; // Mês começa em 0
+      const targetYear = parseInt(selectedYear);
+      
+      filtered = data.filter((row) => {
+        if (!row.DATA) return false;
+        
+        const rowDateParts = row.DATA.split('/');
+        if (rowDateParts.length < 2) return false;
+        
+        const day = parseInt(rowDateParts[0]);
+        const month = parseInt(rowDateParts[1]) - 1;
+        const year = rowDateParts[2] ? parseInt(rowDateParts[2]) : new Date().getFullYear();
+        
+        if (isNaN(day) || isNaN(month) || isNaN(year)) return false;
+        
+        return month === targetMonth && year === targetYear;
+      });
+    } else {
+      // Filtro padrão
+      filtered = googleSheetsService.filterDataByPeriod(data, selectedPeriod);
+    }
+    
     console.log('✅ Dados filtrados por período:', { period: selectedPeriod, count: filtered.length });
     setFilteredData(filtered);
   };
@@ -203,6 +229,10 @@ const SuporteDashboard = () => {
           vendors={[]}
           totalRecords={filteredData.length}
           showVendorFilter={false}
+          selectedMonth={selectedMonth}
+          onMonthChange={setSelectedMonth}
+          selectedYear={selectedYear}
+          onYearChange={setSelectedYear}
         />
 
         {/* Métricas */}
