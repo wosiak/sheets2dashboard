@@ -35,8 +35,10 @@ interface RhChartData {
 }
 
 const RhDashboard: React.FC = () => {
-  const [selectedPeriod, setSelectedPeriod] = React.useState<'hoje' | 'ontem' | 'semana' | 'mes'>('ontem');
+  const [selectedPeriod, setSelectedPeriod] = React.useState<'hoje' | 'ontem' | 'semana' | 'mes' | 'custom'>('ontem');
   const [selectedVendor, setSelectedVendor] = React.useState<string>('todos');
+  const [selectedMonth, setSelectedMonth] = React.useState<string>('');
+  const [selectedYear, setSelectedYear] = React.useState<string>('');
 
   // Busca dados da planilha RH
   const { data: rawData, isLoading, error } = useQuery({
@@ -106,7 +108,30 @@ const RhDashboard: React.FC = () => {
     console.log('🔍 Dados específicos de 29/08/2025:', dados29);
     
     // Filtro customizado para RH que funciona com diferentes formatos de data
-    const filteredData = filterDataByPeriodCustom(processedData, selectedPeriod);
+    let filteredData;
+    if (selectedPeriod === 'custom' && selectedMonth && selectedYear) {
+      // Filtro de mês específico
+      const targetMonth = parseInt(selectedMonth) - 1; // Mês começa em 0
+      const targetYear = parseInt(selectedYear);
+      
+      filteredData = processedData.filter((row) => {
+        if (!row.DATA) return false;
+        
+        const rowDateParts = row.DATA.split('/');
+        if (rowDateParts.length < 2) return false;
+        
+        const day = parseInt(rowDateParts[0]);
+        const month = parseInt(rowDateParts[1]) - 1;
+        const year = rowDateParts[2] ? parseInt(rowDateParts[2]) : new Date().getFullYear();
+        
+        if (isNaN(day) || isNaN(month) || isNaN(year)) return false;
+        
+        return month === targetMonth && year === targetYear;
+      });
+    } else {
+      // Filtro padrão
+      filteredData = filterDataByPeriodCustom(processedData, selectedPeriod);
+    }
 
     // Calcula métricas totais
     const metrics: RhMetrics = {
@@ -150,7 +175,7 @@ const RhDashboard: React.FC = () => {
     };
 
     return { filteredData, metrics, chartData };
-  }, [rawData, selectedPeriod]);
+  }, [rawData, selectedPeriod, selectedMonth, selectedYear]);
 
   if (isLoading) {
     return (
@@ -198,6 +223,10 @@ const RhDashboard: React.FC = () => {
           vendors={[]}
           totalRecords={filteredData.length}
           showVendorFilter={false}
+          selectedMonth={selectedMonth}
+          onMonthChange={setSelectedMonth}
+          selectedYear={selectedYear}
+          onYearChange={setSelectedYear}
         />
 
         {/* Métricas */}

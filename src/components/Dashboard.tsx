@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { BarChart } from './charts/BarChart';
 import { MetricCard } from './MetricCard';
 import { FilterBar } from './FilterBar';
+import { MonthFilter } from './MonthFilter';
 import { getDashboardConfig } from '../config/dashboards';
 import { GoogleSheetsService } from '../services/googleSheetsService';
 import { getMockDataForDashboard } from '../data/mockData';
