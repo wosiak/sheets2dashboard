@@ -137,6 +137,11 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
         value: vendor.cotacao_diaria
       })));
       
+      data.ligacaoPorVendedor = sortByValue(vendorMetrics.map(vendor => ({
+        name: vendor.vendedor,
+        value: vendor.ligacao_diaria
+      })));
+      
       data.followUpPorVendedor = sortByValue(vendorMetrics.map(vendor => ({
         name: vendor.vendedor,
         value: vendor.follow_up
@@ -169,6 +174,11 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
         }));
         
         data.cotacaoPorVendedor = vendorList.map(vendor => ({
+          name: vendor,
+          value: 0
+        }));
+        
+        data.ligacaoPorVendedor = vendorList.map(vendor => ({
           name: vendor,
           value: 0
         }));
@@ -322,6 +332,8 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
               </div>
             </div>
           )}
+          
+
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -376,7 +388,7 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
           )}
         </div>
 
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {chartData.faturamentoPorVendedor && chartData.faturamentoPorVendedor.length > 0 ? (
             <div>
               {filteredData.length === 0 && (
@@ -398,6 +410,31 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
               <div className="text-center text-gray-500">
                 <div className="text-4xl mb-2">💰</div>
                 <p>Nenhum dado de faturamento disponível</p>
+                <p className="text-sm">para o período selecionado</p>
+              </div>
+            </div>
+          )}
+          
+          {chartData.ligacaoPorVendedor && chartData.ligacaoPorVendedor.length > 0 ? (
+            <div>
+              {filteredData.length === 0 && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                  <p className="text-xs text-yellow-700">📞 Nenhum registro encontrado para o período selecionado</p>
+                </div>
+              )}
+              <BarChart
+                data={chartData.ligacaoPorVendedor}
+                xAxisKey="name"
+                yAxisKey="value"
+                title="Ligação Diária por Vendedor"
+                color="#06b6d4"
+              />
+            </div>
+          ) : (
+            <div className="bg-white rounded-lg shadow-sm border p-6 flex items-center justify-center h-64">
+              <div className="text-center text-gray-500">
+                <div className="text-4xl mb-2">📞</div>
+                <p>Nenhum dado de ligação diária disponível</p>
                 <p className="text-sm">para o período selecionado</p>
               </div>
             </div>
