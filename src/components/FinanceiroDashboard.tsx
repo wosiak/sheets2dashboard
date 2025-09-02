@@ -15,6 +15,7 @@ interface FinanceiroData {
   'COBRANÇA PARCELA': string;
   'NOTA FISCAL': string;
   'ESTORNO': string;
+  'CANCELADO': string;
 }
 
 const FinanceiroDashboard = () => {
@@ -50,7 +51,7 @@ const FinanceiroDashboard = () => {
       setError(null);
 
       const response = await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/1yNtfhoSM_RlrDfH8OCCwkzwvsz7ZBmPiPS1RWvWa8eE/values/2025!A:H?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
+        `https://sheets.googleapis.com/v4/spreadsheets/1yNtfhoSM_RlrDfH8OCCwkzwvsz7ZBmPiPS1RWvWa8eE/values/2025!A:K?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
       );
 
       if (!response.ok) {
@@ -132,6 +133,7 @@ const FinanceiroDashboard = () => {
         cobrancaParcela: 0,
         notaFiscal: 0,
         estorno: 0,
+        cancelado: 0,
       };
     }
 
@@ -180,6 +182,11 @@ const FinanceiroDashboard = () => {
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
+    const cancelado = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['CANCELADO'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
     return {
       atividadeDiaria,
       novaProposta,
@@ -190,6 +197,7 @@ const FinanceiroDashboard = () => {
       cobrancaParcela,
       notaFiscal,
       estorno,
+      cancelado,
     };
   };
 
@@ -206,7 +214,8 @@ const FinanceiroDashboard = () => {
           dataVencimento: 0,
           cobrancaParcela: 0,
           notaFiscal: 0, 
-          estorno: 0 
+          estorno: 0,
+          cancelado: 0
         }
       ];
     }
@@ -222,6 +231,7 @@ const FinanceiroDashboard = () => {
       cobrancaParcela: parseInt(row['COBRANÇA PARCELA'] || '0') || 0,
       notaFiscal: parseInt(row['NOTA FISCAL'] || '0') || 0,
       estorno: parseInt(row['ESTORNO'] || '0') || 0,
+      cancelado: parseInt(row['CANCELADO'] || '0') || 0,
     }));
   };
 
@@ -319,6 +329,10 @@ const FinanceiroDashboard = () => {
           <MetricCard
             title="ESTORNO"
             value={metrics.estorno}
+          />
+          <MetricCard
+            title="CANCELADO"
+            value={metrics.cancelado}
           />
         </div>
 
@@ -554,6 +568,32 @@ const FinanceiroDashboard = () => {
                   labelFormatter={(label) => `Data: ${label}`}
                 />
                 <Bar dataKey="estorno" fill="#EF4444" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Cancelado */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Cancelado por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Cancelado']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="cancelado" fill="#DC2626" />
               </BarChart>
             </ResponsiveContainer>
           </div>
