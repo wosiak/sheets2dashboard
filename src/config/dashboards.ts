@@ -31,6 +31,22 @@ export const dashboardConfigs: Record<string, DashboardConfig> = {
         xAxisKey: 'vendedor',
         yAxisKey: 'faturamento',
       },
+      {
+        id: 'qualificacao-por-vendedor',
+        title: 'Qualificação por Vendedor',
+        type: 'bar',
+        dataKey: 'qualificacao',
+        xAxisKey: 'vendedor',
+        yAxisKey: 'qualificacao',
+      },
+      {
+        id: 'feedback-por-vendedor',
+        title: 'Feedback por Vendedor',
+        type: 'bar',
+        dataKey: 'feedback',
+        xAxisKey: 'vendedor',
+        yAxisKey: 'feedback',
+      },
     ],
   },
   

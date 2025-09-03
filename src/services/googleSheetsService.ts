@@ -12,7 +12,7 @@ export class GoogleSheetsService {
 
   async getSheetData(spreadsheetId: string, sheetName: string, range?: string): Promise<any[][]> {
     try {
-      const rangeParam = range || `${sheetName}!A:I`; // Lê até a coluna I (FATURAMENTO)
+      const rangeParam = range || `${sheetName}!A:J`; // Lê até a coluna J (FEEDBACK)
       console.log('📊 Tentando buscar dados da planilha:', { spreadsheetId, sheetName, range: rangeParam });
       
       const url = `${GOOGLE_SHEETS_API_BASE}/${spreadsheetId}/values/${rangeParam}?key=${this.apiKey}`;
@@ -252,17 +252,21 @@ export class GoogleSheetsService {
           ligacao_diaria: 0,
           follow_up: 0,
           contratos: 0,
-          faturamento: 0
+          faturamento: 0,
+          qualificacao: 0,
+          feedback: 0
         };
       }
       
-      // Soma valores numéricos das colunas A-H
+      // Soma valores numéricos das colunas A-J
       const leads = Number(row.LEADS) || 0;
       const cotacaoDiaria = Number(row['COTAÇÃO DIÁRIA']) || 0;
       const ligacaoDiaria = Number(row['LIGAÇÃO DIÁRIA']) || 0;
       const followUp = Number(row['FOLLOW UP']) || 0;
       const contratos = Number(row['CONTRATOS - DIÁRIO']) || 0;
       const faturamento = Number(row.FATURAMENTO) || 0;
+      const qualificacao = Number(row.QUALIFICAÇÃO) || 0;
+      const feedback = Number(row.FEEDBACK) || 0;
       
       // Log específico para faturamento
       if (faturamento > 0) {
@@ -275,6 +279,8 @@ export class GoogleSheetsService {
       vendorMetrics[vendor].follow_up += followUp;
       vendorMetrics[vendor].contratos += contratos;
       vendorMetrics[vendor].faturamento += faturamento;
+      vendorMetrics[vendor].qualificacao += qualificacao;
+      vendorMetrics[vendor].feedback += feedback;
       
       // Log dos primeiros registros para debug
       if (index < 3) {
@@ -285,7 +291,9 @@ export class GoogleSheetsService {
           ligacaoDiaria,
           followUp,
           contratos,
-          faturamento
+          faturamento,
+          qualificacao,
+          feedback
         });
       }
     });

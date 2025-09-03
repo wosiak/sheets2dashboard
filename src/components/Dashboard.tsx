@@ -89,8 +89,8 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
     
     const metrics: Record<string, number> = {};
     
-    // Soma colunas A-H
-    const numericColumns = ['LEADS', 'COTAÇÃO DIÁRIA', 'LIGAÇÃO DIÁRIA', 'FOLLOW UP', 'CONTRATOS - DIÁRIO', 'FATURAMENTO'];
+    // Soma colunas A-J
+    const numericColumns = ['LEADS', 'COTAÇÃO DIÁRIA', 'LIGAÇÃO DIÁRIA', 'FOLLOW UP', 'CONTRATOS - DIÁRIO', 'FATURAMENTO', 'QUALIFICAÇÃO', 'FEEDBACK'];
     
     numericColumns.forEach(column => {
       const total = filteredData.reduce((sum, row) => {
@@ -157,6 +157,16 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
         value: vendor.faturamento
       })));
       
+      data.qualificacaoPorVendedor = sortByValue(vendorMetrics.map(vendor => ({
+        name: vendor.vendedor,
+        value: vendor.qualificacao
+      })));
+      
+      data.feedbackPorVendedor = sortByValue(vendorMetrics.map(vendor => ({
+        name: vendor.vendedor,
+        value: vendor.feedback
+      })));
+      
       console.log('✅ Gráficos com dados reais gerados');
     } else {
       // Se não há dados filtrados, mostra gráficos vazios mas com estrutura
@@ -194,6 +204,16 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
         }));
         
         data.faturamentoPorVendedor = vendorList.map(vendor => ({
+          name: vendor,
+          value: 0
+        }));
+        
+        data.qualificacaoPorVendedor = vendorList.map(vendor => ({
+          name: vendor,
+          value: 0
+        }));
+        
+        data.feedbackPorVendedor = vendorList.map(vendor => ({
           name: vendor,
           value: 0
         }));
@@ -435,6 +455,59 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
               <div className="text-center text-gray-500">
                 <div className="text-4xl mb-2">📞</div>
                 <p>Nenhum dado de ligação diária disponível</p>
+                <p className="text-sm">para o período selecionado</p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Novos gráficos de Qualificação e Feedback */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+          {chartData.qualificacaoPorVendedor && chartData.qualificacaoPorVendedor.length > 0 ? (
+            <div>
+              {filteredData.length === 0 && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                  <p className="text-xs text-yellow-700">🎯 Nenhum registro encontrado para o período selecionado</p>
+                </div>
+              )}
+              <BarChart
+                data={chartData.qualificacaoPorVendedor}
+                xAxisKey="name"
+                yAxisKey="value"
+                title="Qualificação por Vendedor"
+                color="#8b5cf6"
+              />
+            </div>
+          ) : (
+            <div className="bg-white rounded-lg shadow-sm border p-6 flex items-center justify-center h-64">
+              <div className="text-center text-gray-500">
+                <div className="text-4xl mb-2">🎯</div>
+                <p>Nenhum dado de qualificação disponível</p>
+                <p className="text-sm">para o período selecionado</p>
+              </div>
+            </div>
+          )}
+          
+          {chartData.feedbackPorVendedor && chartData.feedbackPorVendedor.length > 0 ? (
+            <div>
+              {filteredData.length === 0 && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-t-lg p-2 text-center">
+                  <p className="text-xs text-yellow-700">💬 Nenhum registro encontrado para o período selecionado</p>
+                </div>
+              )}
+              <BarChart
+                data={chartData.feedbackPorVendedor}
+                xAxisKey="name"
+                yAxisKey="value"
+                title="Feedback por Vendedor"
+                color="#10b981"
+              />
+            </div>
+          ) : (
+            <div className="bg-white rounded-lg shadow-sm border p-6 flex items-center justify-center h-64">
+              <div className="text-center text-gray-500">
+                <div className="text-4xl mb-2">💬</div>
+                <p>Nenhum dado de feedback disponível</p>
                 <p className="text-sm">para o período selecionado</p>
               </div>
             </div>
