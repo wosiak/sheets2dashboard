@@ -17,6 +17,7 @@ interface RetencaoData {
   'SEGURO VIDA': string;
   'SEM INTERESSE': string;
   'REATIVADO': string;
+  'REAPROVEITAMENTO DE LEAD': string;
 }
 
 const RetencaoDashboard = () => {
@@ -52,7 +53,7 @@ const RetencaoDashboard = () => {
       setError(null);
 
       const response = await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/1GUkqFhUTVLFVNiYIp3aBnAKerjZF26CkIwKwSlfs4Xw/values/2025!A:L?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
+        `https://sheets.googleapis.com/v4/spreadsheets/1GUkqFhUTVLFVNiYIp3aBnAKerjZF26CkIwKwSlfs4Xw/values/2025!A:M?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
       );
 
       if (!response.ok) {
@@ -136,6 +137,7 @@ const RetencaoDashboard = () => {
         seguroVida: 0,
         semInteresse: 0,
         reativado: 0,
+        reaproveitamentoLead: 0,
       };
     }
 
@@ -194,6 +196,11 @@ const RetencaoDashboard = () => {
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
+    const reaproveitamentoLead = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['REAPROVEITAMENTO DE LEAD'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
     return {
       novoContato,
       oportunidade,
@@ -206,6 +213,7 @@ const RetencaoDashboard = () => {
       seguroVida,
       semInteresse,
       reativado,
+      reaproveitamentoLead,
     };
   };
 
@@ -224,7 +232,8 @@ const RetencaoDashboard = () => {
           planoOdonto: 0,
           seguroVida: 0,
           semInteresse: 0, 
-          reativado: 0 
+          reativado: 0,
+          reaproveitamentoLead: 0
         }
       ];
     }
@@ -242,6 +251,7 @@ const RetencaoDashboard = () => {
       seguroVida: parseInt(row['SEGURO VIDA'] || '0') || 0,
       semInteresse: parseInt(row['SEM INTERESSE'] || '0') || 0,
       reativado: parseInt(row['REATIVADO'] || '0') || 0,
+      reaproveitamentoLead: parseInt(row['REAPROVEITAMENTO DE LEAD'] || '0') || 0,
     }));
   };
 
@@ -347,6 +357,10 @@ const RetencaoDashboard = () => {
           <MetricCard
             title="REATIVADO"
             value={metrics.reativado}
+          />
+          <MetricCard
+            title="REAPROVEITAMENTO DE LEAD"
+            value={metrics.reaproveitamentoLead}
           />
         </div>
 
@@ -634,6 +648,32 @@ const RetencaoDashboard = () => {
                   labelFormatter={(label) => `Data: ${label}`}
                 />
                 <Bar dataKey="reativado" fill="#DC2626" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Reaproveitamento de Lead */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Reaproveitamento de Lead por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Reaproveitamento de Lead']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="reaproveitamentoLead" fill="#059669" />
               </BarChart>
             </ResponsiveContainer>
           </div>
