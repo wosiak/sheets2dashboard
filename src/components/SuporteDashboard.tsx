@@ -11,6 +11,7 @@ interface SuporteData {
   'NORMAL': string;
   'URGENTE': string;
   'CONCLUÍDO': string;
+  'FEEDBACK': string;
 }
 
 const SuporteDashboard = () => {
@@ -46,7 +47,7 @@ const SuporteDashboard = () => {
       setError(null);
 
       const response = await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/19TdHUfkCIXzm4niGvC3JT95JRmUPz9-0sF7iCmBpGZ8/values/2025!A:F?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
+        `https://sheets.googleapis.com/v4/spreadsheets/19TdHUfkCIXzm4niGvC3JT95JRmUPz9-0sF7iCmBpGZ8/values/2025!A:G?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
       );
 
       if (!response.ok) {
@@ -124,6 +125,7 @@ const SuporteDashboard = () => {
         normal: 0,
         urgente: 0,
         concluido: 0,
+        feedback: 0,
       };
     }
 
@@ -152,19 +154,25 @@ const SuporteDashboard = () => {
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
+    const feedback = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['FEEDBACK'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
     return {
       atividadeDiaria,
       novaSolicitacao,
       normal,
       urgente,
       concluido,
+      feedback,
     };
   };
 
   const prepareChartData = () => {
     if (filteredData.length === 0) {
       return [
-        { data: 'Sem dados', atividadeDiaria: 0, novaSolicitacao: 0, normal: 0, urgente: 0, concluido: 0 }
+        { data: 'Sem dados', atividadeDiaria: 0, novaSolicitacao: 0, normal: 0, urgente: 0, concluido: 0, feedback: 0 }
       ];
     }
 
@@ -175,6 +183,7 @@ const SuporteDashboard = () => {
       normal: parseInt(row['NORMAL'] || '0') || 0,
       urgente: parseInt(row['URGENTE'] || '0') || 0,
       concluido: parseInt(row['CONCLUÍDO'] || '0') || 0,
+      feedback: parseInt(row['FEEDBACK'] || '0') || 0,
     }));
   };
 
@@ -236,7 +245,7 @@ const SuporteDashboard = () => {
         />
 
         {/* Métricas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
           <MetricCard
             title="ATIVIDADE DIÁRIA"
             value={metrics.atividadeDiaria}
@@ -256,6 +265,10 @@ const SuporteDashboard = () => {
           <MetricCard
             title="CONCLUÍDO"
             value={metrics.concluido}
+          />
+          <MetricCard
+            title="FEEDBACK"
+            value={metrics.feedback}
           />
         </div>
 
@@ -366,8 +379,9 @@ const SuporteDashboard = () => {
           </div>
         </div>
 
-        {/* Gráfico Urgente - Largura Total */}
-        <div className="w-full">
+        {/* Gráficos Urgente e Feedback - Largura Total */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Urgente */}
           <div className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Urgente por Dia</h3>
             <ResponsiveContainer width="100%" height={400}>
@@ -389,6 +403,32 @@ const SuporteDashboard = () => {
                   labelFormatter={(label) => `Data: ${label}`}
                 />
                 <Bar dataKey="urgente" fill="#DC2626" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Feedback */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Feedback por Dia</h3>
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Feedback']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="feedback" fill="#10B981" />
               </BarChart>
             </ResponsiveContainer>
           </div>
