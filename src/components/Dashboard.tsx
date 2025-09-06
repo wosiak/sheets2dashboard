@@ -551,9 +551,9 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
       
       if (hasApiKey && config.spreadsheetId) {
         try {
-          // Busca dados da planilha até coluna L
+          // Busca dados da planilha até coluna M
           const response = await fetch(
-            `https://sheets.googleapis.com/v4/spreadsheets/${config.spreadsheetId}/values/2025!A:L?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
+            `https://sheets.googleapis.com/v4/spreadsheets/${config.spreadsheetId}/values/2025!A:M?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
           );
           
           if (!response.ok) {
@@ -648,7 +648,8 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
         implantada: 0,
         desistiu: 0,
         erro_vendas: 0,
-        declinada: 0
+        declinada: 0,
+        feedback: 0
       };
     }
     
@@ -656,7 +657,6 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
     const rows = filteredData.rows;
     
     // Encontra índices das colunas
-    const dataIndex = headers.findIndex((h: string) => h === 'DATA');
     const atividadeIndex = headers.findIndex((h: string) => h === 'ATIVIDADE DIÁRIA');
     const propostaIndex = headers.findIndex((h: string) => h === 'NOVA PROPOSTA');
     const pendAssinaturaIndex = headers.findIndex((h: string) => h === 'PEND ASSINATURA');
@@ -668,6 +668,7 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
     const desistiuIndex = headers.findIndex((h: string) => h === 'DESISTIU');
     const erroVendasIndex = headers.findIndex((h: string) => h === 'ERRO DE VENDAS');
     const declinadaIndex = headers.findIndex((h: string) => h === 'DECLINADA');
+    const feedbackIndex = headers.findIndex((h: string) => h === 'FEEDBACK');
     
     let atividadeTotal = 0;
     let propostaTotal = 0;
@@ -680,6 +681,7 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
     let desistiuTotal = 0;
     let erroVendasTotal = 0;
     let declinadaTotal = 0;
+    let feedbackTotal = 0;
     
     rows.forEach((row: any[]) => {
       if (atividadeIndex >= 0 && row[atividadeIndex]) {
@@ -715,6 +717,9 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
       if (declinadaIndex >= 0 && row[declinadaIndex]) {
         declinadaTotal += Number(row[declinadaIndex]) || 0;
       }
+      if (feedbackIndex >= 0 && row[feedbackIndex]) {
+        feedbackTotal += Number(row[feedbackIndex]) || 0;
+      }
     });
     
     return {
@@ -728,7 +733,8 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
       implantada: implantadaTotal,
       desistiu: desistiuTotal,
       erro_vendas: erroVendasTotal,
-      declinada: declinadaTotal
+      declinada: declinadaTotal,
+      feedback: feedbackTotal
     };
   }, [filteredData]);
 
@@ -744,7 +750,7 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
   const handleSelectAll = () => {
     setSelectedCharts([
       'atividade-diaria',
-      'nova-proposta', 
+      'nova-proposta',
       'pend-assinatura',
       'em-analise',
       'pendencia',
@@ -753,7 +759,8 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
       'implantada',
       'desistiu',
       'erro-vendas',
-      'declinada'
+      'declinada',
+      'feedback'
     ]);
   };
 
@@ -773,7 +780,8 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
     { id: 'implantada', title: 'Implantada' },
     { id: 'desistiu', title: 'Desistiu' },
     { id: 'erro-vendas', title: 'Erro de Vendas' },
-    { id: 'declinada', title: 'Declinada' }
+    { id: 'declinada', title: 'Declinada' },
+    { id: 'feedback', title: 'Feedback' }
   ];
 
   // Gera dados para gráficos
@@ -790,7 +798,8 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
         implantada: [],
         desistiu: [],
         erroVendas: [],
-        declinada: []
+        declinada: [],
+        feedback: []
       };
     }
     
@@ -810,6 +819,7 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
     const desistiuIndex = headers.findIndex((h: string) => h === 'DESISTIU');
     const erroVendasIndex = headers.findIndex((h: string) => h === 'ERRO DE VENDAS');
     const declinadaIndex = headers.findIndex((h: string) => h === 'DECLINADA');
+    const feedbackIndex = headers.findIndex((h: string) => h === 'FEEDBACK');
     
     // Ordena por data
     const sortedRows = rows.sort((a: any[], b: any[]) => {
@@ -871,6 +881,10 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
       declinada: sortedRows.map((row: any[]) => ({
         name: row[dataIndex] || '',
         value: Number(row[declinadaIndex]) || 0
+      })),
+      feedback: sortedRows.map((row: any[]) => ({
+        name: row[dataIndex] || '',
+        value: Number(row[feedbackIndex]) || 0
       }))
     };
   }, [filteredData]);
@@ -971,19 +985,6 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
               const metricKey = chart.id.replace('-', '_') as keyof typeof metrics;
               const value = metrics[metricKey] || 0;
               
-              const colors = {
-                'atividade-diaria': 'text-blue-600',
-                'nova-proposta': 'text-green-600',
-                'pend-assinatura': 'text-orange-600',
-                'em-analise': 'text-yellow-600',
-                'pendencia': 'text-red-600',
-                'entrevista-medica': 'text-cyan-600',
-                'boleto': 'text-lime-600',
-                'implantada': 'text-purple-600',
-                'desistiu': 'text-gray-600',
-                'erro-vendas': 'text-rose-600',
-                'declinada': 'text-indigo-600',
-              };
               
               return (
                 <MetricCard
@@ -1013,7 +1014,8 @@ const AdmDashboardSimple: React.FC<{ config: any }> = ({ config }) => {
                 'implantada': { data: chartData.implantada, color: '#8b5cf6' },
                 'desistiu': { data: chartData.desistiu, color: '#6b7280' },
                 'erro-vendas': { data: chartData.erroVendas, color: '#dc2626' },
-                'declinada': { data: chartData.declinada, color: '#7c3aed' }
+                'declinada': { data: chartData.declinada, color: '#7c3aed' },
+                'feedback': { data: chartData.feedback, color: '#10b981' }
               };
               
               const chartInfo = chartDataMap[chart.id];
