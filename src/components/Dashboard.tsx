@@ -98,9 +98,8 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
         return sum + (typeof value === 'number' ? value : 0);
       }, 0);
       
-      if (total > 0) {
-        metrics[column.toLowerCase().replace(/\s+/g, '_')] = total;
-      }
+      // Sempre inclui a métrica, mesmo se for 0
+      metrics[column.toLowerCase().replace(/\s+/g, '_')] = total;
     });
     
     console.log('📊 Métricas calculadas:', metrics);
@@ -446,7 +445,7 @@ const VendasDashboard: React.FC<{ config: any }> = ({ config }) => {
                 data={chartData.ligacaoPorVendedor}
                 xAxisKey="name"
                 yAxisKey="value"
-                title="Ligação Diária por Vendedor"
+                title="Ligação por Vendedor"
                 color="#06b6d4"
               />
             </div>
