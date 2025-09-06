@@ -9,15 +9,13 @@ interface RetencaoData {
   'NOVO CONTATO': string;
   'OPORTUNIDADE': string;
   'COTAÇÃO': string;
-  'FOLLOW UP': string;
-  'FECHAMENTO': string;
   'VITALÍCIO': string;
-  'PLANO DE SAÚDE': string;
-  'PLANO ODONTO': string;
   'SEGURO VIDA': string;
-  'SEM INTERESSE': string;
-  'REATIVADO': string;
-  'REAPROVEITAMENTO DE LEAD': string;
+  'DESCARTADO': string;
+  'CUSTOM SUCCESS': string;
+  'NOVA PROPOSTA': string;
+  'EM ANÁLISE': string;
+  'IMPLANTADA': string;
 }
 
 const RetencaoDashboard = () => {
@@ -53,7 +51,7 @@ const RetencaoDashboard = () => {
       setError(null);
 
       const response = await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/1GUkqFhUTVLFVNiYIp3aBnAKerjZF26CkIwKwSlfs4Xw/values/2025!A:M?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
+        `https://sheets.googleapis.com/v4/spreadsheets/1GUkqFhUTVLFVNiYIp3aBnAKerjZF26CkIwKwSlfs4Xw/values/2025!A:K?key=${import.meta.env.VITE_GOOGLE_SHEETS_API_KEY}`
       );
 
       if (!response.ok) {
@@ -129,15 +127,13 @@ const RetencaoDashboard = () => {
         novoContato: 0,
         oportunidade: 0,
         cotacao: 0,
-        followUp: 0,
-        fechamento: 0,
         vitalicio: 0,
-        planoSaude: 0,
-        planoOdonto: 0,
         seguroVida: 0,
-        semInteresse: 0,
-        reativado: 0,
-        reaproveitamentoLead: 0,
+        descartado: 0,
+        customSuccess: 0,
+        novaProposta: 0,
+        emAnalise: 0,
+        implantada: 0,
       };
     }
 
@@ -156,28 +152,8 @@ const RetencaoDashboard = () => {
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
-    const followUp = filteredData.reduce((sum, row) => {
-      const value = parseInt(row['FOLLOW UP'] || '0');
-      return sum + (isNaN(value) ? 0 : value);
-    }, 0);
-
-    const fechamento = filteredData.reduce((sum, row) => {
-      const value = parseInt(row['FECHAMENTO'] || '0');
-      return sum + (isNaN(value) ? 0 : value);
-    }, 0);
-
     const vitalicio = filteredData.reduce((sum, row) => {
       const value = parseInt(row['VITALÍCIO'] || '0');
-      return sum + (isNaN(value) ? 0 : value);
-    }, 0);
-
-    const planoSaude = filteredData.reduce((sum, row) => {
-      const value = parseInt(row['PLANO DE SAÚDE'] || '0');
-      return sum + (isNaN(value) ? 0 : value);
-    }, 0);
-
-    const planoOdonto = filteredData.reduce((sum, row) => {
-      const value = parseInt(row['PLANO ODONTO'] || '0');
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
@@ -186,18 +162,28 @@ const RetencaoDashboard = () => {
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
-    const semInteresse = filteredData.reduce((sum, row) => {
-      const value = parseInt(row['SEM INTERESSE'] || '0');
+    const descartado = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['DESCARTADO'] || '0');
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
-    const reativado = filteredData.reduce((sum, row) => {
-      const value = parseInt(row['REATIVADO'] || '0');
+    const customSuccess = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['CUSTOM SUCCESS'] || '0');
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
-    const reaproveitamentoLead = filteredData.reduce((sum, row) => {
-      const value = parseInt(row['REAPROVEITAMENTO DE LEAD'] || '0');
+    const novaProposta = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['NOVA PROPOSTA'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const emAnalise = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['EM ANÁLISE'] || '0');
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+
+    const implantada = filteredData.reduce((sum, row) => {
+      const value = parseInt(row['IMPLANTADA'] || '0');
       return sum + (isNaN(value) ? 0 : value);
     }, 0);
 
@@ -205,15 +191,13 @@ const RetencaoDashboard = () => {
       novoContato,
       oportunidade,
       cotacao,
-      followUp,
-      fechamento,
       vitalicio,
-      planoSaude,
-      planoOdonto,
       seguroVida,
-      semInteresse,
-      reativado,
-      reaproveitamentoLead,
+      descartado,
+      customSuccess,
+      novaProposta,
+      emAnalise,
+      implantada,
     };
   };
 
@@ -225,15 +209,13 @@ const RetencaoDashboard = () => {
           novoContato: 0, 
           oportunidade: 0,
           cotacao: 0,
-          followUp: 0,
-          fechamento: 0, 
           vitalicio: 0,
-          planoSaude: 0,
-          planoOdonto: 0,
           seguroVida: 0,
-          semInteresse: 0, 
-          reativado: 0,
-          reaproveitamentoLead: 0
+          descartado: 0,
+          customSuccess: 0,
+          novaProposta: 0,
+          emAnalise: 0,
+          implantada: 0
         }
       ];
     }
@@ -243,15 +225,13 @@ const RetencaoDashboard = () => {
       novoContato: parseInt(row['NOVO CONTATO'] || '0') || 0,
       oportunidade: parseInt(row['OPORTUNIDADE'] || '0') || 0,
       cotacao: parseInt(row['COTAÇÃO'] || '0') || 0,
-      followUp: parseInt(row['FOLLOW UP'] || '0') || 0,
-      fechamento: parseInt(row['FECHAMENTO'] || '0') || 0,
       vitalicio: parseInt(row['VITALÍCIO'] || '0') || 0,
-      planoSaude: parseInt(row['PLANO DE SAÚDE'] || '0') || 0,
-      planoOdonto: parseInt(row['PLANO ODONTO'] || '0') || 0,
       seguroVida: parseInt(row['SEGURO VIDA'] || '0') || 0,
-      semInteresse: parseInt(row['SEM INTERESSE'] || '0') || 0,
-      reativado: parseInt(row['REATIVADO'] || '0') || 0,
-      reaproveitamentoLead: parseInt(row['REAPROVEITAMENTO DE LEAD'] || '0') || 0,
+      descartado: parseInt(row['DESCARTADO'] || '0') || 0,
+      customSuccess: parseInt(row['CUSTOM SUCCESS'] || '0') || 0,
+      novaProposta: parseInt(row['NOVA PROPOSTA'] || '0') || 0,
+      emAnalise: parseInt(row['EM ANÁLISE'] || '0') || 0,
+      implantada: parseInt(row['IMPLANTADA'] || '0') || 0,
     }));
   };
 
@@ -313,7 +293,7 @@ const RetencaoDashboard = () => {
         />
 
         {/* Métricas */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
           <MetricCard
             title="NOVO CONTATO"
             value={metrics.novoContato}
@@ -327,40 +307,32 @@ const RetencaoDashboard = () => {
             value={metrics.cotacao}
           />
           <MetricCard
-            title="FOLLOW UP"
-            value={metrics.followUp}
-          />
-          <MetricCard
-            title="FECHAMENTO"
-            value={metrics.fechamento}
-          />
-          <MetricCard
             title="VITALÍCIO"
             value={metrics.vitalicio}
-          />
-          <MetricCard
-            title="PLANO SAÚDE"
-            value={metrics.planoSaude}
-          />
-          <MetricCard
-            title="PLANO ODONTO"
-            value={metrics.planoOdonto}
           />
           <MetricCard
             title="SEGURO VIDA"
             value={metrics.seguroVida}
           />
           <MetricCard
-            title="SEM INTERESSE"
-            value={metrics.semInteresse}
+            title="DESCARTADO"
+            value={metrics.descartado}
           />
           <MetricCard
-            title="REATIVADO"
-            value={metrics.reativado}
+            title="CUSTOM SUCCESS"
+            value={metrics.customSuccess}
           />
           <MetricCard
-            title="REAPROVEITAMENTO DE LEAD"
-            value={metrics.reaproveitamentoLead}
+            title="NOVA PROPOSTA"
+            value={metrics.novaProposta}
+          />
+          <MetricCard
+            title="EM ANÁLISE"
+            value={metrics.emAnalise}
+          />
+          <MetricCard
+            title="IMPLANTADA"
+            value={metrics.implantada}
           />
         </div>
 
@@ -444,58 +416,6 @@ const RetencaoDashboard = () => {
             </ResponsiveContainer>
           </div>
 
-          {/* Follow Up */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Follow Up por Dia</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="data" 
-                  tick={{ fontSize: 12 }}
-                  angle={-45}
-                  textAnchor="end"
-                  height={80}
-                />
-                <YAxis 
-                  tick={{ fontSize: 12 }}
-                  tickFormatter={(value) => Math.round(value).toString()}
-                />
-                <Tooltip 
-                  formatter={(value: any) => [Math.round(value), 'Follow Up']}
-                  labelFormatter={(label) => `Data: ${label}`}
-                />
-                <Bar dataKey="followUp" fill="#F59E0B" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Fechamento */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Fechamento por Dia</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="data" 
-                  tick={{ fontSize: 12 }}
-                  angle={-45}
-                  textAnchor="end"
-                  height={80}
-                />
-                <YAxis 
-                  tick={{ fontSize: 12 }}
-                  tickFormatter={(value) => Math.round(value).toString()}
-                />
-                <Tooltip 
-                  formatter={(value: any) => [Math.round(value), 'Fechamento']}
-                  labelFormatter={(label) => `Data: ${label}`}
-                />
-                <Bar dataKey="fechamento" fill="#10B981" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
           {/* Vitalício */}
           <div className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Vitalício por Dia</h3>
@@ -518,58 +438,6 @@ const RetencaoDashboard = () => {
                   labelFormatter={(label) => `Data: ${label}`}
                 />
                 <Bar dataKey="vitalicio" fill="#84CC16" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Plano de Saúde */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Plano de Saúde por Dia</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="data" 
-                  tick={{ fontSize: 12 }}
-                  angle={-45}
-                  textAnchor="end"
-                  height={80}
-                />
-                <YAxis 
-                  tick={{ fontSize: 12 }}
-                  tickFormatter={(value) => Math.round(value).toString()}
-                />
-                <Tooltip 
-                  formatter={(value: any) => [Math.round(value), 'Plano de Saúde']}
-                  labelFormatter={(label) => `Data: ${label}`}
-                />
-                <Bar dataKey="planoSaude" fill="#059669" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Plano Odonto */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Plano Odonto por Dia</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="data" 
-                  tick={{ fontSize: 12 }}
-                  angle={-45}
-                  textAnchor="end"
-                  height={80}
-                />
-                <YAxis 
-                  tick={{ fontSize: 12 }}
-                  tickFormatter={(value) => Math.round(value).toString()}
-                />
-                <Tooltip 
-                  formatter={(value: any) => [Math.round(value), 'Plano Odonto']}
-                  labelFormatter={(label) => `Data: ${label}`}
-                />
-                <Bar dataKey="planoOdonto" fill="#0D9488" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -600,9 +468,9 @@ const RetencaoDashboard = () => {
             </ResponsiveContainer>
           </div>
 
-          {/* Sem Interesse */}
+          {/* Descartado */}
           <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Sem Interesse por Dia</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Descartado por Dia</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -618,17 +486,17 @@ const RetencaoDashboard = () => {
                   tickFormatter={(value) => Math.round(value).toString()}
                 />
                 <Tooltip 
-                  formatter={(value: any) => [Math.round(value), 'Sem Interesse']}
+                  formatter={(value: any) => [Math.round(value), 'Descartado']}
                   labelFormatter={(label) => `Data: ${label}`}
                 />
-                <Bar dataKey="semInteresse" fill="#EF4444" />
+                <Bar dataKey="descartado" fill="#EF4444" />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
-          {/* Reativado */}
+          {/* Custom Success */}
           <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Reativado por Dia</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Custom Success por Dia</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -644,17 +512,17 @@ const RetencaoDashboard = () => {
                   tickFormatter={(value) => Math.round(value).toString()}
                 />
                 <Tooltip 
-                  formatter={(value: any) => [Math.round(value), 'Reativado']}
+                  formatter={(value: any) => [Math.round(value), 'Custom Success']}
                   labelFormatter={(label) => `Data: ${label}`}
                 />
-                <Bar dataKey="reativado" fill="#DC2626" />
+                <Bar dataKey="customSuccess" fill="#10B981" />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
-          {/* Reaproveitamento de Lead */}
+          {/* Nova Proposta */}
           <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Reaproveitamento de Lead por Dia</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Nova Proposta por Dia</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -670,10 +538,62 @@ const RetencaoDashboard = () => {
                   tickFormatter={(value) => Math.round(value).toString()}
                 />
                 <Tooltip 
-                  formatter={(value: any) => [Math.round(value), 'Reaproveitamento de Lead']}
+                  formatter={(value: any) => [Math.round(value), 'Nova Proposta']}
                   labelFormatter={(label) => `Data: ${label}`}
                 />
-                <Bar dataKey="reaproveitamentoLead" fill="#059669" />
+                <Bar dataKey="novaProposta" fill="#F59E0B" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Em Análise */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Em Análise por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Em Análise']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="emAnalise" fill="#8B5CF6" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Implantada */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Implantada por Dia</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="data" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => Math.round(value).toString()}
+                />
+                <Tooltip 
+                  formatter={(value: any) => [Math.round(value), 'Implantada']}
+                  labelFormatter={(label) => `Data: ${label}`}
+                />
+                <Bar dataKey="implantada" fill="#059669" />
               </BarChart>
             </ResponsiveContainer>
           </div>
