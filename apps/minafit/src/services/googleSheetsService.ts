@@ -127,9 +127,11 @@ export class GoogleSheetsService {
     console.log('📅 Filtrando dados por período:', period, 'Data de hoje (Brasília):', todayStr);
 
     const filteredData = data.filter(row => {
-      if (!row.DATA) return false;
+      const rawDate = row['Data'] || row['DATA'];
+if (!rawDate) return false;
 
-      const rowDate = this.parseDate(row.DATA);
+const rowDate = this.parseDate(rawDate);
+
       if (!rowDate) return false;
 
       const rowDateStr = this.formatDateForComparison(rowDate);
