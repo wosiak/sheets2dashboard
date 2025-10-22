@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Dashboard } from './components/Dashboard';
 import { TVModeToggle } from './components/TVModeToggle';
 import { availableDashboards } from './config/dashboards';
-import clearwaterLogo from './assets/clearwater-logo.jpeg';
+import solyidmoblogo from './assets/solydimob-logo.jpeg';
 
 // Configuração do React Query
 const queryClient = new QueryClient({
@@ -34,12 +34,12 @@ function App() {
             {/* Logo e Título Centralizados */}
             <div className="flex items-center space-x-4">
               <img 
-                src={clearwaterLogo} 
-                alt="Clearwater Logo" 
+                src={solyidmoblogo} 
+                alt="Solyd Imob Logo" 
                 className="w-16 h-16 rounded-lg object-cover"
               />
               <h1 className="text-4xl font-bold text-gray-900">
-                Dashboards | Minafit
+                Dashboards | Solyd Imob
               </h1>
             </div>
             

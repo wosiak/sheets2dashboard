@@ -14,6 +14,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
   const config = getDashboardConfig(dashboardName);
   const [selectedPeriod, setSelectedPeriod] = React.useState<'hoje' | 'ontem' | 'semana' | 'mes'>('ontem');
   const [selectedVendor, setSelectedVendor] = React.useState<string>('');
+  const [selectedMonth, setSelectedMonth] = React.useState<string>('');
+  const [selectedYear, setSelectedYear] = React.useState<string>('');
 
   const apiKey = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY || '';
   const googleSheetsService = new GoogleSheetsService(apiKey);
@@ -28,16 +30,24 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
   });
 
   const filteredData = React.useMemo(() => {
-    if (!rawData) return [];
+  if (!rawData) return [];
 
-    const periodFiltered = googleSheetsService.filterDataByPeriod(rawData, selectedPeriod);
+  const periodToUse = selectedPeriod === 'mes' ? 'custom' : selectedPeriod;
 
-    if (selectedVendor) {
-      return periodFiltered.filter(row => row.Responsável === selectedVendor);
-    }
+  const periodFiltered = googleSheetsService.filterDataByPeriod(
+    rawData,
+    periodToUse,
+    selectedMonth,
+    selectedYear
+  );
 
-    return periodFiltered;
-  }, [rawData, selectedPeriod, selectedVendor]);
+  if (selectedVendor) {
+    return periodFiltered.filter(row => row.Responsável === selectedVendor);
+  }
+
+  return periodFiltered;
+}, [rawData, selectedPeriod, selectedMonth, selectedYear, selectedVendor]);
+
 
   const metrics = React.useMemo(() => {
     const total = {
@@ -88,7 +98,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard Minafit</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard Solyd Imob</h1>
           <p className="text-gray-600">Acompanhamento de performance</p>
         </div>
 
@@ -100,6 +110,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
           onVendorChange={setSelectedVendor}
           vendors={vendors}
           totalRecords={filteredData.length}
+          selectedMonth={selectedMonth}
+          onMonthChange={setSelectedMonth}
+          selectedYear={selectedYear}
+          onYearChange={setSelectedYear}
         />
 
         {/* Métricas */}
