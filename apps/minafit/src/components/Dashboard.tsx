@@ -61,7 +61,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
       total.reuniao_agendada += Number(row['Reunião Agendada']) || 0;
       total.reuniao_realizada += Number(row['Reunião Realizada']) || 0;
       total.quantidade_de_ligacao += Number(row['Quantidade de Ligação']) || 0;
-      total.valor_ganho += Number(row['Valor Ganho']) || 0;
+      total.valor_ganho += Number(row['Ganho']) || 0;
     });
 
     return total;
@@ -121,7 +121,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
           <MetricCard title="Reunião Agendada" value={metrics.reuniao_agendada} />
           <MetricCard title="Reunião Realizada" value={metrics.reuniao_realizada} />
           <MetricCard title="Ligações" value={metrics.quantidade_de_ligacao} />
-          <MetricCard title="Valor Ganho" value={metrics.valor_ganho} format="currency" />
+          <MetricCard title="Ganho" value={metrics.valor_ganho} />
         </div>
 
         {/* Gráficos */}
@@ -129,7 +129,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
           <BarChart data={chartData.reunioesAgendadas} xAxisKey="name" yAxisKey="value" title="Reuniões Agendadas" color="#3b82f6" />
           <BarChart data={chartData.reunioesRealizadas} xAxisKey="name" yAxisKey="value" title="Reuniões Realizadas" color="#10b981" />
           <BarChart data={chartData.ligacoes} xAxisKey="name" yAxisKey="value" title="Ligações" color="#f59e0b" />
-          <BarChart data={chartData.valorGanho} xAxisKey="name" yAxisKey="value" title="Valor Ganho" color="#ef4444" format="currency" />
+          <BarChart data={chartData.valorGanho} xAxisKey="name" yAxisKey="value" title="Ganho" color="#ef4444" />
         </div>
       </div>
     </div>

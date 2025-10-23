@@ -191,7 +191,7 @@ getVendorMetrics(data: any[]): any[] {
     vendorMetrics[responsavel].reuniao_agendada += Number(row['Reunião Agendada']) || 0;
     vendorMetrics[responsavel].reuniao_realizada += Number(row['Reunião Realizada']) || 0;
     vendorMetrics[responsavel].quantidade_de_ligacao += Number(row['Quantidade de Ligação']) || 0;
-    vendorMetrics[responsavel].valor_ganho += Number(row['Valor Ganho']) || 0;
+    vendorMetrics[responsavel].valor_ganho += Number(row['Ganho']) || 0;
 
     if (index < 3) {
       console.log(`📋 Registro ${index + 1} de ${responsavel}:`, {
