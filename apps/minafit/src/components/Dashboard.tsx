@@ -32,13 +32,19 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
   const filteredData = React.useMemo(() => {
   if (!rawData) return [];
 
+  const today = new Date();
+  const currentMonth = (today.getMonth() + 1).toString().padStart(2, '0');
+  const currentYear = today.getFullYear().toString();
+
   const periodToUse = selectedPeriod === 'mes' ? 'custom' : selectedPeriod;
+  const monthToUse = selectedPeriod === 'mes' ? currentMonth : selectedMonth;
+  const yearToUse = selectedPeriod === 'mes' ? currentYear : selectedYear;
 
   const periodFiltered = googleSheetsService.filterDataByPeriod(
     rawData,
     periodToUse,
-    selectedMonth,
-    selectedYear
+    monthToUse,
+    yearToUse
   );
 
   if (selectedVendor) {
@@ -47,6 +53,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
 
   return periodFiltered;
 }, [rawData, selectedPeriod, selectedMonth, selectedYear, selectedVendor]);
+
 
 
   const metrics = React.useMemo(() => {
