@@ -13,7 +13,8 @@ interface DashboardProps {
 export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
   const config = getDashboardConfig(dashboardName);
   const [selectedPeriod, setSelectedPeriod] = React.useState<'hoje' | 'ontem' | 'semana' | 'mes'>('ontem');
-  const [selectedVendor, setSelectedVendor] = React.useState<string>('');
+  // const [selectedVendor, setSelectedVendor] = React.useState<string>('');
+  const [selectedVendors, setSelectedVendors] = React.useState<string[]>([]);
   const [selectedMonth, setSelectedMonth] = React.useState<string>('');
   const [selectedYear, setSelectedYear] = React.useState<string>('');
 
@@ -47,12 +48,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
     yearToUse
   );
 
-  if (selectedVendor) {
+  /*if (selectedVendor) {
     return periodFiltered.filter(row => row.Responsável === selectedVendor);
-  }
+  }*/
+ if (selectedVendors.length > 0) {
+  return periodFiltered.filter(row => selectedVendors.includes(row.Responsável));
+}
+
 
   return periodFiltered;
-}, [rawData, selectedPeriod, selectedMonth, selectedYear, selectedVendor]);
+}, [selectedPeriod, selectedMonth, selectedYear, selectedVendors]);
 
 
 
@@ -91,6 +96,13 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
     return Array.from(new Set(rawData?.map(r => r.Responsável).filter(Boolean) || [])).sort();
   }, [rawData]);
 
+  React.useEffect(() => {
+  if (vendors.length > 0 && selectedVendors.length === 0) {
+    setSelectedVendors(vendors);
+  }
+}, [vendors, selectedVendors]);
+
+
   if (isLoading) {
     return <p className="p-8 text-center text-gray-600">Carregando dados da planilha...</p>;
   }
@@ -113,8 +125,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
         <FilterBar
           selectedPeriod={selectedPeriod}
           onPeriodChange={setSelectedPeriod}
-          selectedVendor={selectedVendor}
-          onVendorChange={setSelectedVendor}
+          selectedVendors={selectedVendors}
+          onVendorsChange={setSelectedVendors}
           vendors={vendors}
           totalRecords={filteredData.length}
           selectedMonth={selectedMonth}
