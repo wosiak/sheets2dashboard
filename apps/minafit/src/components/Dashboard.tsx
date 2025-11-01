@@ -149,7 +149,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
           <BarChart data={chartData.reunioesAgendadas} xAxisKey="name" yAxisKey="value" title="Reuniões Agendadas" color="#3b82f6" />
           <BarChart data={chartData.reunioesRealizadas} xAxisKey="name" yAxisKey="value" title="Reuniões Realizadas" color="#10b981" />
           <BarChart data={chartData.ligacoes} xAxisKey="name" yAxisKey="value" title="Ligações" color="#f59e0b" />
-          <BarChart data={chartData.valorGanho} xAxisKey="name" yAxisKey="value" title="Ganho" color="#ef4444" />
+          <BarChart data={chartData.valorGanho} xAxisKey="name" yAxisKey="value" title="Ganho" color="#ef4444" format="currency" />
         </div>
       </div>
     </div>
