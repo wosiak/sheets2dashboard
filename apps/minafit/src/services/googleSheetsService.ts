@@ -41,6 +41,10 @@ export class GoogleSheetsService {
     }
   }
 
+  /**
+   * 🔄 Faz o parse dos dados brutos do Google Sheets,
+   * converte números, datas e valores monetários (R$)
+   */
   parseSheetData(rawData: any[][]): any[] {
     console.log('🔄 Iniciando parse dos dados da planilha...');
     
@@ -63,10 +67,28 @@ export class GoogleSheetsService {
           const value = row[colIndex] || '';
 
           if (typeof value === 'string' && value.trim()) {
-            if (!isNaN(Number(value))) {
-              rowData[header.trim()] = Number(value);
-            } else {
-              rowData[header.trim()] = value;
+            const trimmed = value.trim();
+
+            // 💰 Detecta valores monetários (R$ 1.234,56)
+            const isCurrency = /^R?\$?\s?[\d.,]+$/.test(trimmed);
+
+            if (isCurrency) {
+              // Remove "R$", espaços e pontos de milhar, troca vírgula por ponto
+              const numericString = trimmed
+                .replace(/[R$\s]/g, '')
+                .replace(/\./g, '')
+                .replace(',', '.');
+
+              const numericValue = Number(numericString);
+              rowData[header.trim()] = isNaN(numericValue) ? 0 : numericValue;
+            } 
+            else if (!isNaN(Number(trimmed))) {
+              // 🔢 Caso seja apenas número normal
+              rowData[header.trim()] = Number(trimmed);
+            } 
+            else {
+              // 📄 Texto puro
+              rowData[header.trim()] = trimmed;
             }
           } else {
             rowData[header.trim()] = value;
@@ -89,8 +111,6 @@ export class GoogleSheetsService {
 
     return parsedData;
   }
-
-  // Outras funções continuam iguais...
 
   // Função para parsear datas no formato brasileiro
   private parseDate(dateStr: string): Date | null {
@@ -128,10 +148,9 @@ export class GoogleSheetsService {
 
     const filteredData = data.filter(row => {
       const rawDate = row['Data'] || row['DATA'];
-if (!rawDate) return false;
+      if (!rawDate) return false;
 
-const rowDate = this.parseDate(rawDate);
-
+      const rowDate = this.parseDate(rawDate);
       if (!rowDate) return false;
 
       const rowDateStr = this.formatDateForComparison(rowDate);
@@ -164,47 +183,47 @@ const rowDate = this.parseDate(rawDate);
     return filteredData;
   }
 
- // Função para obter métricas agregadas por responsável
-getVendorMetrics(data: any[]): any[] {
-  console.log('🔍 Iniciando cálculo de métricas por responsável...');
-  console.log('📊 Total de registros para processar:', data.length);
+  // Função para obter métricas agregadas por responsável
+  getVendorMetrics(data: any[]): any[] {
+    console.log('🔍 Iniciando cálculo de métricas por responsável...');
+    console.log('📊 Total de registros para processar:', data.length);
 
-  const vendorMetrics: Record<string, any> = {};
+    const vendorMetrics: Record<string, any> = {};
 
-  data.forEach((row, index) => {
-    const responsavel = row['Responsável'];
-    if (!responsavel) {
-      console.log('⚠️ Registro sem Responsável:', row);
-      return;
-    }
+    data.forEach((row, index) => {
+      const responsavel = row['Responsável'];
+      if (!responsavel) {
+        console.log('⚠️ Registro sem Responsável:', row);
+        return;
+      }
 
-    if (!vendorMetrics[responsavel]) {
-      vendorMetrics[responsavel] = {
-        responsavel,
-        reuniao_agendada: 0,
-        reuniao_realizada: 0,
-        quantidade_de_ligacao: 0,
-        valor_ganho: 0,
-      };
-    }
+      if (!vendorMetrics[responsavel]) {
+        vendorMetrics[responsavel] = {
+          responsavel,
+          reuniao_agendada: 0,
+          reuniao_realizada: 0,
+          quantidade_de_ligacao: 0,
+          valor_ganho: 0,
+        };
+      }
 
-    vendorMetrics[responsavel].reuniao_agendada += Number(row['Reunião Agendada']) || 0;
-    vendorMetrics[responsavel].reuniao_realizada += Number(row['Reunião Realizada']) || 0;
-    vendorMetrics[responsavel].quantidade_de_ligacao += Number(row['Quantidade de Ligação']) || 0;
-    vendorMetrics[responsavel].valor_ganho += Number(row['Ganho']) || 0;
+      vendorMetrics[responsavel].reuniao_agendada += Number(row['Reunião Agendada']) || 0;
+      vendorMetrics[responsavel].reuniao_realizada += Number(row['Reunião Realizada']) || 0;
+      vendorMetrics[responsavel].quantidade_de_ligacao += Number(row['Quantidade de Ligação']) || 0;
+      vendorMetrics[responsavel].valor_ganho += Number(row['Ganho']) || 0;
 
-    if (index < 3) {
-      console.log(`📋 Registro ${index + 1} de ${responsavel}:`, {
-        reuniao_agendada: vendorMetrics[responsavel].reuniao_agendada,
-        valor_ganho: vendorMetrics[responsavel].valor_ganho,
-      });
-    }
-  });
+      if (index < 3) {
+        console.log(`📋 Registro ${index + 1} de ${responsavel}:`, {
+          reuniao_agendada: vendorMetrics[responsavel].reuniao_agendada,
+          valor_ganho: vendorMetrics[responsavel].valor_ganho,
+        });
+      }
+    });
 
-  const result = Object.values(vendorMetrics);
-  console.log('📊 Métricas por responsável calculadas:', result.length, 'itens');
-  return result;
-}
+    const result = Object.values(vendorMetrics);
+    console.log('📊 Métricas por responsável calculadas:', result.length, 'itens');
+    return result;
+  }
 }
 
 // Instância padrão do serviço

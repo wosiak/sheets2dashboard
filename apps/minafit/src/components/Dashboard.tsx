@@ -140,8 +140,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
           <MetricCard title="Reunião Agendada" value={metrics.reuniao_agendada} />
           <MetricCard title="Reunião Realizada" value={metrics.reuniao_realizada} />
           <MetricCard title="Ligações" value={metrics.quantidade_de_ligacao} />
-          <MetricCard title="Ganho" value={metrics.valor_ganho} />
+          <MetricCard title="Ganho" value={metrics.valor_ganho} format="currency" />
         </div>
+
 
         {/* Gráficos */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10">
