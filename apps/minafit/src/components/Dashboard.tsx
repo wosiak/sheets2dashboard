@@ -15,11 +15,15 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
   const [selectedPeriod, setSelectedPeriod] = React.useState<'hoje' | 'ontem' | 'semana' | 'mes'>('ontem');
   // const [selectedVendor, setSelectedVendor] = React.useState<string>('');
   const [selectedVendors, setSelectedVendors] = React.useState<string[]>([]);
+  const [selectedSources, setSelectedSources] = React.useState<string[]>([]);
   const [selectedMonth, setSelectedMonth] = React.useState<string>('');
   const [selectedYear, setSelectedYear] = React.useState<string>('');
 
   const apiKey = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY || '';
-  const googleSheetsService = new GoogleSheetsService(apiKey);
+  const googleSheetsService = React.useMemo(() => {
+  return new GoogleSheetsService(apiKey);
+}, [apiKey]);
+
 
   const { data: rawData, isLoading, error } = useQuery({
     queryKey: ['dashboard-data', dashboardName, config.spreadsheetId, config.sheetName],
@@ -48,17 +52,28 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
     yearToUse
   );
 
-  /*if (selectedVendor) {
-    return periodFiltered.filter(row => row.Responsável === selectedVendor);
-  }*/
- if (selectedVendors.length > 0) {
-  return periodFiltered.filter(row => selectedVendors.includes(row.Responsável));
-}
+  return periodFiltered.filter(row => {
+    const vendorMatch =
+      selectedVendors.length === 0 ||
+      selectedVendors.includes(row.Responsável);
+
+    const sourceMatch =
+  selectedSources.length > 0
+    ? selectedSources.includes(row.Fonte ?? '')
+    : true;
 
 
-  return periodFiltered;
-}, [selectedPeriod, selectedMonth, selectedYear, selectedVendors]);
-
+    return vendorMatch && sourceMatch;
+  });
+}, [
+  rawData,
+  selectedPeriod,
+  selectedMonth,
+  selectedYear,
+  selectedVendors,
+  selectedSources,
+  googleSheetsService
+]);
 
 
   const metrics = React.useMemo(() => {
@@ -96,12 +111,15 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
     return Array.from(new Set(rawData?.map(r => r.Responsável).filter(Boolean) || [])).sort();
   }, [rawData]);
 
+  const sources = React.useMemo(() => {
+    return Array.from(new Set(rawData?.map(r => r.Fonte).filter(Boolean) || [])).sort();
+  }, [rawData]);
+
   React.useEffect(() => {
   if (vendors.length > 0 && selectedVendors.length === 0) {
     setSelectedVendors(vendors);
   }
 }, [vendors, selectedVendors]);
-
 
   if (isLoading) {
     return <p className="p-8 text-center text-gray-600">Carregando dados da planilha...</p>;
@@ -123,17 +141,24 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
 
         {/* Filtros */}
         <FilterBar
-          selectedPeriod={selectedPeriod}
-          onPeriodChange={setSelectedPeriod}
-          selectedVendors={selectedVendors}
-          onVendorsChange={setSelectedVendors}
-          vendors={vendors}
-          totalRecords={filteredData.length}
-          selectedMonth={selectedMonth}
-          onMonthChange={setSelectedMonth}
-          selectedYear={selectedYear}
-          onYearChange={setSelectedYear}
-        />
+  selectedPeriod={selectedPeriod}
+  onPeriodChange={setSelectedPeriod}
+
+  selectedVendors={selectedVendors}
+  onVendorsChange={setSelectedVendors}
+  vendors={vendors}
+
+  selectedSources={selectedSources}
+  onSourcesChange={setSelectedSources}
+  sources={sources}
+
+  totalRecords={filteredData.length}
+  selectedMonth={selectedMonth}
+  onMonthChange={setSelectedMonth}
+  selectedYear={selectedYear}
+  onYearChange={setSelectedYear}
+/>
+
 
         {/* Métricas */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
