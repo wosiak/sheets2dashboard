@@ -45,7 +45,6 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   const vendorRef = useRef<HTMLDivElement>(null);
   const sourceRef = useRef<HTMLDivElement>(null);
 
-  // Fecha dropdown ao clicar fora
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (vendorRef.current && !vendorRef.current.contains(event.target as Node)) {
@@ -74,21 +73,16 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border p-6">
+    <div className="filter-bar">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
 
-        {/* COLUNA ESQUERDA - PERÍODO */}
+        {/* PERÍODO */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Período
-          </label>
-
+          <label className="filter-label">Período</label>
           <select
             value={selectedPeriod}
-            onChange={(e) =>
-              onPeriodChange(e.target.value as any)
-            }
-            className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full"
+            onChange={(e) => onPeriodChange(e.target.value as any)}
+            className="filter-select"
           >
             <option value="hoje">Hoje</option>
             <option value="ontem">Ontem</option>
@@ -109,15 +103,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           )}
         </div>
 
-        {/* COLUNA DO MEIO - CORRETORES */}
+        {/* CORRETORES */}
         <div className="relative w-64 mx-auto" ref={vendorRef}>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Corretores
-          </label>
+          <label className="filter-label">Corretores</label>
 
           <button
             onClick={() => setVendorDropdownOpen(!vendorDropdownOpen)}
-            className="w-full border px-3 py-2 rounded text-sm text-left bg-white"
+            className="filter-dropdown-btn"
           >
             {selectedVendors.length > 0
               ? selectedVendors.join(', ')
@@ -125,16 +117,17 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           </button>
 
           {vendorDropdownOpen && (
-            <div className="absolute z-10 mt-2 w-full bg-white border rounded shadow p-3 max-h-64 overflow-y-auto">
-              <div className="flex gap-2 mb-3">
+            <div className="absolute z-10 mt-2 w-full filter-dropdown-panel">
+              <div className="flex gap-3 mb-3">
                 <button
-                  className="text-xs text-blue-600"
+                  className="text-xs font-medium"
+                  style={{ color: 'var(--accent)' }}
                   onClick={() => onVendorsChange(vendors)}
                 >
                   Selecionar todos
                 </button>
                 <button
-                  className="text-xs text-red-500"
+                  className="text-xs font-medium text-red-400"
                   onClick={() => onVendorsChange([])}
                 >
                   Limpar
@@ -142,7 +135,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               </div>
 
               {vendors.map(v => (
-                <label key={v} className="flex gap-2 text-sm mb-2">
+                <label key={v} className="flex gap-2 text-sm mb-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={selectedVendors.includes(v)}
@@ -157,18 +150,14 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           )}
         </div>
 
-        {/* COLUNA DIREITA - FONTE + TOTAL */}
+        {/* FONTE + TOTAL */}
         <div className="flex items-end gap-6 justify-end">
-
-          {/* Fonte */}
           <div className="relative w-64" ref={sourceRef}>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Fonte
-            </label>
+            <label className="filter-label">Fonte</label>
 
             <button
               onClick={() => setSourceDropdownOpen(!sourceDropdownOpen)}
-              className="w-full border px-3 py-2 rounded text-sm text-left bg-white"
+              className="filter-dropdown-btn"
             >
               {selectedSources.length > 0
                 ? selectedSources.join(', ')
@@ -176,16 +165,17 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             </button>
 
             {sourceDropdownOpen && (
-              <div className="absolute z-10 mt-2 w-full bg-white border rounded shadow p-3 max-h-64 overflow-y-auto">
-                <div className="flex gap-2 mb-3">
+              <div className="absolute z-10 mt-2 w-full filter-dropdown-panel">
+                <div className="flex gap-3 mb-3">
                   <button
-                    className="text-xs text-blue-600"
+                    className="text-xs font-medium"
+                    style={{ color: 'var(--accent)' }}
                     onClick={() => onSourcesChange(sources)}
                   >
                     Selecionar todos
                   </button>
                   <button
-                    className="text-xs text-red-500"
+                    className="text-xs font-medium text-red-400"
                     onClick={() => onSourcesChange([])}
                   >
                     Limpar
@@ -193,7 +183,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 </div>
 
                 {sources.map(s => (
-                  <label key={s} className="flex gap-2 text-sm mb-2">
+                  <label key={s} className="flex gap-2 text-sm mb-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={selectedSources.includes(s)}
@@ -208,10 +198,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             )}
           </div>
 
-          {/* Total */}
-          <div className="text-sm text-gray-600 whitespace-nowrap">
+          <div className="text-sm whitespace-nowrap" style={{ color: 'var(--text-secondary)' }}>
             Total de registros:{' '}
-            <span className="font-semibold text-gray-900">
+            <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>
               {totalRecords}
             </span>
           </div>

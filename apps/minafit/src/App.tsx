@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Dashboard } from './components/Dashboard';
 import { TVModeToggle } from './components/TVModeToggle';
+import { ThemeToggle } from './components/ThemeToggle';
 import { availableDashboards } from './config/dashboards';
 import solyidmoblogo from './assets/solydimob-logo.jpeg';
 
-// Configuração do React Query
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -18,40 +18,58 @@ const queryClient = new QueryClient({
 function App() {
   const [currentDashboard, setCurrentDashboard] = useState('vendas');
   const [isTVMode, setIsTVMode] = useState(false);
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    const saved = localStorage.getItem('solyd-theme');
+    return (saved === 'light' || saved === 'dark') ? saved : 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('solyd-theme', theme);
+  }, [theme]);
+
+  useEffect(() => {
+    if (isTVMode) {
+      document.documentElement.classList.add('tv-mode');
+    } else {
+      document.documentElement.classList.remove('tv-mode');
+    }
+    return () => document.documentElement.classList.remove('tv-mode');
+  }, [isTVMode]);
+
+  const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
   console.log('🎯 App - Dashboard atual:', currentDashboard);
   console.log('📋 Dashboards disponíveis:', availableDashboards.map(d => d.id));
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className={`min-h-screen bg-gray-50 ${isTVMode ? 'p-0' : 'p-6'}`}>
+      <div className={`min-h-screen ${isTVMode ? 'p-0' : 'p-0'}`}>
         {/* Header */}
-        <div className={`bg-white shadow-sm border-b ${isTVMode ? 'p-4' : 'p-6 mb-6'}`}>
-          <div className="flex items-center justify-between">
-            {/* Espaçador vazio para centralizar */}
-            <div className="w-48"></div>
-            
-            {/* Logo e Título Centralizados */}
-            <div className="flex items-center space-x-4">
-              <img 
-                src={solyidmoblogo} 
-                alt="Solyd Imob Logo" 
-                className="w-16 h-16 rounded-lg object-cover"
+        <div className={`app-header ${isTVMode ? 'px-8 py-5' : 'px-6 py-4'}`}>
+          <div className="flex items-center justify-between max-w-[1600px] mx-auto">
+            <div className="flex items-center gap-3 w-56">
+              <ThemeToggle theme={theme} onToggle={toggleTheme} />
+            </div>
+
+            <div className="flex items-center gap-4">
+              <img
+                src={solyidmoblogo}
+                alt="Solyd Imob Logo"
+                className={`rounded-lg object-cover ${isTVMode ? 'w-14 h-14' : 'w-10 h-10'}`}
               />
-              <h1 className="text-4xl font-bold text-gray-900">
+              <h1 className={`font-semibold text-[var(--text-primary)] ${isTVMode ? 'text-xl' : 'text-lg'}`}>
                 Dashboards | Solyd Imob
               </h1>
             </div>
-            
-            {/* Controles à direita */}
-            <div className="flex items-center space-x-4 w-48 justify-end">
-              {/* Seletor de Dashboard */}
-              <div className="flex items-center space-x-2">
-                <label className="text-sm font-medium text-gray-700">Dashboard:</label>
+
+            <div className="flex items-center gap-4 w-56 justify-end">
+              <div className="flex items-center gap-2">
+                <label className="text-sm font-medium text-[var(--text-secondary)]">Dashboard:</label>
                 <select
                   value={currentDashboard}
                   onChange={(e) => setCurrentDashboard(e.target.value)}
-                  className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="header-select"
                 >
                   {availableDashboards.map((dashboard) => (
                     <option key={dashboard.id} value={dashboard.id}>
@@ -60,16 +78,15 @@ function App() {
                   ))}
                 </select>
               </div>
-              
-              {/* TV Mode Toggle */}
+
               <TVModeToggle isTVMode={isTVMode} onToggle={setIsTVMode} />
             </div>
           </div>
         </div>
 
         {/* Dashboard Content */}
-        <div className={isTVMode ? 'p-4' : ''}>
-          <Dashboard dashboardName={currentDashboard} />
+        <div className={isTVMode ? 'px-8 py-4' : 'px-6 py-6'}>
+          <Dashboard dashboardName={currentDashboard} isTVMode={isTVMode} selectedPeriodLabel="" />
         </div>
       </div>
     </QueryClientProvider>

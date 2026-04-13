@@ -1,10 +1,5 @@
 import React from 'react';
 
-/**
- * Componente de filtro de mês específico
- * Permite selecionar um mês e ano específicos para filtrar dados
- * Útil para visualizar dados históricos (ex: dados de agosto quando estamos em setembro)
- */
 interface MonthFilterProps {
   selectedMonth: string;
   onMonthChange: (month: string) => void;
@@ -37,15 +32,13 @@ export const MonthFilter: React.FC<MonthFilterProps> = ({
   const years = Array.from({ length: 5 }, (_, i) => currentYear - 2 + i);
 
   return (
-    <div className="flex items-center space-x-3">
+    <div className="flex items-center gap-3">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Mês
-        </label>
+        <label className="filter-label">Mês</label>
         <select
           value={selectedMonth}
           onChange={(e) => onMonthChange(e.target.value)}
-          className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="filter-select"
         >
           <option value="">Selecione o mês</option>
           {months.map((month) => (
@@ -57,13 +50,11 @@ export const MonthFilter: React.FC<MonthFilterProps> = ({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Ano
-        </label>
+        <label className="filter-label">Ano</label>
         <select
           value={selectedYear}
           onChange={(e) => onYearChange(e.target.value)}
-          className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="filter-select"
         >
           <option value="">Selecione o ano</option>
           {years.map((year) => (

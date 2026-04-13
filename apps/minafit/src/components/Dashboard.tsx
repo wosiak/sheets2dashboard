@@ -6,14 +6,25 @@ import { FilterBar } from './FilterBar';
 import { getDashboardConfig } from '../config/dashboards';
 import { GoogleSheetsService } from '../services/googleSheetsService';
 
+const OPERADORES_EXCLUIDOS = ['MADUREIRA', 'MARI DANTAS', 'EDUARDO BRAGAGNOLO', 'ADRIANA FERREIRA'];
+
+const PERIOD_LABELS: Record<string, string> = {
+  hoje: 'Hoje',
+  ontem: 'Ontem',
+  semana: 'Última Semana',
+  mes: 'Mês Atual',
+  custom: 'Mês Específico',
+};
+
 interface DashboardProps {
   dashboardName: string;
+  isTVMode?: boolean;
+  selectedPeriodLabel?: string;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ dashboardName, isTVMode = false }) => {
   const config = getDashboardConfig(dashboardName);
   const [selectedPeriod, setSelectedPeriod] = React.useState<'hoje' | 'ontem' | 'semana' | 'mes'>('ontem');
-  // const [selectedVendor, setSelectedVendor] = React.useState<string>('');
   const [selectedVendors, setSelectedVendors] = React.useState<string[]>([]);
   const [selectedSources, setSelectedSources] = React.useState<string[]>([]);
   const [selectedMonth, setSelectedMonth] = React.useState<string>('');
@@ -29,9 +40,14 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
     queryKey: ['dashboard-data', dashboardName, config.spreadsheetId, config.sheetName],
     queryFn: async () => {
       const sheetData = await googleSheetsService.getSheetData(config.spreadsheetId, config.sheetName);
-      return googleSheetsService.parseSheetData(sheetData);
+      const parsed = googleSheetsService.parseSheetData(sheetData);
+      return parsed.filter(row => {
+        const nome = (row['Responsável'] || row['Responsavel'] || '').trim().replace(/\s+/g, ' ').toUpperCase();
+        return !OPERADORES_EXCLUIDOS.some(excluido => nome.includes(excluido));
+      });
     },
     refetchInterval: config.refreshInterval * 1000,
+    staleTime: 0,
   });
 
   const filteredData = React.useMemo(() => {
@@ -82,6 +98,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
       reuniao_realizada: 0,
       quantidade_de_ligacao: 0,
       valor_ganho: 0,
+      ligacoes_inbound: 0,
+      ligacoes_outbound: 0,
     };
 
     filteredData.forEach(row => {
@@ -89,6 +107,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
       total.reuniao_realizada += Number(row['Reunião Realizada']) || 0;
       total.quantidade_de_ligacao += Number(row['Quantidade de Ligação']) || 0;
       total.valor_ganho += Number(row['Ganho']) || 0;
+      total.ligacoes_inbound += Number(row['Ligações Inbound'] || 0);
+      total.ligacoes_outbound += Number(row['Ligações Outbound'] || 0);
     });
 
     return total;
@@ -99,11 +119,23 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
 
     const sort = (arr: any[]) => arr.sort((a, b) => b.value - a.value);
 
+    const inboundMap: Record<string, number> = {};
+    const outboundMap: Record<string, number> = {};
+
+    filteredData.forEach(row => {
+      const resp = row['Responsável'];
+      if (!resp) return;
+      inboundMap[resp] = (inboundMap[resp] || 0) + Number(row['Ligações Inbound'] || 0);
+      outboundMap[resp] = (outboundMap[resp] || 0) + Number(row['Ligações Outbound'] || 0);
+    });
+
     return {
       reunioesAgendadas: sort(vendorMetrics.map(v => ({ name: v.responsavel, value: v.reuniao_agendada }))),
       reunioesRealizadas: sort(vendorMetrics.map(v => ({ name: v.responsavel, value: v.reuniao_realizada }))),
       ligacoes: sort(vendorMetrics.map(v => ({ name: v.responsavel, value: v.quantidade_de_ligacao }))),
       valorGanho: sort(vendorMetrics.map(v => ({ name: v.responsavel, value: v.valor_ganho }))),
+      inbound: sort(Object.entries(inboundMap).map(([name, value]) => ({ name, value }))),
+      outbound: sort(Object.entries(outboundMap).map(([name, value]) => ({ name, value }))),
     };
   }, [filteredData]);
 
@@ -122,59 +154,85 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName }) => {
 }, [vendors, selectedVendors]);
 
   if (isLoading) {
-    return <p className="p-8 text-center text-gray-600">Carregando dados da planilha...</p>;
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center">
+          <div className="inline-block w-8 h-8 border-4 border-[var(--accent)] border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p style={{ color: 'var(--text-secondary)' }}>Carregando dados da planilha...</p>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <p className="p-8 text-center text-red-500">Erro ao carregar dados da planilha.</p>;
+    return <p className="p-8 text-center text-red-400">Erro ao carregar dados da planilha.</p>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen p-0">
+      <div className="max-w-[1600px] mx-auto">
 
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard Solyd Imob</h1>
-          <p className="text-gray-600">Acompanhamento de performance</p>
+        {/* Header interno + badge de período no TV mode */}
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+              Dashboard Solyd Imob
+            </h1>
+            <p style={{ color: 'var(--text-secondary)' }} className="text-sm mt-1">
+              Acompanhamento de performance
+            </p>
+          </div>
+          {isTVMode && (
+            <span
+              className="tv-period-badge hidden px-4 py-2 rounded-lg text-sm font-medium"
+              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-card)', color: 'var(--text-secondary)' }}
+            >
+              Período: {PERIOD_LABELS[selectedPeriod] || selectedPeriod}
+            </span>
+          )}
         </div>
 
         {/* Filtros */}
-        <FilterBar
-  selectedPeriod={selectedPeriod}
-  onPeriodChange={setSelectedPeriod}
-
-  selectedVendors={selectedVendors}
-  onVendorsChange={setSelectedVendors}
-  vendors={vendors}
-
-  selectedSources={selectedSources}
-  onSourcesChange={setSelectedSources}
-  sources={sources}
-
-  totalRecords={filteredData.length}
-  selectedMonth={selectedMonth}
-  onMonthChange={setSelectedMonth}
-  selectedYear={selectedYear}
-  onYearChange={setSelectedYear}
-/>
-
-
-        {/* Métricas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <MetricCard title="Reunião Agendada" value={metrics.reuniao_agendada} />
-          <MetricCard title="Reunião Realizada" value={metrics.reuniao_realizada} />
-          <MetricCard title="Ligações" value={metrics.quantidade_de_ligacao} />
-          <MetricCard title="Ganho" value={metrics.valor_ganho} format="currency" />
+        <div className="mb-6">
+          <FilterBar
+            selectedPeriod={selectedPeriod}
+            onPeriodChange={setSelectedPeriod}
+            selectedVendors={selectedVendors}
+            onVendorsChange={setSelectedVendors}
+            vendors={vendors}
+            selectedSources={selectedSources}
+            onSourcesChange={setSelectedSources}
+            sources={sources}
+            totalRecords={filteredData.length}
+            selectedMonth={selectedMonth}
+            onMonthChange={setSelectedMonth}
+            selectedYear={selectedYear}
+            onYearChange={setSelectedYear}
+          />
         </div>
 
+        {/* Métricas — linha principal */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-3">
+          <MetricCard title="Reunião Agendada" value={metrics.reuniao_agendada} icon="calendar" animationDelay={0.05} />
+          <MetricCard title="Reunião Realizada" value={metrics.reuniao_realizada} icon="check" animationDelay={0.10} />
+          <MetricCard title="Ligações" value={metrics.quantidade_de_ligacao} icon="phone" animationDelay={0.15} />
+          <MetricCard title="Ligações Inbound" value={metrics.ligacoes_inbound} icon="phone-in" animationDelay={0.20} />
+          <MetricCard title="Ligações Outbound" value={metrics.ligacoes_outbound} icon="phone-out" animationDelay={0.25} />
+        </div>
+
+        {/* Métricas — linha de destaque (Ganho) */}
+        <div className="mb-8">
+          <MetricCard title="Ganho" value={metrics.valor_ganho} format="currency" icon="money" animationDelay={0.30} variant="wide" />
+        </div>
 
         {/* Gráficos */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <BarChart data={chartData.ligacoes} xAxisKey="name" yAxisKey="value" title="Ligações" color="#f59e0b" />
           <BarChart data={chartData.reunioesAgendadas} xAxisKey="name" yAxisKey="value" title="Reuniões Agendadas" color="#3b82f6" />
           <BarChart data={chartData.reunioesRealizadas} xAxisKey="name" yAxisKey="value" title="Reuniões Realizadas" color="#10b981" />
           <BarChart data={chartData.valorGanho} xAxisKey="name" yAxisKey="value" title="Ganho" color="#ef4444" format="currency" />
+          <BarChart data={chartData.inbound} xAxisKey="name" yAxisKey="value" title="Ligações Inbound" color="#8b5cf6" />
+          <BarChart data={chartData.outbound} xAxisKey="name" yAxisKey="value" title="Ligações Outbound" color="#06b6d4" />
         </div>
       </div>
     </div>

@@ -2,51 +2,411 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ——— Dark theme (padrão) ——— */
+:root,
+[data-theme="dark"] {
+  --bg-base: #0f172a;
+  --bg-card: #1e293b;
+  --bg-header: #1e293b;
+  --border-card: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --accent: #8b5cf6;
+  --accent-hover: #7c3aed;
+  --success: #10b981;
+  --chart-1: #8b5cf6;
+  --chart-2: #06b6d4;
+  --chart-3: #10b981;
+  --chart-4: #f59e0b;
+  --chart-5: #f97316;
+  --chart-6: #ec4899;
+  --shadow-dropdown: rgba(0, 0, 0, 0.4);
+}
+
+/* ——— Light theme ——— */
+[data-theme="light"] {
+  --bg-base: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-header: #ffffff;
+  --border-card: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  --success: #059669;
+  --chart-1: #7c3aed;
+  --chart-2: #0891b2;
+  --chart-3: #059669;
+  --chart-4: #d97706;
+  --chart-5: #ea580c;
+  --chart-6: #db2777;
+  --shadow-dropdown: rgba(0, 0, 0, 0.1);
+}
+
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
   }
 }
 
 @layer components {
+  /* ——— Animações ——— */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in-up {
+    opacity: 0;
+    animation: fadeInUp 0.4s ease forwards;
+  }
+
+  /* ——— Header ——— */
+  .app-header {
+    background: var(--bg-header);
+    border-bottom: 1px solid var(--border-card);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+
+  /* ——— Cards genéricos ——— */
   .card {
-    @apply bg-white rounded-lg shadow-md p-6;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: background-color 0.3s, border-color 0.3s;
   }
-  
+
+  /* ——— Metric Cards ——— */
   .metric-card {
-    @apply bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-6 shadow-lg;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: background-color 0.3s, border-color 0.3s;
   }
-  
-  .chart-container {
-    @apply bg-white rounded-lg shadow-md p-4;
+
+  .metric-card .metric-icon {
+    background: rgba(139, 92, 246, 0.15);
+    padding: 10px;
+    border-radius: 50%;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  
-  /* Estilos para modo TV */
-  .tv-content {
-    @apply p-5;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
+
+  .metric-card .metric-label {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
   }
-  
-  .tv-content .chart-container {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+
+  .metric-card .metric-value {
+    color: var(--text-primary);
+    font-size: 2rem;
+    font-weight: 700;
   }
-  
-  .tv-content .metric-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 15px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+
+  .metric-card .metric-value.is-currency {
+    color: var(--success);
   }
-  
-  .tv-content h1 {
-    font-size: 3rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+  /* Variante wide — card horizontal fino */
+  .metric-card-wide {
+    padding: 0.875rem 1.5rem;
   }
-  
-  .tv-content h3 {
+
+  .metric-card-wide .metric-label {
+    margin-bottom: 0;
+  }
+
+  .metric-card-wide .metric-value {
     font-size: 1.5rem;
+    margin-top: 0;
+  }
+
+  /* ——— Charts ——— */
+  .chart-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+
+  .chart-container .chart-title {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-card);
+  }
+
+  /* ——— Filtros ——— */
+  .filter-bar {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+
+  .filter-label {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    margin-bottom: 0.375rem;
+    display: block;
+  }
+
+  .filter-select {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    border: 1px solid var(--border-card);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s, background-color 0.3s, color 0.3s;
+  }
+
+  .filter-select:focus {
+    border-color: var(--accent);
+  }
+
+  .filter-select option {
+    background: var(--bg-base);
+    color: var(--text-primary);
+  }
+
+  .filter-dropdown-btn {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    border: 1px solid var(--border-card);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    width: 100%;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.3s, color 0.3s;
+  }
+
+  .filter-dropdown-btn:hover {
+    border-color: var(--accent);
+  }
+
+  .filter-dropdown-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 8px;
+    box-shadow: 0 10px 40px var(--shadow-dropdown);
+    padding: 0.75rem;
+    max-height: 16rem;
+    overflow-y: auto;
+  }
+
+  .filter-dropdown-panel::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .filter-dropdown-panel::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .filter-dropdown-panel::-webkit-scrollbar-thumb {
+    background: var(--border-card);
+    border-radius: 3px;
+  }
+
+  .filter-dropdown-panel label {
+    color: var(--text-primary);
+  }
+
+  .filter-dropdown-panel input[type="checkbox"] {
+    accent-color: var(--accent);
+  }
+
+  /* ——— Botão TV ——— */
+  .btn-tv-on {
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-tv-on:hover {
+    background: var(--accent-hover);
+  }
+
+  .btn-tv-off {
+    background: #ef4444;
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-tv-off:hover {
+    background: #dc2626;
+  }
+
+  /* ——— Header select ——— */
+  .header-select {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    border: 1px solid var(--border-card);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s, background-color 0.3s, color 0.3s;
+  }
+
+  .header-select:focus {
+    border-color: var(--accent);
+  }
+
+  .header-select option {
+    background: var(--bg-base);
+    color: var(--text-primary);
+  }
+
+  /* ——— Theme Toggle Switch ——— */
+  .theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .theme-toggle-track {
+    position: relative;
+    width: 56px;
+    height: 28px;
+    background: var(--border-card);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    transition: background-color 0.3s;
+  }
+
+  .theme-toggle-track.is-light {
+    background: #cbd5e1;
+  }
+
+  .theme-toggle-icon {
+    font-size: 14px;
+    line-height: 1;
+    z-index: 1;
+    user-select: none;
+  }
+
+  .theme-toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    background: var(--accent);
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .theme-toggle-track.is-light .theme-toggle-thumb {
+    transform: translateX(28px);
+    background: #f59e0b;
+  }
+
+  /* ——— Tooltip Recharts override ——— */
+  .recharts-default-tooltip {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-card) !important;
+    border-radius: 8px !important;
+    color: var(--text-primary) !important;
+  }
+
+  .recharts-tooltip-label {
+    color: var(--text-primary) !important;
+  }
+
+  /* ——— TV MODE ——— */
+  .tv-mode {
+    font-size: 18px;
+  }
+
+  .tv-mode .metric-card {
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .tv-mode .metric-card .metric-value {
+    font-size: clamp(1.8rem, 4vw, 3.5rem);
+    font-weight: 800;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .tv-mode .metric-card .metric-label {
+    font-size: 1rem;
+  }
+
+  .tv-mode .metric-card-wide {
+    padding: 1rem 2rem;
+  }
+
+  .tv-mode .metric-card-wide .metric-value {
+    font-size: 2.5rem;
+  }
+
+  .tv-mode .app-header {
+    padding: 1.25rem 2rem;
+  }
+
+  .tv-mode .app-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .tv-mode .chart-container {
+    padding: 1.5rem;
+  }
+
+  .tv-mode .filter-bar {
+    display: none;
+  }
+
+  .tv-mode .tv-period-badge {
+    display: inline-flex;
   }
 }

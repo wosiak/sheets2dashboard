@@ -3,8 +3,8 @@ import type { DashboardConfig } from '../types';
 // Configurações para diferentes dashboards
 export const dashboardConfigs: Record<string, DashboardConfig> = {
   vendas: {
-  spreadsheetId: '1OQkhC8Hme84i3VvnDuIiNERi4CUDByHPsBkNJ66RUMc',
-  sheetName: 'Dashboard',
+  spreadsheetId: import.meta.env.VITE_SPREADSHEET_ID || '1OQkhC8Hme84i3VvnDuIiNERi4CUDByHPsBkNJ66RUMc',
+  sheetName: import.meta.env.VITE_SHEET_NAME || 'Dashboard',
   refreshInterval: 60, // ou o que preferir
   charts: [
     {
