@@ -1,6 +1,20 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "functions": {
+    "api/index.js": {
+      "includeFiles": [
+        "dashboard.html",
+        "formulario.html",
+        "styles.css",
+        "sheets-api.js",
+        "engine.js",
+        "config.js",
+        "auth.js",
+        "database.json"
+      ]
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -11,7 +25,31 @@
       "destination": "/apps/minafit/dist/assets/$1"
     },
     {
-      "source": "/(dashboard\\.html|formulario\\.html|styles\\.css|sheets-api\\.js|engine\\.js|config\\.js|auth\\.js)",
+      "source": "/dashboard.html",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/formulario.html",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/styles.css",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/sheets-api.js",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/engine.js",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/config.js",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/auth.js",
       "destination": "/api/index.js"
     },
     {
