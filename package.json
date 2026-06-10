@@ -4,10 +4,14 @@
   "description": "Formulário e Dashboard de Marketing para Solyd Imob",
   "main": "server.js",
   "type": "commonjs",
+  "workspaces": [
+    "apps/minafit",
+    "apps/clearwater"
+  ],
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "build": "npm install --prefix apps/minafit && npm run build --prefix apps/minafit"
+    "build": "npm run build --workspace=apps/minafit"
   },
   "dependencies": {
     "cors": "^2.8.5",
