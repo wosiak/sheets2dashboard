@@ -16,7 +16,15 @@
       "destination": "/apps/minafit/dist/assets/$1"
     },
     {
+      "source": "/dashboard",
+      "destination": "/api/index.js"
+    },
+    {
       "source": "/dashboard.html",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/formulario",
       "destination": "/api/index.js"
     },
     {

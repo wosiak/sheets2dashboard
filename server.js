@@ -574,6 +574,15 @@ app.use(express.static(minafitDistPath));
 // Servir arquivos estáticos do diretório raiz
 app.use(express.static(process.cwd()));
 
+// Rotas explícitas para as telas de marketing (compatibilidade Vercel cleanUrls)
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'dashboard.html'));
+});
+
+app.get('/formulario', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'formulario.html'));
+});
+
 // Encaminhar todas as outras requisições para a index.html do React (ou fallback da raiz)
 app.get('*', async (req, res) => {
   try {
