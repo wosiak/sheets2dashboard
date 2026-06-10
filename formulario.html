@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solyd Imob — Formulário de Entrada</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+  <!-- Autenticação agora é feita via Service Account no Backend -->
+</head>
+<body>
+
+  <!-- Overlay de Loading -->
+  <div id="loader" class="loader-overlay">
+    <div class="loader-box">
+      <div class="spinner"></div>
+      <div id="loaderText" class="loader-text">Carregando dados...</div>
+    </div>
+  </div>
+
+  <!-- Toast Notificações -->
+  <div id="toast" class="toast">
+    <span id="toastIcon" class="toast-icon">✓</span>
+    <span id="toastMsg" class="toast-msg">Sucesso ao salvar!</span>
+  </div>
+
+  <div class="wrap">
+    <div class="topbar"></div>
+    
+    <!-- Navbar Premium com Botão de Login OAuth -->
+    <header class="navbar">
+      <div class="brand">
+        <a href="dashboard.html" class="brand-logo">SOLYD <span>IMOB</span></a>
+        <div id="dbStatus" class="db-status mock">
+          <span class="dot-blink"></span>
+          <span id="dbStatusText">Verificando...</span>
+        </div>
+      </div>
+      <nav class="nav-links" style="align-items: center;">
+        <a href="/" class="nav-link">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Vendas
+        </a>
+        <a href="dashboard.html" class="nav-link">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          Dashboard
+        </a>
+        <a href="formulario.html" class="nav-link active">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Formulário
+        </a>
+        
+        <!-- Conexão via Service Account no Servidor -->
+      </nav>
+    </header>
+
+    <div class="head">
+      <div>
+        <div class="sub">Gestão de Dados</div>
+        <h1>Formulário de <span>Lançamento</span></h1>
+      </div>
+      <div>
+        <a href="dashboard.html" class="btn btn-outline">
+          Visualizar Painel →
+        </a>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 1: MOVIMENTO DIÁRIO -->
+    <section class="card-form">
+      <div class="form-header">
+        <h2 class="form-title">Movimento <span>Diário</span></h2>
+        <span style="color: var(--muted); font-size: 11px;">Mapeia direto para a data em A:G</span>
+      </div>
+      
+      <div class="form-grid">
+        <div class="form-group" style="grid-column: span 2;">
+          <label for="diarioData">Selecionar Data (Apenas 2026)</label>
+          <input type="date" id="diarioData" min="2026-01-01" max="2026-12-31" value="2026-05-15">
+        </div>
+
+        <div class="form-group">
+          <label for="leadsAlto">Leads Alto Padrão</label>
+          <input type="number" id="leadsAlto" min="0" value="0">
+        </div>
+        <div class="form-group">
+          <label for="leadsMedio">Leads Médio Padrão</label>
+          <input type="number" id="leadsMedio" min="0" value="0">
+        </div>
+
+        <div class="form-group">
+          <label for="agendAlto">Agendamentos Alto Padrão</label>
+          <input type="number" id="agendAlto" min="0" value="0">
+        </div>
+        <div class="form-group">
+          <label for="agendMedio">Agendamentos Médio Padrão</label>
+          <input type="number" id="agendMedio" min="0" value="0">
+        </div>
+
+        <div class="form-group">
+          <label for="reunAlto">Reuniões Alto Padrão</label>
+          <input type="number" id="reunAlto" min="0" value="0">
+        </div>
+        <div class="form-group">
+          <label for="reunMedio">Reuniões Médio Padrão</label>
+          <input type="number" id="reunMedio" min="0" value="0">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button id="btnSalvarDiario" class="btn btn-gold">Salvar Movimento</button>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2: CUSTOS MENSAIS -->
+    <section class="card-form">
+      <div class="form-header">
+        <h2 class="form-title">Custos <span>Mensais</span></h2>
+        <span style="color: var(--muted); font-size: 11px;">Mapeia para a linha do mês em N:S</span>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group" style="grid-column: span 2;">
+          <label for="custoMes">Selecionar Mês (2026)</label>
+          <select id="custoMes">
+            <option value="2026-01">Janeiro</option>
+            <option value="2026-02">Fevereiro</option>
+            <option value="2026-03">Março</option>
+            <option value="2026-04">Abril</option>
+            <option value="2026-05" selected>Maio</option>
+            <option value="2026-06">Junho</option>
+            <option value="2026-07">Julho</option>
+            <option value="2026-08">Agosto</option>
+            <option value="2026-09">Setembro</option>
+            <option value="2026-10">Outubro</option>
+            <option value="2026-11">Novembro</option>
+            <option value="2026-12">Dezembro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="invAlto">Inv. Anúncios Alto Padrão (R$)</label>
+          <input type="number" id="invAlto" min="0" value="0" step="100">
+        </div>
+        <div class="form-group">
+          <label for="invMedio">Inv. Anúncios Médio Padrão (R$)</label>
+          <input type="number" id="invMedio" min="0" value="0" step="100">
+        </div>
+
+        <div class="form-group">
+          <label for="contratacao">Contratação / Treinamento (R$)</label>
+          <input type="number" id="contratacao" min="0" value="0" step="50">
+        </div>
+        <div class="form-group">
+          <label for="telefonia">Telefonia / Discadora (R$)</label>
+          <input type="number" id="telefonia" min="0" value="0" step="50">
+        </div>
+
+        <div class="form-group" style="grid-column: span 2;">
+          <label for="ferramentas">Ferramentas (CRM, etc) (R$)</label>
+          <input type="number" id="ferramentas" min="0" value="0" step="50">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button id="btnSalvarCustos" class="btn btn-gold">Salvar Custos</button>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3: PERFORMANCE SDR -->
+    <section class="card-form">
+      <div class="form-header">
+        <h2 class="form-title">Performance <span>SDR</span></h2>
+        <span style="color: var(--muted); font-size: 11px;">Busca Mês + Operador em U:Y. Atualiza ou adiciona</span>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="sdrPerfMes">Selecionar Mês (2026)</label>
+          <select id="sdrPerfMes">
+            <option value="Janeiro">Janeiro</option>
+            <option value="Fevereiro">Fevereiro</option>
+            <option value="Março">Março</option>
+            <option value="Abril">Abril</option>
+            <option value="Maio" selected>Maio</option>
+            <option value="Junho">Junho</option>
+            <option value="Julho">Julho</option>
+            <option value="Agosto">Agosto</option>
+            <option value="Setembro">Setembro</option>
+            <option value="Outubro">Outubro</option>
+            <option value="Novembro">Novembro</option>
+            <option value="Dezembro">Dezembro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="sdrPerfNome">Operador (SDR)</label>
+          <select id="sdrPerfNome">
+            <!-- Populado via Roster AD:AE -->
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="sdrPerfLeads">Leads Recebidos</label>
+          <input type="number" id="sdrPerfLeads" min="0" value="0">
+        </div>
+
+        <div class="form-group">
+          <label for="sdrPerfAgend">Leads Agendados</label>
+          <input type="number" id="sdrPerfAgend" min="0" value="0">
+        </div>
+
+        <div class="form-group" style="grid-column: span 2;">
+          <label for="sdrPerfReun">Reuniões Concluídas</label>
+          <input type="number" id="sdrPerfReun" min="0" value="0">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button id="btnSalvarSdrPerf" class="btn btn-gold">Salvar Performance</button>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 4: GESTÃO DE OPERADORES (ROSTER AD:AE) -->
+    <section class="card-form">
+      <div class="form-header">
+        <h2 class="form-title">Gestão de <span>Operadores</span></h2>
+        <span style="color: var(--muted); font-size: 11px;">Controla o roster ativo de SDRs em AD:AE</span>
+      </div>
+
+      <div class="form-grid" style="align-items: flex-end; margin-bottom: 24px; border-bottom: 1px solid var(--line); padding-bottom: 24px;">
+        <div class="form-group" style="margin-bottom: 0; flex: 1;">
+          <label for="novoOperadorNome">Nome do Novo Operador</label>
+          <input type="text" id="novoOperadorNome" placeholder="Ex: Carlos">
+        </div>
+        <div>
+          <button id="btnAdicionarOperador" class="btn btn-gold" style="height: 46px;">
+            + Cadastrar
+          </button>
+        </div>
+      </div>
+
+      <h3 style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; margin-bottom: 12px; color: var(--gold-2);">Lista de Operadores Cadastrados</h3>
+      <div class="tbl">
+        <div class="tbl-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Operador</th>
+                <th>Situação</th>
+                <th style="width: 100px; text-align: center;">Excluir</th>
+              </tr>
+            </thead>
+            <tbody id="rosterTableBody">
+              <!-- Gerado dinamicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 5: CONFIGURAÇÕES -->
+    <section class="card-form">
+      <div class="form-header">
+        <h2 class="form-title">Configurações <span>Gerais</span></h2>
+        <span style="color: var(--muted); font-size: 11px;">Gerencia a taxa de comissão e exibe informações do servidor</span>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="comissaoTaxa">Taxa de Comissão Padrão (%)</label>
+          <input type="number" id="comissaoTaxa" min="0" max="100" step="0.1" value="5.0">
+        </div>
+
+        <div class="form-group">
+          <label>Spreadsheet ID (Servidor - Somente Leitura)</label>
+          <div id="displaySpreadsheetId" style="background: var(--navy-3); border: 1px solid var(--line); color: var(--gold-2); padding: 12px 14px; border-radius: 8px; font-size: 13px; word-break: break-all; font-family: monospace;">-</div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button id="btnSalvarConfig" class="btn btn-gold">Salvar Comissão</button>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 6: REGISTRO DE VENDAS (I:L) -->
+    <section class="card-form vendas-list-card">
+      <div class="form-header" style="border-bottom: none; margin-bottom: 0;">
+        <h2 class="form-title">Registro de <span>Vendas</span></h2>
+        <button id="btnAbrirModalVenda" class="btn btn-gold">
+          + Adicionar Venda
+        </button>
+      </div>
+      
+      <div class="tbl" style="margin-top: 16px;">
+        <div class="tbl-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>SDR</th>
+                <th>Segmento</th>
+                <th>Valor do Imóvel</th>
+                <th style="width: 120px; text-align: center;">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="vendasTableBody">
+              <tr>
+                <td colspan="5" style="text-align: center; color: var(--muted); padding: 30px;">
+                  Carregando lançamentos...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODAL ADICIONAR / EDITAR VENDA -->
+  <div id="modalVenda" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalVendaTitle" class="modal-title">Adicionar <span>Venda</span></h3>
+        <button id="btnFecharModalVenda" class="modal-close">×</button>
+      </div>
+      
+      <form id="vendaForm" onsubmit="event.preventDefault();">
+        <input type="hidden" id="vendaRowIndex" value="">
+        
+        <div class="form-group">
+          <label for="vendaData">Data da Venda (Apenas 2026)</label>
+          <input type="date" id="vendaData" min="2026-01-01" max="2026-12-31" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="vendaSdr">Operador (SDR)</label>
+          <select id="vendaSdr" required>
+            <!-- Populado via Roster AD:AE -->
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="vendaSegmento">Segmento</label>
+          <select id="vendaSegmento" required>
+            <option value="Alto">Alto Padrão</option>
+            <option value="Médio">Médio Padrão</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="vendaValor">Valor do Imóvel (R$)</label>
+          <input type="number" id="vendaValor" min="0" placeholder="Ex: 1200000" required>
+        </div>
+
+        <div class="form-actions" style="border-top: 1px solid var(--line); padding-top: 18px; margin-top: 18px;">
+          <button type="button" id="btnCancelarVenda" class="btn btn-outline">Cancelar</button>
+          <button type="submit" id="btnSalvarVenda" class="btn btn-gold">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lógica da Aplicação -->
+  <script src="config.js"></script>
+  <script src="sheets-api.js"></script>
+  <script src="engine.js"></script>
+  
+  <script>
+    let dbCache = null;
+
+    // Toast feedback
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const icon = document.getElementById('toastIcon');
+      const msg = document.getElementById('toastMsg');
+      
+      toast.className = `toast show ${type}`;
+      icon.textContent = type === 'success' ? '✓' : '✗';
+      msg.textContent = message;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+
+    // Loading overlay
+    function showLoading(active, text = 'Carregando...') {
+      const loader = document.getElementById('loader');
+      const loaderText = document.getElementById('loaderText');
+      loaderText.textContent = text;
+      if (active) {
+        loader.classList.add('active');
+      } else {
+        loader.classList.remove('active');
+      }
+    }
+
+    async function updateAuthUI() {
+      const badge = document.getElementById('dbStatus');
+      const text = document.getElementById('dbStatusText');
+
+      const status = await SheetsAPI.getBackendStatus();
+      if (status.spreadsheetConnected) {
+        badge.className = 'db-status sheets';
+        text.textContent = 'Planilha Conectada (Servidor)';
+        if (document.getElementById('displaySpreadsheetId')) {
+          document.getElementById('displaySpreadsheetId').textContent = status.spreadsheetId || 'Não configurada';
+        }
+      } else {
+        badge.className = 'db-status mock';
+        text.textContent = 'Modo Simulação (Local)';
+        if (document.getElementById('displaySpreadsheetId')) {
+          document.getElementById('displaySpreadsheetId').textContent = 'Nenhum (Executando localmente)';
+        }
+      }
+    }
+
+    // Carrega todos os blocos em batch
+    async function loadData() {
+      showLoading(true, 'Lendo dados da base...');
+      try {
+        dbCache = await SheetsAPI.readAllData();
+        
+        // Configura inputs
+        autoLoadDiario();
+        autoLoadCustos();
+        autoLoadRoster();
+        autoLoadConfig();
+        
+        // Renderizar vendas
+        renderVendasTable();
+      } catch (err) {
+        showToast('Erro ao carregar os dados: ' + err.message, 'error');
+        console.error(err);
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // AUTO LOAD DIARIO
+    function autoLoadDiario() {
+      if (!dbCache) return;
+      const dateVal = document.getElementById('diarioData').value;
+      if (!dateVal) return;
+      
+      const line = Config.linhaDoDia(dateVal);
+      const index = line - Config.DIARIO_START_ROW;
+      
+      const fields = ['leadsAlto', 'leadsMedio', 'agendAlto', 'agendMedio', 'reunAlto', 'reunMedio'];
+      
+      if (dbCache.diario && dbCache.diario[index]) {
+        const row = dbCache.diario[index];
+        fields.forEach((field, i) => {
+          document.getElementById(field).value = Engine.parseCellNumber(row[i + 1]) || 0;
+        });
+      } else {
+        fields.forEach(field => {
+          document.getElementById(field).value = 0;
+        });
+      }
+    }
+
+    // AUTO LOAD CUSTOS
+    function autoLoadCustos() {
+      if (!dbCache) return;
+      const monthVal = document.getElementById('custoMes').value;
+      if (!monthVal) return;
+
+      const line = Config.linhaDoMesCusto(monthVal);
+      const index = line - Config.CUSTOS_START_ROW;
+
+      const fields = ['invAlto', 'invMedio', 'contratacao', 'telefonia', 'ferramentas'];
+
+      if (dbCache.custos && dbCache.custos[index]) {
+        const row = dbCache.custos[index];
+        fields.forEach((field, i) => {
+          document.getElementById(field).value = Engine.parseCellNumber(row[i + 1]) || 0;
+        });
+      } else {
+        fields.forEach(field => {
+          document.getElementById(field).value = 0;
+        });
+      }
+    }
+
+    // AUTO LOAD SDR PERFORMANCE (Lookup combinando Mês + Operador)
+    function autoLoadSdrPerformance() {
+      if (!dbCache) return;
+      const monthName = document.getElementById('sdrPerfMes').value;
+      const sdrName = document.getElementById('sdrPerfNome').value;
+
+      const fields = {
+        sdrPerfLeads: 2,
+        sdrPerfAgend: 3,
+        sdrPerfReun: 4
+      };
+
+      if (!sdrName) {
+        Object.keys(fields).forEach(id => document.getElementById(id).value = 0);
+        return;
+      }
+
+      // Procurar por mes + sdr em sdrPerformance
+      const row = dbCache.sdrPerformance.find(r => r[0] === monthName && String(r[1]).toLowerCase() === sdrName.toLowerCase());
+
+      if (row) {
+        document.getElementById('sdrPerfLeads').value = Engine.parseCellNumber(row[2]) || 0;
+        document.getElementById('sdrPerfAgend').value = Engine.parseCellNumber(row[3]) || 0;
+        document.getElementById('sdrPerfReun').value = Engine.parseCellNumber(row[4]) || 0;
+      } else {
+        Object.keys(fields).forEach(id => document.getElementById(id).value = 0);
+      }
+    }
+
+    // AUTO LOAD ROSTER E DROPDOWNS
+    function autoLoadRoster() {
+      if (!dbCache) return;
+
+      const tbody = document.getElementById('rosterTableBody');
+      tbody.innerHTML = '';
+
+      const dropdownPerf = document.getElementById('sdrPerfNome');
+      const dropdownVenda = document.getElementById('vendaSdr');
+      
+      dropdownPerf.innerHTML = '';
+      dropdownVenda.innerHTML = '';
+
+      const rosterList = [];
+      const activeSdrs = [];
+
+      dbCache.roster.forEach((row, i) => {
+        if (!row || row.length < 2) return;
+        const name = String(row[0] || '').trim();
+        const status = String(row[1] || '').trim();
+
+        if (name !== '') {
+          const line = Config.ROSTER_START_ROW + i;
+          rosterList.push({ line, name, status });
+          
+          if (status !== 'Inativo') {
+            activeSdrs.push(name);
+          }
+        }
+      });
+
+      // Renderizar tabela de operadores
+      if (rosterList.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: var(--muted); padding: 20px;">Nenhum operador cadastrado.</td></tr>';
+      } else {
+        rosterList.forEach(op => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${op.name}</td>
+            <td>
+              <select class="sel" style="padding: 4px 8px; font-size: 11px;" onchange="alterarStatusOperador(${op.line}, this.value)">
+                <option value="Ativo" ${op.status === 'Ativo' ? 'selected' : ''}>Ativo</option>
+                <option value="Em treino" ${op.status === 'Em treino' ? 'selected' : ''}>Em treino</option>
+                <option value="Inativo" ${op.status === 'Inativo' ? 'selected' : ''}>Inativo</option>
+              </select>
+            </td>
+            <td style="text-align: center;">
+              <button class="btn btn-danger btn-icon" onclick="excluirOperador(${op.line})" title="Excluir Permanentemente">✕</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      // Preencher dropdowns de SDRs (apenas Ativos e Em Treino)
+      if (activeSdrs.length === 0) {
+        const emptyOpt = '<option value="">Cadastre um SDR ativo primeiro</option>';
+        dropdownPerf.innerHTML = emptyOpt;
+        dropdownVenda.innerHTML = emptyOpt;
+      } else {
+        activeSdrs.sort().forEach(name => {
+          const opt = `<option value="${name}">${name}</option>`;
+          dropdownPerf.insertAdjacentHTML('beforeend', opt);
+          dropdownVenda.insertAdjacentHTML('beforeend', opt);
+        });
+      }
+
+      // Atualizar auto-load de performance do primeiro SDR ativo da lista
+      autoLoadSdrPerformance();
+    }
+
+    // AUTO LOAD CONFIG
+    function autoLoadConfig() {
+      if (!dbCache) return;
+      const commRate = Engine.parseCellNumber(dbCache.commission?.[0]?.[0]) || Config.COMMISSION_DEFAULT;
+      document.getElementById('comissaoTaxa').value = (commRate * 100).toFixed(1);
+    }
+
+    // RENDERIZAR TABELA DE VENDAS
+    function renderVendasTable() {
+      const tbody = document.getElementById('vendasTableBody');
+      tbody.innerHTML = '';
+
+      if (!dbCache || !dbCache.vendas) return;
+
+      const salesList = [];
+      dbCache.vendas.forEach((row, i) => {
+        if (!row || row.length < 4) return;
+        const rawDate = row[0];
+        const sdr = String(row[1] || '').trim();
+        const segmento = String(row[2] || '').trim();
+        const valor = Engine.parseCellNumber(row[3]);
+
+        if (rawDate && sdr !== '' && segmento !== '' && valor > 0) {
+          salesList.push({
+            line: Config.VENDAS_START_ROW + i,
+            dateStr: rawDate,
+            sdr,
+            segmento,
+            valor
+          });
+        }
+      });
+
+      if (salesList.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--muted); padding: 30px;">Nenhuma venda cadastrada.</td></tr>';
+        return;
+      }
+
+      // Ordenar vendas por data decrescente
+      salesList.sort((a, b) => {
+        const dateA = Engine.parseSheetDate(a.dateStr) || new Date(0);
+        const dateB = Engine.parseSheetDate(b.dateStr) || new Date(0);
+        return dateB - dateA;
+      });
+
+      salesList.forEach(sale => {
+        const tr = document.createElement('tr');
+        const valorFormatted = sale.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+        
+        tr.innerHTML = `
+          <td>${sale.dateStr}</td>
+          <td>${sale.sdr}</td>
+          <td><span class="tag ${sale.segmento === 'Alto' ? 'ativo' : 'em-treino'}" style="margin: 0; color: ${sale.segmento === 'Alto' ? 'var(--alto)' : 'var(--medio)'}; border-color: ${sale.segmento === 'Alto' ? 'var(--alto)' : 'var(--medio)'}">${sale.segmento} padrão</span></td>
+          <td>${valorFormatted}</td>
+          <td class="vendas-table-actions">
+            <button class="btn btn-outline btn-icon" onclick="editarVenda(${sale.line}, '${sale.dateStr}', '${sale.sdr}', '${sale.segmento}', ${sale.valor})" title="Editar">✎</button>
+            <button class="btn btn-danger btn-icon" onclick="deletarVenda(${sale.line})" title="Excluir">✕</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ==========================================================================
+    // LISTENERS DE AÇÕES
+    // ==========================================================================
+
+    // Diário
+    document.getElementById('diarioData').addEventListener('change', autoLoadDiario);
+    document.getElementById('btnSalvarDiario').addEventListener('click', async () => {
+      const dateStr = document.getElementById('diarioData').value;
+      if (!dateStr) return showToast('Selecione uma data válida.', 'error');
+
+      const payload = {
+        dateStr,
+        leadsAlto: Math.max(0, parseInt(document.getElementById('leadsAlto').value, 10) || 0),
+        leadsMedio: Math.max(0, parseInt(document.getElementById('leadsMedio').value, 10) || 0),
+        agendAlto: Math.max(0, parseInt(document.getElementById('agendAlto').value, 10) || 0),
+        agendMedio: Math.max(0, parseInt(document.getElementById('agendMedio').value, 10) || 0),
+        reunAlto: Math.max(0, parseInt(document.getElementById('reunAlto').value, 10) || 0),
+        reunMedio: Math.max(0, parseInt(document.getElementById('reunMedio').value, 10) || 0)
+      };
+
+      showLoading(true, 'Gravando dados diários...');
+      try {
+        await SheetsAPI.saveDailyMovement(payload);
+        showToast('Movimento diário salvo com sucesso!');
+        await loadData();
+      } catch (err) {
+        console.error('Erro detalhado do backend:', err.response || err);
+        showToast(err.message || 'Erro ao salvar no Sheets!', 'error');
+      } finally {
+        showLoading(false);
+      }
+    });
+
+    // Custos
+    document.getElementById('custoMes').addEventListener('change', autoLoadCustos);
+    document.getElementById('btnSalvarCustos').addEventListener('click', async () => {
+      const monthStr = document.getElementById('custoMes').value;
+      const payload = {
+        monthStr,
+        invAlto: Math.max(0, parseFloat(document.getElementById('invAlto').value) || 0),
+        invMedio: Math.max(0, parseFloat(document.getElementById('invMedio').value) || 0),
+        contratacao: Math.max(0, parseFloat(document.getElementById('contratacao').value) || 0),
+        telefonia: Math.max(0, parseFloat(document.getElementById('telefonia').value) || 0),
+        ferramentas: Math.max(0, parseFloat(document.getElementById('ferramentas').value) || 0)
+      };
+
+      showLoading(true, 'Gravando custos mensais...');
+      try {
+        await SheetsAPI.saveCost(payload);
+        showToast('Custos mensais gravados com sucesso!');
+        await loadData();
+      } catch (err) {
+        console.error('Erro detalhado do backend:', err.response || err);
+        showToast(err.message || 'Erro ao gravar custos!', 'error');
+      } finally {
+        showLoading(false);
+      }
+    });
+
+    // SDR Performance
+    document.getElementById('sdrPerfMes').addEventListener('change', autoLoadSdrPerformance);
+    document.getElementById('sdrPerfNome').addEventListener('change', autoLoadSdrPerformance);
+    document.getElementById('btnSalvarSdrPerf').addEventListener('click', async () => {
+      const monthName = document.getElementById('sdrPerfMes').value;
+      const sdr = document.getElementById('sdrPerfNome').value;
+      if (!sdr) return showToast('Selecione um operador.', 'error');
+
+      const payload = {
+        monthName,
+        sdr,
+        leadsRecebidos: Math.max(0, parseInt(document.getElementById('sdrPerfLeads').value, 10) || 0),
+        leadsAgendados: Math.max(0, parseInt(document.getElementById('sdrPerfAgend').value, 10) || 0),
+        reunioes: Math.max(0, parseInt(document.getElementById('sdrPerfReun').value, 10) || 0)
+      };
+
+      showLoading(true, 'Gravando desempenho...');
+      try {
+        await SheetsAPI.saveSDRPerformance(payload);
+        showToast('Performance do SDR salva com sucesso!');
+        await loadData();
+      } catch (err) {
+        console.error('Erro detalhado do backend:', err.response || err);
+        showToast(err.message || 'Erro ao salvar performance!', 'error');
+      } finally {
+        showLoading(false);
+      }
+    });
+
+    // Adicionar Operador (Roster)
+    document.getElementById('btnAdicionarOperador').addEventListener('click', async () => {
+      const name = document.getElementById('novoOperadorNome').value.trim();
+      if (!name) return showToast('Insira o nome do operador.', 'error');
+
+      showLoading(true, 'Cadastrando operador...');
+      try {
+        await SheetsAPI.saveOperator(null, { sdr: name }, 'add');
+        document.getElementById('novoOperadorNome').value = '';
+        showToast('Operador cadastrado com sucesso!');
+        await loadData();
+      } catch (err) {
+        console.error('Erro detalhado do backend:', err.response || err);
+        showToast(err.message || 'Erro ao cadastrar operador!', 'error');
+      } finally {
+        showLoading(false);
+      }
+    });
+
+    // Ações do Roster chamadas globalmente
+    window.alterarStatusOperador = async function(line, status) {
+      showLoading(true, 'Alterando situação...');
+      try {
+        await SheetsAPI.saveOperator(line, { status }, 'edit_status');
+        showToast('Situação atualizada!');
+        await loadData();
+      } catch (err) {
+        console.error('Erro detalhado do backend:', err.response || err);
+        showToast(err.message || 'Erro ao mudar situação!', 'error');
+      } finally {
+        showLoading(false);
+      }
+    };
+
+    window.excluirOperador = async function(line) {
+      if (!confirm('Deseja realmente excluir este operador?')) return;
+      showLoading(true, 'Removendo operador...');
+      try {
+        await SheetsAPI.saveOperator(line, null, 'delete');
+        showToast('Operador removido!');
+        await loadData();
+      } catch (err) {
+        console.error('Erro detalhado do backend:', err.response || err);
+        showToast(err.message || 'Erro ao remover operador!', 'error');
+      } finally {
+        showLoading(false);
+      }
+    };
+
+    // Salvar Configurações (E comissão AB2)
+    document.getElementById('btnSalvarConfig').addEventListener('click', async () => {
+      const taxaVal = parseFloat(document.getElementById('comissaoTaxa').value);
+
+      if (isNaN(taxaVal) || taxaVal < 0) return showToast('Taxa de comissão inválida.', 'error');
+
+      showLoading(true, 'Gravando comissão...');
+      try {
+        await SheetsAPI.saveCommissionRate(taxaVal / 100);
+        showToast('Comissão salva com sucesso!');
+        await loadData();
+      } catch (err) {
+        console.error('Erro detalhado do backend:', err.response || err);
+        showToast(err.message || 'Erro ao salvar taxa de comissão!', 'error');
+      } finally {
+        showLoading(false);
+      }
+    });
+
+    // MODAL VENDAS - EVENTOS
+    const modal = document.getElementById('modalVenda');
+    const openModalBtn = document.getElementById('btnAbrirModalVenda');
+    const closeModalBtn = document.getElementById('btnFecharModalVenda');
+    const cancelModalBtn = document.getElementById('btnCancelarVenda');
+    
+    function abrirModal(title = 'Adicionar Venda', line = '', date = '', sdr = '', segmento = 'Alto', valor = '') {
+      document.getElementById('modalVendaTitle').innerHTML = title;
+      document.getElementById('vendaRowIndex').value = line;
+      
+      let parsedDateVal = '2026-05-15';
+      if (date) {
+        const parsed = Engine.parseSheetDate(date);
+        if (parsed) parsedDateVal = Engine.formatLocalDate(parsed);
+      }
+      document.getElementById('vendaData').value = parsedDateVal;
+      
+      if (sdr) document.getElementById('vendaSdr').value = sdr;
+      document.getElementById('vendaSegmento').value = segmento;
+      document.getElementById('vendaValor').value = valor;
+      
+      modal.classList.add('active');
+    }
+
+    function fecharModal() {
+      modal.classList.remove('active');
+      document.getElementById('vendaForm').reset();
+    }
+
+    openModalBtn.addEventListener('click', () => {
+      // Checar se há SDR ativo cadastrado antes de abrir o modal
+      const hasSdr = document.getElementById('vendaSdr').value !== '';
+      if (!hasSdr) {
+        showToast('Cadastre um SDR ativo no roster primeiro!', 'error');
+        return;
+      }
+      abrirModal('Adicionar <span>Venda</span>');
+    });
+    closeModalBtn.addEventListener('click', fecharModal);
+    cancelModalBtn.addEventListener('click', fecharModal);
+
+    document.getElementById('vendaForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const lineVal = document.getElementById('vendaRowIndex').value;
+      const action = lineVal === '' ? 'add' : 'edit';
+      const dateStr = document.getElementById('vendaData').value;
+      const sdr = document.getElementById('vendaSdr').value;
+      const segmento = document.getElementById('vendaSegmento').value;
+      const valor = parseFloat(document.getElementById('vendaValor').value);
+
+      if (!dateStr || !sdr || valor <= 0) {
+        return showToast('Preencha os campos obrigatórios.', 'error');
+      }
+
+      const payload = { dateStr, sdr, segmento, valor };
+
+      fecharModal();
+      showLoading(true, 'Gravando venda...');
+      try {
+        await SheetsAPI.saveSale(lineVal, payload, action);
+        showToast('Venda registrada com sucesso!');
+        await loadData();
+      } catch (err) {
+        console.error('Erro detalhado do backend:', err.response || err);
+        showToast(err.message || 'Erro ao salvar venda!', 'error');
+      } finally {
+        showLoading(false);
+      }
+    });
+
+    window.editarVenda = function(line, date, sdr, segmento, valor) {
+      abrirModal('Editar <span>Venda</span>', line, date, sdr, segmento, valor);
+    };
+
+    window.deletarVenda = async function(line) {
+      if (!confirm('Deseja realmente deletar esta venda?')) return;
+      showLoading(true, 'Removendo venda...');
+      try {
+        await SheetsAPI.saveSale(line, null, 'delete');
+        showToast('Venda removida com sucesso!');
+        await loadData();
+      } catch (err) {
+        console.error('Erro detalhado do backend:', err.response || err);
+        showToast(err.message || 'Erro ao deletar venda!', 'error');
+      } finally {
+        showLoading(false);
+      }
+    };
+
+    // INICIALIZADOR
+    document.addEventListener('DOMContentLoaded', async () => {
+      await updateAuthUI();
+      loadData();
+
+      // Ajustar link de Vendas se estiver rodando em desenvolvimento com Vite
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        try {
+          // Faz uma checagem rápida para ver se o Vite dev server está online
+          await fetch('http://localhost:5173/', { method: 'HEAD', mode: 'no-cors' });
+          document.querySelectorAll('a[href="/"]').forEach(link => {
+            link.href = 'http://localhost:5173/';
+          });
+        } catch (e) {
+          // Dev server não está online, deixa o link padrão '/'
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -50,7 +50,18 @@ function App() {
                 <label className="text-sm font-medium text-gray-700">Dashboard:</label>
                 <select
                   value={currentDashboard}
-                  onChange={(e) => setCurrentDashboard(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === 'marketing') {
+                      if (window.location.port === '5173') {
+                        window.location.href = 'http://localhost:3000/dashboard.html';
+                      } else {
+                        window.location.href = '/dashboard.html';
+                      }
+                    } else {
+                      setCurrentDashboard(val);
+                    }
+                  }}
                   className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   {availableDashboards.map((dashboard) => (

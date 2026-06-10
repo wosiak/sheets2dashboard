@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solyd Imob — Dashboard de Performance</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Autenticação agora é feita via Service Account no Backend -->
+</head>
+<body>
+
+  <!-- Overlay de Loading -->
+  <div id="loader" class="loader-overlay">
+    <div class="loader-box">
+      <div class="spinner"></div>
+      <div id="loaderText" class="loader-text">Carregando painel...</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="topbar"></div>
+    
+    <!-- Navbar Premium com Botões OAuth -->
+    <header class="navbar">
+      <div class="brand">
+        <a href="dashboard.html" class="brand-logo">SOLYD <span>IMOB</span></a>
+        <div id="dbStatus" class="db-status mock">
+          <span class="dot-blink"></span>
+          <span id="dbStatusText">Verificando...</span>
+        </div>
+      </div>
+      <nav class="nav-links" style="align-items: center;">
+        <a href="/" class="nav-link">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Vendas
+        </a>
+        <a href="dashboard.html" class="nav-link active">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          Dashboard
+        </a>
+        <a href="formulario.html" class="nav-link">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Formulário
+        </a>
+
+        <!-- Conexão via Service Account no Servidor -->
+      </nav>
+    </header>
+
+    <!-- Cabeçalho com Filtros de Período -->
+    <div class="head">
+      <div>
+        <div class="sub" id="periodSubLabel">Solyd Imob · Painel de Marketing</div>
+        <h1 id="periodTitle">Painel Geral <span>2026</span></h1>
+      </div>
+      
+      <div class="filters">
+        <!-- Date range personalizado -->
+        <div id="customDateContainer" style="display: none; align-items: center; gap: 6px;">
+          <input type="date" id="customStartDate" class="sel" style="padding: 6px 10px;" min="2026-01-01" max="2026-12-31" value="2026-05-01">
+          <span style="color: var(--muted); font-size: 11px;">até</span>
+          <input type="date" id="customEndDate" class="sel" style="padding: 6px 10px;" min="2026-01-01" max="2026-12-31" value="2026-05-31">
+        </div>
+
+        <select id="periodFilter" class="sel">
+          <option value="mes_anterior" selected>Mês Anterior (Maio 2026)</option>
+          <option value="hoje">Hoje</option>
+          <option value="semana">Esta Semana</option>
+          <option value="mes">Este Mês</option>
+          <option value="7_dias">Últimos 7 dias</option>
+          <option value="30_dias">Últimos 30 dias</option>
+          <option value="90_dias">Últimos 90 dias</option>
+          <option value="ano">Este Ano (2026)</option>
+          <option value="personalizado">Personalizado...</option>
+        </select>
+
+        <div class="toggle">
+          <button id="tMes" class="active" onclick="setChartMode('mes')">Mês inteiro</button>
+          <button id="tDia" onclick="setChartMode('dia')">Por dia</button>
+        </div>
+        
+        <select id="groupByOverride" class="sel" style="padding: 6px 10px; font-size: 11px;">
+          <option value="auto">Grupo: Auto</option>
+          <option value="day">Grupo: Dia</option>
+          <option value="week">Grupo: Semana</option>
+          <option value="month">Grupo: Mês</option>
+        </select>
+        
+        <button id="btnRefresh" class="btn btn-outline" style="padding: 6px 12px; font-size: 11px; height: 31px;">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 4px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          Atualizar
+        </button>
+      </div>
+    </div>
+
+    <!-- SEÇÃO: GRÁFICO DE LEADS -->
+    <div class="section-label">Leads que entraram</div>
+    <div class="chart-card">
+      <div class="chart-top">
+        <div class="big"><span id="leadsTitleCount">0</span> novos leads</div>
+        <div class="cmp" id="leadsComparisonText">Carregando comparativo...</div>
+      </div>
+      <div class="legend">
+        <div class="leg" id="legendTotal"><span class="sw" style="background:#C09B3A"></span>Total</div>
+        <div class="leg"><span class="sw" style="background:#6E8CA8"></span>Alto padrão</div>
+        <div class="leg"><span class="sw" style="background:#9B7E4A"></span>Médio padrão</div>
+      </div>
+      <div class="chart-box"><canvas id="leadsChart"></canvas></div>
+    </div>
+
+    <!-- SEÇÃO: FUNIL -->
+    <div class="section-label">O caminho até a venda</div>
+    <div class="funnel" id="funnelContainer">
+      <div class="stage"><div class="num" id="funnelLeads">0</div><div class="nm">Leads</div></div>
+      <div class="conv"><div class="rate" id="rateLeadAgend">0%</div><div class="arr">›</div><div class="cl">agendou</div></div>
+      <div class="stage"><div class="num" id="funnelAgend">0</div><div class="nm">Agendamentos</div></div>
+      <div class="conv"><div class="rate" id="rateAgendReun">0%</div><div class="arr">›</div><div class="cl">compareceu</div></div>
+      <div class="stage"><div class="num" id="funnelReun">0</div><div class="nm">Reuniões</div></div>
+      <div class="conv"><div class="rate" id="rateReunVenda">0%</div><div class="arr">›</div><div class="cl">fechou</div></div>
+      <div class="stage"><div class="num" id="funnelVendas">0</div><div class="nm">Vendas</div></div>
+    </div>
+
+    <!-- SEÇÃO: MÉTRICAS CARDS -->
+    <div class="section-label">Os números que importam</div>
+    <div class="mrow" id="metricsGrid">
+      
+      <!-- Custo por Lead -->
+      <div class="mcard">
+        <div class="ml">Custo por lead</div>
+        <div class="mv" id="cplTotal"><small>R$</small> 0</div>
+        <div class="mseg">
+          <div><span class="sd" style="background:#6E8CA8"></span>Alto<b id="cplAlto">R$ 0</b></div>
+          <div><span class="sd" style="background:#9B7E4A"></span>Médio<b id="cplMedio">R$ 0</b></div>
+        </div>
+      </div>
+
+      <!-- Custo por Reunião -->
+      <div class="mcard">
+        <div class="ml">Custo por reunião</div>
+        <div class="mv" id="cprTotal"><small>R$</small> 0</div>
+        <div class="mseg">
+          <div><span class="sd" style="background:#6E8CA8"></span>Alto<b id="cprAlto">R$ 0</b></div>
+          <div><span class="sd" style="background:#9B7E4A"></span>Médio<b id="cprMedio">R$ 0</b></div>
+        </div>
+      </div>
+
+      <!-- Ticket Médio -->
+      <div class="mcard">
+        <div class="ml">Ticket médio</div>
+        <div class="mv" id="tmTotal"><small>R$</small> 0</div>
+        <div class="mseg">
+          <div><span class="sd" style="background:#6E8CA8"></span>Alto<b id="tmAlto">R$ 0</b></div>
+          <div><span class="sd" style="background:#9B7E4A"></span>Médio<b id="tmMedio">R$ 0</b></div>
+        </div>
+      </div>
+
+      <!-- Agendamentos por Venda -->
+      <div class="mcard">
+        <div class="ml">Agendamentos por venda</div>
+        <div class="mv" id="apvTotal">0</div>
+        <div class="mseg">
+          <div><span class="sd" style="background:#6E8CA8"></span>Alto<b id="apvAlto">0</b></div>
+          <div><span class="sd" style="background:#9B7E4A"></span>Médio<b id="apvMedio">0</b></div>
+        </div>
+      </div>
+
+      <!-- Reuniões por Venda -->
+      <div class="mcard">
+        <div class="ml">Reuniões por venda</div>
+        <div class="mv" id="rpvTotal">0</div>
+        <div class="mseg">
+          <div><span class="sd" style="background:#6E8CA8"></span>Alto<b id="rpvAlto">0</b></div>
+          <div><span class="sd" style="background:#9B7E4A"></span>Médio<b id="rpvMedio">0</b></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SEÇÃO: DESEMPENHO POR SDR -->
+    <div class="section-label">Desempenho por SDR</div>
+    <div class="tbl">
+      <div class="tbl-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>SDR</th>
+              <th>Leads recebidos</th>
+              <th>Leads agendados</th>
+              <th>Taxa Agendamento</th>
+              <th>Custo do lead enviado</th>
+              <th>Custo por reunião</th>
+              <th style="text-align: right; padding-right: 20px;">Vendas Concluídas</th>
+            </tr>
+          </thead>
+          <tbody id="sdrTableBody">
+            <!-- Gerado dinamicamente -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SEÇÃO: DONUT DE CUSTOS -->
+    <div class="section-label">Pra onde vai o dinheiro</div>
+    <div class="cost-wrap">
+      <div class="donut-box">
+        <canvas id="costChart"></canvas>
+        <div class="donut-center">
+          <div class="dt">Total</div>
+          <div class="dv" id="costsTotalValue"><small>R$</small> 0</div>
+        </div>
+      </div>
+      <div class="cost-list" id="costsListBody">
+        <!-- Gerado dinamicamente -->
+      </div>
+    </div>
+
+    <!-- SEÇÃO: RESULTADO FINANCEIRO -->
+    <div class="section-label">O resultado do período</div>
+    <div class="fin">
+      <div class="fcard">
+        <div class="fl">Quanto investi</div>
+        <div class="fv" id="finInvestido"><small>R$</small> 0</div>
+        <div class="fsub">Todos os custos proporcionais somados</div>
+      </div>
+      <div class="fcard">
+        <div class="fl">Comissão recebida</div>
+        <div class="fv" id="finComissao"><small>R$</small> 0</div>
+        <div class="fsub" id="finComissaoSub">5% sobre vendas concluídas</div>
+      </div>
+      <div class="fcard result" id="finResultadoCard">
+        <div class="fl">Resultado Líquido</div>
+        <div class="fv" id="finResultadoValue"><small>R$</small> 0</div>
+        <div class="fsub">Comissão menos investimento</div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO: ROI POR SEGMENTO -->
+    <div class="section-label">Retorno por segmento</div>
+    <div class="roi">
+      <div class="rcard hl">
+        <div>
+          <div class="rhead">
+            <span class="sd" style="background:#6E8CA8"></span>
+            <span class="rn">Alto padrão</span>
+          </div>
+          <div class="rdetail" id="roiAltoDetail">
+            Investido em anúncio: <b>R$ 0</b><br>
+            0 vendas · comissão <b>R$ 0</b>
+          </div>
+        </div>
+        <div class="rbig alto">
+          <div class="rv" id="roiAltoValue">0,0×</div>
+          <div class="rl">retorno</div>
+        </div>
+      </div>
+      
+      <div class="rcard">
+        <div>
+          <div class="rhead">
+            <span class="sd" style="background:#9B7E4A"></span>
+            <span class="rn">Médio padrão</span>
+          </div>
+          <div class="rdetail" id="roiMedioDetail">
+            Investido em anúncio: <b>R$ 0</b><br>
+            0 vendas · comissão <b>R$ 0</b>
+          </div>
+        </div>
+        <div class="rbig medio">
+          <div class="rv" id="roiMedioValue">0,0×</div>
+          <div class="rl">retorno</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      Os dados mostrados acima são extraídos dinamicamente da planilha do **Google Sheets** (aba *Marketing*) e calculados em tempo real na camada de código. O investimento de custos mensais é rateado proporcionalmente aos dias filtrados no período. As taxas de ROI consideram comissão total gerada sobre o investimento exclusivo de anúncios de cada respectivo segmento.
+    </div>
+
+  </div>
+
+  <!-- Carregar lógica -->
+  <script src="config.js"></script>
+  <script src="sheets-api.js"></script>
+  <script src="engine.js"></script>
+
+  <script>
+    let rawSheetsData = null; 
+    let calculatedData = null; 
+    let leadsChart = null;
+    let costDonutChart = null;
+    let chartMode = 'mes'; 
+
+    function getLocalDateStr(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function getDatesForFilter(filterName, customStart, customEnd) {
+      const now = new Date(); 
+      let start, end;
+      
+      switch (filterName) {
+        case 'hoje':
+          start = new Date(now);
+          end = new Date(now);
+          break;
+        case 'semana': {
+          const day = now.getDay();
+          const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+          start = new Date(now);
+          start.setDate(diff);
+          end = new Date(start);
+          end.setDate(start.getDate() + 6);
+          break;
+        }
+        case 'mes':
+          start = new Date(now.getFullYear(), now.getMonth(), 1);
+          end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+          break;
+        case 'mes_anterior':
+          start = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+          end = new Date(now.getFullYear(), now.getMonth(), 0);
+          break;
+        case '7_dias':
+          start = new Date(now);
+          start.setDate(now.getDate() - 6);
+          end = new Date(now);
+          break;
+        case '30_dias':
+          start = new Date(now);
+          start.setDate(now.getDate() - 29);
+          end = new Date(now);
+          break;
+        case '90_dias':
+          start = new Date(now);
+          start.setDate(now.getDate() - 89);
+          end = new Date(now);
+          break;
+        case 'ano':
+          start = new Date(now.getFullYear(), 0, 1);
+          end = new Date(now.getFullYear(), 11, 31);
+          break;
+        case 'personalizado':
+          return { startStr: customStart, endStr: customEnd };
+        default:
+          start = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+          end = new Date(now.getFullYear(), now.getMonth(), 0);
+      }
+      
+      return {
+        startStr: getLocalDateStr(start),
+        endStr: getLocalDateStr(end)
+      };
+    }
+
+    function setChartMode(mode) {
+      chartMode = mode;
+      document.getElementById('tMes').classList.toggle('active', mode === 'mes');
+      document.getElementById('tDia').classList.toggle('active', mode === 'dia');
+      
+      document.getElementById('legendTotal').style.display = mode === 'mes' ? 'flex' : 'none';
+
+      renderLeadsChart();
+    }
+
+    function showLoading(active, text = 'Carregando painel...') {
+      const loader = document.getElementById('loader');
+      const loaderText = document.getElementById('loaderText');
+      loaderText.textContent = text;
+      if (active) {
+        loader.classList.add('active');
+      } else {
+        loader.classList.remove('active');
+      }
+    }
+
+    async function updateAuthUI() {
+      const badge = document.getElementById('dbStatus');
+      const text = document.getElementById('dbStatusText');
+
+      const status = await SheetsAPI.getBackendStatus();
+      if (status.spreadsheetConnected) {
+        badge.className = 'db-status sheets';
+        text.textContent = 'Planilha Conectada (Servidor)';
+      } else {
+        badge.className = 'db-status mock';
+        text.textContent = 'Modo Simulação (Local)';
+      }
+    }
+
+    async function loadDashboard() {
+      showLoading(true, 'Buscando dados...');
+      try {
+        rawSheetsData = await SheetsAPI.readAllData();
+        recalculateAndRender();
+      } catch (error) {
+        console.error('Falha ao buscar dados', error);
+        alert('Falha ao buscar dados da API: ' + error.message);
+        recalculateAndRender();
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    function recalculateAndRender() {
+      if (!rawSheetsData) return;
+
+      const filterVal = document.getElementById('periodFilter').value;
+      const customStart = document.getElementById('customStartDate').value;
+      const customEnd = document.getElementById('customEndDate').value;
+      const groupByOverride = document.getElementById('groupByOverride').value;
+
+      const dates = getDatesForFilter(filterVal, customStart, customEnd);
+      updatePeriodLabels(dates.startStr, dates.endStr);
+
+      calculatedData = Engine.calcularDashboard({
+        startDateStr: dates.startStr,
+        endDateStr: dates.endStr,
+        groupBy: groupByOverride,
+        rawData: rawSheetsData
+      });
+
+      renderSummaryText();
+      renderFunnel();
+      renderMetricsCards();
+      renderSdrTable();
+      renderCostsChart();
+      renderFinancials();
+      renderRoiCards();
+      renderLeadsChart();
+    }
+
+    function updatePeriodLabels(startStr, endStr) {
+      const start = Engine.parseSheetDate(startStr);
+      const end = Engine.parseSheetDate(endStr);
+      
+      if (!start || !end) return;
+
+      const format = (d) => `${String(d.getDate()).padStart(2, '0')} ${Config.MESES_NOMES[d.getMonth()].substring(0, 3)} ${d.getFullYear()}`;
+      
+      if (start.getDate() === 1 && end.getDate() === new Date(end.getFullYear(), end.getMonth() + 1, 0).getDate() && start.getMonth() === end.getMonth()) {
+        document.getElementById('periodTitle').innerHTML = `${Config.MESES_NOMES[start.getMonth()]} <span>2026</span>`;
+      } else {
+        document.getElementById('periodTitle').innerHTML = `${start.getDate()}/${start.getMonth()+1} - ${end.getDate()}/${end.getMonth()+1} <span>2026</span>`;
+      }
+      
+      document.getElementById('periodSubLabel').innerHTML = `Solyd Imob · Período: ${format(start)} a ${format(end)}`;
+    }
+
+    function renderSummaryText() {
+      const data = calculatedData;
+      document.getElementById('leadsTitleCount').textContent = data.funil.leads;
+      
+      const comp = data.comparacao;
+      const varPct = comp.variacaoLeads * 100;
+      const varSign = varPct >= 0 ? '+' : '';
+      const varClass = varPct >= 0 ? 'color: var(--up)' : 'color: var(--error)';
+      
+      document.getElementById('leadsComparisonText').innerHTML = `
+        Alto padrão <b>${data.segmentos.alto.leads}</b> · 
+        Médio padrão <b>${data.segmentos.medio.leads}</b> · 
+        Período anterior fechou em <b>${comp.leadsAnterior}</b> 
+        (<span style="${varClass}; font-weight: 600;">${varSign}${varPct.toFixed(1)}%</span>)
+      `;
+    }
+
+    function renderFunnel() {
+      const f = calculatedData.funil;
+      document.getElementById('funnelLeads').textContent = f.leads;
+      document.getElementById('funnelAgend').textContent = f.agendamentos;
+      document.getElementById('funnelReun').textContent = f.reunioes;
+      document.getElementById('funnelVendas').textContent = f.vendas;
+
+      document.getElementById('rateLeadAgend').textContent = `${(f.taxaLeadAgend * 100).toFixed(0)}%`;
+      document.getElementById('rateAgendReun').textContent = `${(f.taxaAgendReuniao * 100).toFixed(0)}%`;
+      document.getElementById('rateReunVenda').textContent = `${(f.taxaReuniaoVenda * 100).toFixed(1)}%`;
+    }
+
+    function renderMetricsCards() {
+      const seg = calculatedData.segmentos;
+      const formatBrl = (val) => val === 0 ? 'R$ 0' : `R$ ${val.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}`;
+      
+      const formatTicket = (val) => {
+        if (val === 0) return 'R$ 0';
+        if (val >= 1000000) return `R$ ${(val/1000000).toFixed(1).replace('.', ',')}M`;
+        if (val >= 1000) return `R$ ${(val/1000).toFixed(0)}k`;
+        return `R$ ${val}`;
+      };
+
+      document.getElementById('cplTotal').innerHTML = `<small>R$</small> ${calculatedData.segmentos.total.custoPorLead.toFixed(0)}`;
+      document.getElementById('cplAlto').textContent = formatBrl(seg.alto.custoPorLead);
+      document.getElementById('cplMedio').textContent = formatBrl(seg.medio.custoPorLead);
+
+      document.getElementById('cprTotal').innerHTML = `<small>R$</small> ${calculatedData.segmentos.total.custoPorReuniao.toFixed(0)}`;
+      document.getElementById('cprAlto').textContent = formatBrl(seg.alto.custoPorReuniao);
+      document.getElementById('cprMedio').textContent = formatBrl(seg.medio.custoPorReuniao);
+
+      document.getElementById('tmTotal').innerHTML = formatTicket(calculatedData.segmentos.total.ticketMedio).replace('R$', '<small>R$</small>');
+      document.getElementById('tmAlto').textContent = formatTicket(seg.alto.ticketMedio);
+      document.getElementById('tmMedio').textContent = formatTicket(seg.medio.ticketMedio);
+
+      document.getElementById('apvTotal').textContent = calculatedData.segmentos.total.agendPorVenda.toFixed(0);
+      document.getElementById('apvAlto').textContent = seg.alto.agendPorVenda.toFixed(0);
+      document.getElementById('apvMedio').textContent = seg.medio.agendPorVenda.toFixed(0);
+
+      document.getElementById('rpvTotal').textContent = calculatedData.segmentos.total.reunioesPorVenda.toFixed(0);
+      document.getElementById('rpvAlto').textContent = seg.alto.reunioesPorVenda.toFixed(0);
+      document.getElementById('rpvMedio').textContent = seg.medio.reunioesPorVenda.toFixed(0);
+    }
+
+    function renderSdrTable() {
+      const tbody = document.getElementById('sdrTableBody');
+      tbody.innerHTML = '';
+
+      const sdrs = calculatedData.sdrs;
+
+      if (sdrs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--muted); padding: 30px;">Nenhum SDR ativo com performance registrada no período.</td></tr>';
+        return;
+      }
+
+      sdrs.sort((a, b) => b.leadsRecebidos - a.leadsRecebidos);
+
+      sdrs.forEach(s => {
+        const tr = document.createElement('tr');
+        
+        let statusTag = '';
+        if (s.status !== '—') {
+          const statusClass = s.status === 'Ativo' ? 'ativo' : s.status === 'Em treino' ? 'em-treino' : '';
+          statusTag = `<span class="tag ${statusClass}">${s.status.toLowerCase()}</span>`;
+        }
+
+        const taxaAgendFormatted = `${(s.taxaAgendamento * 100).toFixed(0)}%`;
+        const custoLeadFormatted = s.custoLeadEnviado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+        const custoReunioesFormatted = s.custoPorReuniao.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+
+        tr.innerHTML = `
+          <td>${s.sdr} ${statusTag}</td>
+          <td>${s.leadsRecebidos}</td>
+          <td>${s.leadsAgendados}</td>
+          <td style="font-weight: 500; color: var(--gold-2);">${taxaAgendFormatted}</td>
+          <td>${custoLeadFormatted}</td>
+          <td>${custoReunioesFormatted}</td>
+          <td style="text-align: right; padding-right: 20px; font-weight: 600; color: var(--cream);">${s.vendas}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderCostsChart() {
+      const c = calculatedData.custos;
+      const total = c.total;
+      
+      const formatBrl = (val) => val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+      
+      if (total >= 1000) {
+        document.getElementById('costsTotalValue').innerHTML = `<small>R$</small> ${(total/1000).toFixed(0)}<small>k</small>`;
+      } else {
+        document.getElementById('costsTotalValue').innerHTML = `<small>R$</small> ${total}`;
+      }
+
+      const categorias = [
+        { nome: 'Anúncios (Alto + Médio)', val: c.anunciosAlto + c.anunciosMedio, cor: '#C09B3A' },
+        { nome: 'Contratação / treinamento', val: c.contratacao, cor: '#6E8CA8' },
+        { nome: 'Telefonia / discadora', val: c.telefonia, cor: '#9B7E4A' },
+        { nome: 'Ferramentas (CRM, etc)', val: c.ferramentas, cor: '#4A5D78' }
+      ];
+
+      const listBody = document.getElementById('costsListBody');
+      listBody.innerHTML = '';
+
+      const donutData = [];
+      const donutLabels = [];
+      const donutColors = [];
+
+      categorias.forEach(cat => {
+        const pct = total > 0 ? Math.round((cat.val / total) * 100) : 0;
+        donutData.push(cat.val);
+        donutLabels.push(cat.nome);
+        donutColors.push(cat.cor);
+
+        const row = document.createElement('div');
+        row.className = 'cost-row';
+        row.innerHTML = `
+          <div class="cost-name"><span class="dot" style="background:${cat.cor}"></span>${cat.nome}</div>
+          <div><span class="cost-pct">${pct}%</span> <span class="cost-val">${formatBrl(cat.val)}</span></div>
+        `;
+        listBody.appendChild(row);
+      });
+
+      const ctx = document.getElementById('costChart').getContext('2d');
+      if (costDonutChart) costDonutChart.destroy();
+      
+      costDonutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: donutLabels,
+          datasets: [{
+            data: donutData,
+            backgroundColor: donutColors,
+            borderColor: '#0E1A2D',
+            borderWidth: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '72%',
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#0E1A2D',
+              borderColor: '#1E2D47',
+              borderWidth: 1,
+              padding: 10,
+              titleColor: '#F0E6D3',
+              bodyColor: '#C7CFDE',
+              callbacks: {
+                label: (c) => `  R$ ${c.parsed.toLocaleString('pt-BR')}`
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderFinancials() {
+      const res = calculatedData.resultado;
+      const rate = calculatedData.meta.commRate;
+      const formatBrl = (val) => val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+
+      document.getElementById('finInvestido').innerHTML = formatBrl(res.investido).replace('R$', '<small>R$</small> ');
+      document.getElementById('finComissao').innerHTML = formatBrl(res.comissaoRecebida).replace('R$', '<small>R$</small> ');
+      
+      const totalVendido = calculatedData.segmentos.total.valorVendido;
+      const totalVendas = calculatedData.segmentos.total.vendas;
+      document.getElementById('finComissaoSub').textContent = `${(rate * 100).toFixed(0)}% sobre ${formatBrl(totalVendido)} vendidos (${totalVendas} vendas)`;
+
+      const resCard = document.getElementById('finResultadoCard');
+      const resVal = document.getElementById('finResultadoValue');
+      
+      resVal.innerHTML = formatBrl(res.resultadoLiquido).replace('R$', '<small>R$</small> ');
+      
+      if (res.resultadoLiquido >= 0) {
+        resCard.classList.remove('negative');
+        resVal.style.color = 'var(--up)';
+      } else {
+        resCard.classList.add('negative');
+        resVal.style.color = 'var(--error)';
+      }
+    }
+
+    function renderRoiCards() {
+      const seg = calculatedData.segmentos;
+      const formatBrl = (val) => val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+
+      document.getElementById('roiAltoDetail').innerHTML = `
+        Investido em anúncio: <b>${formatBrl(seg.alto.custoPorLead * seg.alto.leads)}</b><br>
+        ${seg.alto.vendas} vendas · comissão <b>${formatBrl(seg.alto.comissao)}</b>
+      `;
+      document.getElementById('roiAltoValue').textContent = `${seg.alto.roi.toFixed(1)}×`;
+
+      document.getElementById('roiMedioDetail').innerHTML = `
+        Investido em anúncio: <b>${formatBrl(seg.medio.custoPorLead * seg.medio.leads)}</b><br>
+        ${seg.medio.vendas} vendas · comissão <b>${formatBrl(seg.medio.comissao)}</b>
+      `;
+      document.getElementById('roiMedioValue').textContent = `${seg.medio.roi.toFixed(1)}×`;
+    }
+
+    function renderLeadsChart() {
+      const ctx = document.getElementById('leadsChart').getContext('2d');
+      if (leadsChart) leadsChart.destroy();
+
+      const st = calculatedData.serieTemporal;
+      
+      function getGradient(ctxObj) {
+        const g = ctxObj.createLinearGradient(0, 0, 0, 240);
+        g.addColorStop(0, 'rgba(192, 155, 58, 0.22)');
+        g.addColorStop(1, 'rgba(192, 155, 58, 0.01)');
+        return g;
+      }
+
+      const optionsBase = {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#0E1A2D',
+            borderColor: '#1E2D47',
+            borderWidth: 1,
+            padding: 11,
+            titleColor: '#F0E6D3',
+            bodyColor: '#C7CFDE',
+            titleFont: { family: 'Montserrat', weight: '600', size: 12 },
+            bodyFont: { family: 'Montserrat', size: 12 },
+            callbacks: {
+              title: (i) => `${calculatedData.meta.groupBy === 'day' ? 'Dia' : calculatedData.meta.groupBy === 'week' ? 'Semana' : 'Mês'} ` + i[0].label,
+              label: (c) => c.parsed.y === null ? null : `  ${c.dataset.label}: ${c.parsed.y}`
+            }
+          }
+        },
+        scales: {
+          x: {
+            stacked: chartMode === 'dia',
+            grid: { color: 'rgba(30, 45, 71, 0.4)' },
+            ticks: { color: '#7E8AA0', font: { family: 'Montserrat', size: 10 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 12 }
+          },
+          y: {
+            stacked: chartMode === 'dia',
+            beginAtZero: true,
+            grid: { color: 'rgba(30, 45, 71, 0.5)' },
+            ticks: { color: '#7E8AA0', font: { family: 'Montserrat', size: 10 } }
+          }
+        }
+      };
+
+      if (chartMode === 'mes') {
+        leadsChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: st.labels,
+            datasets: [
+              { label: 'Médio Padrão', data: st.leadsMedioAcc, borderColor: '#9B7E4A', borderWidth: 1.8, pointRadius: 0, tension: 0.4, fill: false },
+              { label: 'Alto Padrão', data: st.leadsAltoAcc, borderColor: '#6E8CA8', borderWidth: 1.8, pointRadius: 0, tension: 0.4, fill: false },
+              { label: 'Total', data: st.leadsTotalAcc, borderColor: '#C09B3A', borderWidth: 2.8, pointRadius: 0, pointHoverRadius: 5, pointBackgroundColor: '#08111F', pointBorderColor: '#D4B45A', tension: 0.4, fill: true, backgroundColor: getGradient(ctx) }
+            ]
+          },
+          options: optionsBase
+        });
+      } else {
+        leadsChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: st.labels,
+            datasets: [
+              { label: 'Médio Padrão', data: st.leadsMedio, backgroundColor: 'rgba(155, 126, 74, 0.75)', stack: 's', borderRadius: 3 },
+              { label: 'Alto Padrão', data: st.leadsAlto, backgroundColor: 'rgba(110, 140, 168, 0.85)', stack: 's', borderRadius: 3 }
+            ]
+          },
+          options: optionsBase
+        });
+      }
+    }
+
+    // ==========================================================================
+    // LISTENERS E INICIALIZADORES
+    // ==========================================================================
+    document.getElementById('periodFilter').addEventListener('change', (e) => {
+      const isCustom = e.target.value === 'personalizado';
+      document.getElementById('customDateContainer').style.display = isCustom ? 'flex' : 'none';
+      loadDashboard();
+    });
+
+    document.getElementById('customStartDate').addEventListener('change', loadDashboard);
+    document.getElementById('customEndDate').addEventListener('change', loadDashboard);
+    document.getElementById('groupByOverride').addEventListener('change', loadDashboard);
+    document.getElementById('btnRefresh').addEventListener('click', loadDashboard);
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await updateAuthUI();
+      loadDashboard();
+
+      // Ajustar link de Vendas se estiver rodando em desenvolvimento com Vite
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        try {
+          // Faz uma checagem rápida para ver se o Vite dev server está online
+          await fetch('http://localhost:5173/', { method: 'HEAD', mode: 'no-cors' });
+          document.querySelectorAll('a[href="/"]').forEach(link => {
+            link.href = 'http://localhost:5173/';
+          });
+        } catch (e) {
+          // Dev server não está online, deixa o link padrão '/'
+        }
+      }
+    });
+  </script>
+</body>
+</html>
