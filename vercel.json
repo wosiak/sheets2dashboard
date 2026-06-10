@@ -8,15 +8,15 @@
     },
     {
       "source": "/assets/(.*)",
-      "destination": "/dashboard-solyd-imob/apps/minafit/dist/assets/$1"
+      "destination": "/apps/minafit/dist/assets/$1"
     },
     {
       "source": "/",
-      "destination": "/dashboard-solyd-imob/apps/minafit/dist/index.html"
+      "destination": "/apps/minafit/dist/index.html"
     },
     {
       "source": "/((?!dashboard|formulario|styles\\.css|sheets-api|engine|config|auth|api/).*)",
-      "destination": "/dashboard-solyd-imob/apps/minafit/dist/$1"
+      "destination": "/apps/minafit/dist/$1"
     }
   ]
 }

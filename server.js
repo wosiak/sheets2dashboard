@@ -568,7 +568,7 @@ app.post('/api/sdr-performance', async (req, res) => {
 });
 
 // Servir a aplicação React construída (minafit)
-const minafitDistPath = path.join(__dirname, 'dashboard-solyd-imob', 'apps', 'minafit', 'dist');
+const minafitDistPath = path.join(__dirname, 'apps', 'minafit', 'dist');
 app.use(express.static(minafitDistPath));
 
 // Servir arquivos estáticos do diretório raiz
