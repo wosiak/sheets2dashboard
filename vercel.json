@@ -48,7 +48,7 @@
       "destination": "/apps/minafit/dist/index.html"
     },
     {
-      "source": "/((?!dashboard|formulario|styles\\.css|sheets-api|engine|config|auth|api/).*)",
+      "source": "/(.*)",
       "destination": "/apps/minafit/dist/$1"
     }
   ]
