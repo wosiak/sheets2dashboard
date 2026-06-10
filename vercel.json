@@ -3,16 +3,7 @@
   "cleanUrls": true,
   "functions": {
     "api/index.js": {
-      "includeFiles": [
-        "dashboard.html",
-        "formulario.html",
-        "styles.css",
-        "sheets-api.js",
-        "engine.js",
-        "config.js",
-        "auth.js",
-        "database.json"
-      ]
+      "includeFiles": "*.{html,css,js,json}"
     }
   },
   "rewrites": [
