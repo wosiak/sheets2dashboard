@@ -1,0 +1,3231 @@
+{
+  "commission": 0.05,
+  "diario": {
+    "2026-01-01": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-02": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-03": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-04": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-05": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-06": {
+      "leadsAlto": 4,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-01-07": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-08": {
+      "leadsAlto": 6,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-09": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-10": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-11": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-12": {
+      "leadsAlto": 4,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-13": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-14": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-15": {
+      "leadsAlto": 5,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-16": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-17": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-18": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-19": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-20": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-21": {
+      "leadsAlto": 6,
+      "leadsMedio": 8,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-22": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-23": {
+      "leadsAlto": 5,
+      "leadsMedio": 11,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-01-24": {
+      "leadsAlto": 5,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-25": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-26": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-27": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-28": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-29": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-30": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-01-31": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-01": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-02": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-03": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-02-04": {
+      "leadsAlto": 4,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-05": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-06": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-07": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-02-08": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-09": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-10": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-11": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-12": {
+      "leadsAlto": 5,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-13": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-14": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-15": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-16": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-17": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-18": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-19": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-20": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-21": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-22": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-23": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-24": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-25": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-26": {
+      "leadsAlto": 4,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-27": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-02-28": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-01": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-02": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-03-03": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-04": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-05": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-06": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-07": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-03-08": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-09": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-10": {
+      "leadsAlto": 5,
+      "leadsMedio": 11,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-11": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-12": {
+      "leadsAlto": 4,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-13": {
+      "leadsAlto": 4,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-14": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-03-15": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-16": {
+      "leadsAlto": 6,
+      "leadsMedio": 8,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-17": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-18": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-19": {
+      "leadsAlto": 4,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-03-20": {
+      "leadsAlto": 6,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-03-21": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-03-22": {
+      "leadsAlto": 5,
+      "leadsMedio": 11,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-03-23": {
+      "leadsAlto": 6,
+      "leadsMedio": 10,
+      "agendAlto": 2,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-03-24": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-25": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-26": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-27": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-28": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-29": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-30": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-03-31": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-01": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-04-02": {
+      "leadsAlto": 3,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-03": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-04": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-05": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-06": {
+      "leadsAlto": 5,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-07": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-08": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-09": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-10": {
+      "leadsAlto": 6,
+      "leadsMedio": 10,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-11": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-12": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-13": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-14": {
+      "leadsAlto": 6,
+      "leadsMedio": 10,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-15": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-16": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-17": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-18": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-19": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-20": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-21": {
+      "leadsAlto": 5,
+      "leadsMedio": 11,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-04-22": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-23": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-24": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-25": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-26": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-27": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-28": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-29": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-04-30": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-01": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-02": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-03": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-04": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-05": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-06": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-07": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-08": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-09": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-10": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-11": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-12": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-13": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-14": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-15": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-16": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-17": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-18": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-19": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-20": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-21": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-22": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-23": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-24": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-25": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-26": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-27": {
+      "leadsAlto": 4,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-05-28": {
+      "leadsAlto": 0,
+      "leadsMedio": 0,
+      "agendAlto": 0,
+      "agendMedio": 0,
+      "reunAlto": 0,
+      "reunMedio": 0
+    },
+    "2026-05-29": {
+      "leadsAlto": 0,
+      "leadsMedio": 0,
+      "agendAlto": 0,
+      "agendMedio": 0,
+      "reunAlto": 0,
+      "reunMedio": 0
+    },
+    "2026-05-30": {
+      "leadsAlto": 0,
+      "leadsMedio": 0,
+      "agendAlto": 0,
+      "agendMedio": 0,
+      "reunAlto": 0,
+      "reunMedio": 0
+    },
+    "2026-05-31": {
+      "leadsAlto": 0,
+      "leadsMedio": 0,
+      "agendAlto": 0,
+      "agendMedio": 0,
+      "reunAlto": 0,
+      "reunMedio": 0
+    },
+    "2026-06-01": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-02": {
+      "leadsAlto": 3,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-03": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-04": {
+      "leadsAlto": 4,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-05": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-06": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-07": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-06-08": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-09": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-10": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-06-11": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-12": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-13": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-14": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-15": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-16": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-17": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-06-18": {
+      "leadsAlto": 2,
+      "leadsMedio": 6,
+      "agendAlto": 0,
+      "agendMedio": 2,
+      "reunAlto": 0,
+      "reunMedio": 1
+    },
+    "2026-06-19": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-20": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-21": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-22": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-23": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-24": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-25": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-26": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-27": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-28": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-29": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-06-30": {
+      "leadsAlto": 5,
+      "leadsMedio": 11,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-07-01": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-02": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-03": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-04": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-05": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-06": {
+      "leadsAlto": 3,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-07": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-08": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-09": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-10": {
+      "leadsAlto": 6,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-07-11": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-07-12": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-13": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-14": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-15": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-16": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-07-17": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-18": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-19": {
+      "leadsAlto": 5,
+      "leadsMedio": 11,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-07-20": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-21": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-22": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-23": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-24": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-25": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-26": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-27": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-28": {
+      "leadsAlto": 5,
+      "leadsMedio": 11,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-29": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-07-30": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-07-31": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-01": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-02": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-03": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-04": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-08-05": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-06": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-08-07": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-08": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-09": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-10": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-11": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-12": {
+      "leadsAlto": 5,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-13": {
+      "leadsAlto": 5,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-14": {
+      "leadsAlto": 4,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-08-15": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-16": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-17": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-18": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-19": {
+      "leadsAlto": 3,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-20": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-08-21": {
+      "leadsAlto": 6,
+      "leadsMedio": 8,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-22": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-23": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-24": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-08-25": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-26": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-27": {
+      "leadsAlto": 5,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-28": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-29": {
+      "leadsAlto": 2,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-30": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-08-31": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-09-01": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-02": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-03": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-04": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-05": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-06": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-07": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-08": {
+      "leadsAlto": 5,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-09": {
+      "leadsAlto": 6,
+      "leadsMedio": 10,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-10": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-11": {
+      "leadsAlto": 3,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-12": {
+      "leadsAlto": 5,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-13": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-14": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-15": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-16": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-17": {
+      "leadsAlto": 6,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-18": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-19": {
+      "leadsAlto": 6,
+      "leadsMedio": 8,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-20": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-21": {
+      "leadsAlto": 5,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-22": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-23": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-24": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-25": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-26": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-27": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-28": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-09-29": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-09-30": {
+      "leadsAlto": 3,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-01": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-02": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-03": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-04": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-05": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-06": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-07": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-08": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-09": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-10": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-11": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-12": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-13": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-14": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-15": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-10-16": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-17": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-18": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-19": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-20": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-21": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-22": {
+      "leadsAlto": 5,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-23": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-24": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-10-25": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-26": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-10-27": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-28": {
+      "leadsAlto": 5,
+      "leadsMedio": 11,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-29": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-30": {
+      "leadsAlto": 5,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-10-31": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-01": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-02": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-03": {
+      "leadsAlto": 4,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-04": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-05": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-06": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-07": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-08": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-11-09": {
+      "leadsAlto": 5,
+      "leadsMedio": 11,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-11-10": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-11": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-12": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-13": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-14": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-15": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-16": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-17": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-18": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-19": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-20": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-21": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-22": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-23": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-24": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-25": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-26": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-27": {
+      "leadsAlto": 6,
+      "leadsMedio": 10,
+      "agendAlto": 2,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-11-28": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-29": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-11-30": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-01": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-02": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-12-03": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-04": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-05": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-06": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-07": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-08": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-09": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-10": {
+      "leadsAlto": 2,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-11": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-12": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-13": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-14": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-15": {
+      "leadsAlto": 4,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-16": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-17": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-12-18": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-19": {
+      "leadsAlto": 4,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-20": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-12-21": {
+      "leadsAlto": 3,
+      "leadsMedio": 5,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-22": {
+      "leadsAlto": 4,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-23": {
+      "leadsAlto": 5,
+      "leadsMedio": 10,
+      "agendAlto": 1,
+      "agendMedio": 3,
+      "reunAlto": 1,
+      "reunMedio": 2
+    },
+    "2026-12-24": {
+      "leadsAlto": 3,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-25": {
+      "leadsAlto": 3,
+      "leadsMedio": 6,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-26": {
+      "leadsAlto": 6,
+      "leadsMedio": 9,
+      "agendAlto": 2,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-27": {
+      "leadsAlto": 5,
+      "leadsMedio": 8,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-28": {
+      "leadsAlto": 4,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-29": {
+      "leadsAlto": 3,
+      "leadsMedio": 7,
+      "agendAlto": 1,
+      "agendMedio": 1,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-30": {
+      "leadsAlto": 5,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    },
+    "2026-12-31": {
+      "leadsAlto": 4,
+      "leadsMedio": 9,
+      "agendAlto": 1,
+      "agendMedio": 2,
+      "reunAlto": 1,
+      "reunMedio": 1
+    }
+  },
+  "vendas": [
+    {
+      "data": "2026-05-10",
+      "sdr": "Isabel",
+      "segmento": "Alto",
+      "valor": 1200000
+    },
+    {
+      "data": "2026-05-18",
+      "sdr": "Isabel",
+      "segmento": "Alto",
+      "valor": 1200000
+    },
+    {
+      "data": "2026-05-15",
+      "sdr": "Ana",
+      "segmento": "Médio",
+      "valor": 500000
+    },
+    {
+      "data": "2026-05-25",
+      "sdr": "Ana",
+      "segmento": "Médio",
+      "valor": 500000
+    }
+  ],
+  "custos": {
+    "2026-01": {
+      "invAlto": 13135,
+      "invMedio": 10625,
+      "contratacao": 5000,
+      "telefonia": 2000,
+      "ferramentas": 1000
+    },
+    "2026-02": {
+      "invAlto": 12387,
+      "invMedio": 10366,
+      "contratacao": 5000,
+      "telefonia": 2000,
+      "ferramentas": 1000
+    },
+    "2026-03": {
+      "invAlto": 14651,
+      "invMedio": 11245,
+      "contratacao": 5000,
+      "telefonia": 2000,
+      "ferramentas": 1000
+    },
+    "2026-04": {
+      "invAlto": 12539,
+      "invMedio": 10341,
+      "contratacao": 5000,
+      "telefonia": 2000,
+      "ferramentas": 1000
+    },
+    "2026-05": {
+      "invAlto": 14640,
+      "invMedio": 13200,
+      "contratacao": 6560,
+      "telefonia": 2400,
+      "ferramentas": 1200
+    },
+    "2026-06": {
+      "invAlto": 10999,
+      "invMedio": 8689,
+      "contratacao": 5000,
+      "telefonia": 2000,
+      "ferramentas": 1000
+    },
+    "2026-07": {
+      "invAlto": 12081,
+      "invMedio": 10528,
+      "contratacao": 5000,
+      "telefonia": 2000,
+      "ferramentas": 1000
+    },
+    "2026-08": {
+      "invAlto": 14105,
+      "invMedio": 8388,
+      "contratacao": 5000,
+      "telefonia": 2000,
+      "ferramentas": 1000
+    },
+    "2026-09": {
+      "invAlto": 13920,
+      "invMedio": 11817,
+      "contratacao": 5000,
+      "telefonia": 2000,
+      "ferramentas": 1000
+    },
+    "2026-10": {
+      "invAlto": 14567,
+      "invMedio": 9491,
+      "contratacao": 5000,
+      "telefonia": 2000,
+      "ferramentas": 1000
+    },
+    "2026-11": {
+      "invAlto": 12162,
+      "invMedio": 8687,
+      "contratacao": 5000,
+      "telefonia": 2000,
+      "ferramentas": 1000
+    },
+    "2026-12": {
+      "invAlto": 11606,
+      "invMedio": 10903,
+      "contratacao": 5000,
+      "telefonia": 2000,
+      "ferramentas": 1000
+    }
+  },
+  "sdrPerformance": [
+    {
+      "mes": "Maio",
+      "sdr": "Isabel",
+      "status": "Ativo",
+      "leadsRecebidos": 200,
+      "leadsAgendados": 58,
+      "reunioes": 35
+    },
+    {
+      "mes": "Maio",
+      "sdr": "Ana",
+      "status": "Em treino",
+      "leadsRecebidos": 148,
+      "leadsAgendados": 29,
+      "reunioes": 17
+    },
+    {
+      "mes": "Janeiro",
+      "sdr": "Isabel",
+      "status": "Ativo",
+      "leadsRecebidos": 180,
+      "leadsAgendados": 45,
+      "reunioes": 25
+    },
+    {
+      "mes": "Janeiro",
+      "sdr": "Ana",
+      "status": "Ativo",
+      "leadsRecebidos": 150,
+      "leadsAgendados": 35,
+      "reunioes": 20
+    },
+    {
+      "mes": "Fevereiro",
+      "sdr": "Isabel",
+      "status": "Ativo",
+      "leadsRecebidos": 180,
+      "leadsAgendados": 45,
+      "reunioes": 25
+    },
+    {
+      "mes": "Fevereiro",
+      "sdr": "Ana",
+      "status": "Ativo",
+      "leadsRecebidos": 150,
+      "leadsAgendados": 35,
+      "reunioes": 20
+    },
+    {
+      "mes": "Março",
+      "sdr": "Isabel",
+      "status": "Ativo",
+      "leadsRecebidos": 180,
+      "leadsAgendados": 45,
+      "reunioes": 25
+    },
+    {
+      "mes": "Março",
+      "sdr": "Ana",
+      "status": "Ativo",
+      "leadsRecebidos": 150,
+      "leadsAgendados": 35,
+      "reunioes": 20
+    },
+    {
+      "mes": "Abril",
+      "sdr": "Isabel",
+      "status": "Ativo",
+      "leadsRecebidos": 180,
+      "leadsAgendados": 45,
+      "reunioes": 25
+    },
+    {
+      "mes": "Abril",
+      "sdr": "Ana",
+      "status": "Ativo",
+      "leadsRecebidos": 150,
+      "leadsAgendados": 35,
+      "reunioes": 20
+    },
+    {
+      "mes": "Junho",
+      "sdr": "Isabel",
+      "status": "Ativo",
+      "leadsRecebidos": 180,
+      "leadsAgendados": 45,
+      "reunioes": 25
+    },
+    {
+      "mes": "Junho",
+      "sdr": "Ana",
+      "status": "Ativo",
+      "leadsRecebidos": 150,
+      "leadsAgendados": 35,
+      "reunioes": 20
+    },
+    {
+      "mes": "Julho",
+      "sdr": "Isabel",
+      "status": "Ativo",
+      "leadsRecebidos": 180,
+      "leadsAgendados": 45,
+      "reunioes": 25
+    },
+    {
+      "mes": "Julho",
+      "sdr": "Ana",
+      "status": "Ativo",
+      "leadsRecebidos": 150,
+      "leadsAgendados": 35,
+      "reunioes": 20
+    },
+    {
+      "mes": "Agosto",
+      "sdr": "Isabel",
+      "status": "Ativo",
+      "leadsRecebidos": 180,
+      "leadsAgendados": 45,
+      "reunioes": 25
+    },
+    {
+      "mes": "Agosto",
+      "sdr": "Ana",
+      "status": "Ativo",
+      "leadsRecebidos": 150,
+      "leadsAgendados": 35,
+      "reunioes": 20
+    },
+    {
+      "mes": "Setembro",
+      "sdr": "Isabel",
+      "status": "Ativo",
+      "leadsRecebidos": 180,
+      "leadsAgendados": 45,
+      "reunioes": 25
+    },
+    {
+      "mes": "Setembro",
+      "sdr": "Ana",
+      "status": "Ativo",
+      "leadsRecebidos": 150,
+      "leadsAgendados": 35,
+      "reunioes": 20
+    },
+    {
+      "mes": "Outubro",
+      "sdr": "Isabel",
+      "status": "Ativo",
+      "leadsRecebidos": 180,
+      "leadsAgendados": 45,
+      "reunioes": 25
+    },
+    {
+      "mes": "Outubro",
+      "sdr": "Ana",
+      "status": "Ativo",
+      "leadsRecebidos": 150,
+      "leadsAgendados": 35,
+      "reunioes": 20
+    },
+    {
+      "mes": "Novembro",
+      "sdr": "Isabel",
+      "status": "Ativo",
+      "leadsRecebidos": 180,
+      "leadsAgendados": 45,
+      "reunioes": 25
+    },
+    {
+      "mes": "Novembro",
+      "sdr": "Ana",
+      "status": "Ativo",
+      "leadsRecebidos": 150,
+      "leadsAgendados": 35,
+      "reunioes": 20
+    },
+    {
+      "mes": "Dezembro",
+      "sdr": "Isabel",
+      "status": "Ativo",
+      "leadsRecebidos": 180,
+      "leadsAgendados": 45,
+      "reunioes": 25
+    },
+    {
+      "mes": "Dezembro",
+      "sdr": "Ana",
+      "status": "Ativo",
+      "leadsRecebidos": 150,
+      "leadsAgendados": 35,
+      "reunioes": 20
+    }
+  ]
+}

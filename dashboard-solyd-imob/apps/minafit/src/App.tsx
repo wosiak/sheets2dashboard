@@ -68,7 +68,18 @@ function App() {
                 <label className="text-sm font-medium text-[var(--text-secondary)]">Dashboard:</label>
                 <select
                   value={currentDashboard}
-                  onChange={(e) => setCurrentDashboard(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === 'marketing') {
+                      if (window.location.port === '5173') {
+                        window.location.href = 'http://localhost:3000/dashboard.html';
+                      } else {
+                        window.location.href = '/dashboard.html';
+                      }
+                    } else {
+                      setCurrentDashboard(val);
+                    }
+                  }}
                   className="header-select"
                 >
                   {availableDashboards.map((dashboard) => (

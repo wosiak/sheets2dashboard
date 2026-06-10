@@ -40,8 +40,13 @@ export const dashboardConfigs: Record<string, DashboardConfig> = {
       yAxisKey: 'Valor Ganho',
     },
   ],
-},
-
+  },
+  marketing: {
+    spreadsheetId: '',
+    sheetName: '',
+    refreshInterval: 0,
+    charts: []
+  }
 };
 
 // Dashboard padrão

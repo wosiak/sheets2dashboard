@@ -263,6 +263,12 @@ export const dashboardConfigs: Record<string, DashboardConfig> = {
       { id: 'estorno-por-dia', title: 'Estorno por Dia', type: 'bar', dataKey: 'estorno', xAxisKey: 'data', yAxisKey: 'estorno' },
     ],
   },
+  marketing: {
+    spreadsheetId: '',
+    sheetName: '',
+    refreshInterval: 0,
+    charts: []
+  }
 };
 
 // Dashboard padrão
