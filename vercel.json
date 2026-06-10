@@ -11,6 +11,10 @@
       "destination": "/apps/minafit/dist/assets/$1"
     },
     {
+      "source": "/(dashboard\\.html|formulario\\.html|styles\\.css|sheets-api\\.js|engine\\.js|config\\.js|auth\\.js)",
+      "destination": "/api/index.js"
+    },
+    {
       "source": "/",
       "destination": "/apps/minafit/dist/index.html"
     },
