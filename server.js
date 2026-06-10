@@ -45,7 +45,7 @@ try {
 }
 
 // Banco de Dados Local (Fallback/Simulação)
-const DB_FILE = path.join(__dirname, 'database.json');
+const DB_FILE = path.join(process.cwd(), 'database.json');
 
 async function readLocalDb() {
   try {
@@ -568,11 +568,11 @@ app.post('/api/sdr-performance', async (req, res) => {
 });
 
 // Servir a aplicação React construída (minafit)
-const minafitDistPath = path.join(__dirname, 'apps', 'minafit', 'dist');
+const minafitDistPath = path.join(process.cwd(), 'apps', 'minafit', 'dist');
 app.use(express.static(minafitDistPath));
 
 // Servir arquivos estáticos do diretório raiz
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(process.cwd()));
 
 // Encaminhar todas as outras requisições para a index.html do React (ou fallback da raiz)
 app.get('*', async (req, res) => {
@@ -582,7 +582,7 @@ app.get('*', async (req, res) => {
     return res.sendFile(reactIndex);
   } catch (err) {
     try {
-      const rootIndex = path.join(__dirname, 'index.html');
+      const rootIndex = path.join(process.cwd(), 'index.html');
       await fs.access(rootIndex);
       return res.sendFile(rootIndex);
     } catch (e) {
