@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "build": "npm install --prefix dashboard-solyd-imob/apps/minafit && npm run build --prefix dashboard-solyd-imob/apps/minafit"
   },
   "dependencies": {
     "cors": "^2.8.5",
