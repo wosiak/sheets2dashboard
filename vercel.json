@@ -4,7 +4,7 @@
   "buildCommand": "npm run build",
   "functions": {
     "api/index.js": {
-      "includeFiles": "*.{html,css,js,json}"
+      "includeFiles": "apps/minafit/public/*.{js,json}"
     }
   },
   "rewrites": [
