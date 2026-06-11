@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs').promises;
 const { google } = require('googleapis');
-const Config = require('./config');
+const Config = require('./apps/minafit/public/config');
 
 const app = express();
 app.use(cors());
@@ -583,36 +583,13 @@ app.post('/api/sdr-performance', async (req, res) => {
 const minafitDistPath = path.join(process.cwd(), 'apps', 'minafit', 'dist');
 app.use(express.static(minafitDistPath));
 
-// Servir arquivos estáticos do diretório raiz
-app.use(express.static(process.cwd()));
-
 // Rotas explícitas para as telas de marketing (compatibilidade Vercel cleanUrls)
 app.get('/dashboard', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'dashboard.html'));
+  res.sendFile(path.join(minafitDistPath, 'dashboard.html'));
 });
 
 app.get('/formulario', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'formulario.html'));
-});
-
-app.get('/styles.css', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'styles.css'));
-});
-
-app.get('/sheets-api.js', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'sheets-api.js'));
-});
-
-app.get('/engine.js', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'engine.js'));
-});
-
-app.get('/config.js', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'config.js'));
-});
-
-app.get('/auth.js', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'auth.js'));
+  res.sendFile(path.join(minafitDistPath, 'formulario.html'));
 });
 
 // Encaminhar todas as outras requisições para a index.html do React (ou fallback da raiz)

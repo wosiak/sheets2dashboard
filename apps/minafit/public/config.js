@@ -95,6 +95,8 @@ const Config = {
 // Exportação universal para Node.js e Navegador
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = Config;
-} else {
+} else if (typeof window !== 'undefined') {
   window.Config = Config;
+} else {
+  globalThis.Config = Config;
 }

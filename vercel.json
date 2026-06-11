@@ -18,39 +18,19 @@
     },
     {
       "source": "/dashboard",
-      "destination": "/api/index.js"
+      "destination": "/apps/minafit/dist/dashboard.html"
     },
     {
       "source": "/dashboard.html",
-      "destination": "/api/index.js"
+      "destination": "/apps/minafit/dist/dashboard.html"
     },
     {
       "source": "/formulario",
-      "destination": "/api/index.js"
+      "destination": "/apps/minafit/dist/formulario.html"
     },
     {
       "source": "/formulario.html",
-      "destination": "/api/index.js"
-    },
-    {
-      "source": "/styles.css",
-      "destination": "/api/index.js"
-    },
-    {
-      "source": "/sheets-api.js",
-      "destination": "/api/index.js"
-    },
-    {
-      "source": "/engine.js",
-      "destination": "/api/index.js"
-    },
-    {
-      "source": "/config.js",
-      "destination": "/api/index.js"
-    },
-    {
-      "source": "/auth.js",
-      "destination": "/api/index.js"
+      "destination": "/apps/minafit/dist/formulario.html"
     },
     {
       "source": "/",
