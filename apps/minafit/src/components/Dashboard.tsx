@@ -30,17 +30,34 @@ export const Dashboard: React.FC<DashboardProps> = ({ dashboardName, isTVMode = 
   const [selectedMonth, setSelectedMonth] = React.useState<string>('');
   const [selectedYear, setSelectedYear] = React.useState<string>('');
 
-  const apiKey = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY || '';
+  const defaultApiKey = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY || '';
   const googleSheetsService = React.useMemo(() => {
-  return new GoogleSheetsService(apiKey);
-}, [apiKey]);
-
+    return new GoogleSheetsService(defaultApiKey);
+  }, [defaultApiKey]);
 
   const { data: rawData, isLoading, error } = useQuery({
     queryKey: ['dashboard-data', dashboardName, config.spreadsheetId, config.sheetName],
     queryFn: async () => {
-      const sheetData = await googleSheetsService.getSheetData(config.spreadsheetId, config.sheetName);
-      const parsed = googleSheetsService.parseSheetData(sheetData);
+      let targetApiKey = defaultApiKey;
+      let targetSpreadsheetId = config.spreadsheetId;
+      let targetSheetName = config.sheetName;
+
+      try {
+        const configResp = await fetch('/api/sales-config');
+        if (configResp.ok) {
+          const salesConfig = await configResp.json();
+          if (salesConfig.apiKey) targetApiKey = salesConfig.apiKey;
+          if (salesConfig.spreadsheetId) targetSpreadsheetId = salesConfig.spreadsheetId;
+          if (salesConfig.sheetName) targetSheetName = salesConfig.sheetName;
+        }
+      } catch (err) {
+        console.warn('⚠️ Falha ao buscar configuração dinâmica do backend, usando fallbacks:', err);
+      }
+
+      const dynamicService = new GoogleSheetsService(targetApiKey);
+      const sheetData = await dynamicService.getSheetData(targetSpreadsheetId, targetSheetName);
+      const parsed = dynamicService.parseSheetData(sheetData);
+      
       return parsed.filter(row => {
         const nome = (row['Responsável'] || row['Responsavel'] || '').trim().replace(/\s+/g, ' ').toUpperCase();
         return !OPERADORES_EXCLUIDOS.some(excluido => nome.includes(excluido));

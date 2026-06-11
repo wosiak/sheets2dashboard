@@ -5,21 +5,21 @@
 /* ——— Dark theme (padrão) ——— */
 :root,
 [data-theme="dark"] {
-  --bg-base: #0f172a;
-  --bg-card: #1e293b;
-  --bg-header: #1e293b;
-  --border-card: #334155;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --accent: #8b5cf6;
-  --accent-hover: #7c3aed;
-  --success: #10b981;
-  --chart-1: #8b5cf6;
-  --chart-2: #06b6d4;
-  --chart-3: #10b981;
-  --chart-4: #f59e0b;
-  --chart-5: #f97316;
-  --chart-6: #ec4899;
+  --bg-base: #08111F;
+  --bg-card: #0E1A2D;
+  --bg-header: #0E1A2D;
+  --border-card: #1E2D47;
+  --text-primary: #F0E6D3;
+  --text-secondary: #7E8AA0;
+  --accent: #C09B3A;
+  --accent-hover: #D4B45A;
+  --success: #5FBF8A;
+  --chart-1: #C09B3A;
+  --chart-2: #6E8CA8;
+  --chart-3: #9B7E4A;
+  --chart-4: #5FBF8A;
+  --chart-5: #1E2D47;
+  --chart-6: #7E8AA0;
   --shadow-dropdown: rgba(0, 0, 0, 0.4);
 }
 
@@ -47,7 +47,7 @@
   body {
     background: var(--bg-base);
     color: var(--text-primary);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
     transition: background-color 0.3s, color 0.3s;
   }
 }

@@ -167,6 +167,15 @@ app.get('/api/status', (req, res) => {
   });
 });
 
+// GET /api/sales-config - Configurações do dashboard de vendas para consumo dinâmico do front-end
+app.get('/api/sales-config', (req, res) => {
+  res.json({
+    apiKey: process.env.VITE_GOOGLE_SHEETS_API_KEY || '',
+    spreadsheetId: process.env.VITE_SPREADSHEET_ID || '',
+    sheetName: process.env.VITE_SHEET_NAME || 'Dashboard'
+  });
+});
+
 // GET /api/data - Carrega todos os dados (Sheets com fallback para database.json)
 app.get('/api/data', async (req, res) => {
   if (sheets && !googleSheetsError) {
