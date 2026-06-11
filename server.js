@@ -16,21 +16,24 @@ app.use(express.json());
 // Inicializar Google Sheets API
 let sheets = null;
 let googleSheetsError = null;
-const spreadsheetId = process.env.GOOGLE_SPREADSHEET_ID;
+const spreadsheetId = process.env.GOOGLE_SPREADSHEET_ID ? process.env.GOOGLE_SPREADSHEET_ID.trim() : null;
 
 try {
   if (!process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || !process.env.GOOGLE_PRIVATE_KEY) {
     throw new Error('Service account email or private key missing in environment variables.');
   }
 
+  const serviceAccountEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL.trim();
   const privateKey = process.env.GOOGLE_PRIVATE_KEY
+    .trim()
     .replace(/\\n/g, '\n')
     .replace(/^"/, '')
-    .replace(/"$/, '');
+    .replace(/"$/, '')
+    .trim();
 
   const auth = new google.auth.GoogleAuth({
     credentials: {
-      client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      client_email: serviceAccountEmail,
       private_key: privateKey,
     },
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
@@ -581,6 +584,26 @@ app.get('/dashboard', (req, res) => {
 
 app.get('/formulario', (req, res) => {
   res.sendFile(path.join(process.cwd(), 'formulario.html'));
+});
+
+app.get('/styles.css', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'styles.css'));
+});
+
+app.get('/sheets-api.js', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'sheets-api.js'));
+});
+
+app.get('/engine.js', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'engine.js'));
+});
+
+app.get('/config.js', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'config.js'));
+});
+
+app.get('/auth.js', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'auth.js'));
 });
 
 // Encaminhar todas as outras requisições para a index.html do React (ou fallback da raiz)
